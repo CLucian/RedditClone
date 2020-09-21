@@ -26,27 +26,33 @@ export default class Navbar extends React.Component {
 
 	render() {
 		return (
-			<div className="navbar">
-				<ul className="navbar-links">
-				<li className="list-item">
-					<Link to="/">Home</Link>
-				</li>
-				{ this.context.accessToken ? null :
-					<li className="list-item">
-						<a href={getAuthorizationURL()}>Log In</a>
-					</li>
+			<React.Fragment>
+				{ this.context.isLoading === false ?
+					<div className="navbar">
+						<ul className="navbar-links">
+						<li className="list-item">
+							<Link to="/">Home</Link>
+						</li>
+						{ this.context.accessToken ? null :
+							<li className="list-item">
+								<a href={getAuthorizationURL()}>Log In</a>
+							</li>
+						}
+						<li className="list-item">
+							<Link to="/about">About</Link>
+						</li>
+						<li className="list-item">
+							<Link to="/profile">Profile</Link>
+						</li>
+						<li className="list-item">
+							<button onClick={this.context.setLoginStatusOut}>Log out</button>
+						</li>
+						</ul>
+					</div> 
+					:
+					null
 				}
-				<li className="list-item">
-					<Link to="/about">About</Link>
-				</li>
-				<li className="list-item">
-					<Link to="/profile">Profile</Link>
-				</li>
-				<li className="list-item">
-					<button onClick={this.context.setLoginStatusOut}>Log out</button>
-				</li>
-				</ul>
-			</div>
+			</React.Fragment>
    		);
 	}
 }

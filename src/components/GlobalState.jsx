@@ -6,12 +6,19 @@ export default class GlobalState extends React.Component {
 	state = {
 		accessToken: null,
 		isLoggedIn: false,
+		isLoading: true
 	};
 
 	componentDidMount() {
 		if (localStorage.getItem('access_token')) {
 			this.setState({
-				accessToken: localStorage.getItem('access_token')
+				accessToken: localStorage.getItem('access_token'),
+				isLoading: false
+			})
+		}
+		else {
+			this.setState({
+				isLoading: false
 			})
 		}
 	}

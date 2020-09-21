@@ -4,9 +4,13 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+import GlobalState from './components/GlobalState';
+
 ReactDOM.render(
   <React.StrictMode>
+    <GlobalState>
       <App />
+    </GlobalState>
   </React.StrictMode>,
   document.getElementById("root")
 );
