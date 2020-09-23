@@ -26,7 +26,8 @@ export default class Authorize extends React.Component {
       })
       .catch((err) => {
         console.log(err);
-      });
+	  });
+	  
   }
 
   render() {

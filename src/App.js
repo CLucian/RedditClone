@@ -10,8 +10,8 @@ import About from "./components/about.component";
 import Authorize from "./components/authorize.component";
 import ErrorPage from "./components/errorPage.component";
 import Navbar from "./components/navbar.component";
-import ProfileWithContext from './components/profile.component';
-
+import Profile from './components/profile.component';
+import { GlobalContext } from './components/GlobalState';
 
 
 class App extends React.Component {
@@ -31,6 +31,10 @@ class App extends React.Component {
 
 
   render() {
+    if (this.context.isLoading){
+      return 'loading...'
+    }
+
     return (
       <Router>
         <div className="app">
@@ -39,9 +43,7 @@ class App extends React.Component {
             <Route path="/" exact component={Home} />
             <Route path="/about" exact component={About} />
             <Route path="/authorize" exact component={Authorize} />
-            <Route path="/profile" exact>
-              <ProfileWithContext />
-            </Route>
+            <Route path="/profile" exact component={Profile} />
             <Route path="/" component={ErrorPage} />
           </Switch>
         </div>
@@ -49,5 +51,7 @@ class App extends React.Component {
     );
   }
 }
+
+App.contextType = GlobalContext;
 
 export default App;

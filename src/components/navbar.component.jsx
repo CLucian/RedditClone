@@ -20,40 +20,40 @@ export default class Navbar extends React.Component {
 		super(props);
 	}
 
-	clearStorage = () => {
-		localStorage.clear();
-	}
+	// clearStorage = () =>  {
+	// 	localStorage.clear();
+	// }
 
 	render() {
+		console.log('username=====', this.context.username)
 		return (
-			<React.Fragment>
-				{ this.context.isLoading === false ?
-					<div className="navbar">
-						<ul className="navbar-links">
-						<li className="list-item">
-							<Link to="/">Home</Link>
-						</li>
-						{ this.context.accessToken ? null :
-							<li className="list-item">
-								<a href={getAuthorizationURL()}>Log In</a>
-							</li>
-						}
-						<li className="list-item">
-							<Link to="/about">About</Link>
-						</li>
-						<li className="list-item">
-							<Link to="/profile">Profile</Link>
-						</li>
-						<li className="list-item">
-							<button onClick={this.context.setLoginStatusOut}>Log out</button>
-						</li>
-						</ul>
-					</div> 
-					:
-					null
-				}
-			</React.Fragment>
-   		);
+      <React.Fragment>
+        <div className="navbar">
+          <ul className="navbar-links">
+            <li className="list-item">
+              <Link to="/">Home</Link>
+            </li>
+            {this.context.accessToken ? null : (
+              <li className="list-item">
+                <a href={getAuthorizationURL()}>Log In</a>
+              </li>
+            )}
+            <li className="list-item">
+              <Link to="/about">About</Link>
+            </li>
+            <li className="list-item">
+              <Link to="/profile">Profile</Link>
+            </li>
+            <li className="list-item">
+              <button onClick={this.context.setLoginStatusOut}>Log out</button>
+            </li>
+            <li>
+              User: {this.context.username}
+            </li>
+          </ul>
+        </div>
+      </React.Fragment>
+    );
 	}
 }
 
