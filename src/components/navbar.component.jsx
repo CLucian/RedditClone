@@ -25,7 +25,7 @@ export default class Navbar extends React.Component {
 	// }
 
 	render() {
-		console.log('username=====', this.context.username)
+		console.log('username=====', this.context.userData)
 		return (
       <React.Fragment>
         <div className="navbar">
@@ -44,12 +44,28 @@ export default class Navbar extends React.Component {
             <li className="list-item">
               <Link to="/profile">Profile</Link>
             </li>
-            <li className="list-item">
-              <button onClick={this.context.setLoginStatusOut}>Log out</button>
-            </li>
-            <li>
-              User: {this.context.username}
-            </li>
+            {/* {this.context.accessToken ? (
+              <li className="list-item">
+                <button onClick={this.context.setLoginStatusOut}>
+                  Log out
+                </button>
+              </li>
+            ) : null} */}
+            {/* {this.context.username ? (
+              <li>User: {this.context.username}</li>
+            ) : null} */}
+            <div className="userInfo">
+              {this.context.userData ? (
+                <li className="user">{this.context.userData.name}</li>
+              ) : null}
+              {this.context.accessToken ? (
+                <li className="list-item login-btn">
+                  <button onClick={this.context.setLoginStatusOut}>
+                    Log out
+                  </button>
+                </li>
+              ) : null}
+            </div>
           </ul>
         </div>
       </React.Fragment>

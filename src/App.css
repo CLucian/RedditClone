@@ -44,3 +44,21 @@ a {
 .authorized {
   font-size: 10rem;
 }
+
+.userInfo {
+  text-align: center;
+  /* height: 100%; */
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+}
+
+.logout-btn {
+  height: 100%;
+}
+
+.user {
+  height: 100%;
+  padding-bottom: 1rem;
+  font-size: 1.5rem;
+}

@@ -1,66 +1,106 @@
 import React from 'react';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
 export const GlobalContext = React.createContext();
 
 export default class GlobalState extends React.Component {
-	state = {
-		accessToken: null,
-		isLoggedIn: false,
-		isLoading: true,
-		username: null
-	};
+	constructor(props){
+		super(props);
+    this.state = {
+      accessToken: null,
+      isLoggedIn: false,
+      isLoading: true,
+      userData: null,
+    };
+  }
+
+	
+	// MAKE USER DATA ACCESSIBLE TO BOTH FLOWS --> MAKE IT A REUSABLE FUNCTION
+	// Take in auth token as param
+	// dont set state in getUserData
+	// return a promise at the end of getUserData and set ALL state after it resolves
+
+	// this.getUserDate()//.then//.then().catch()
+
+	setGlobalState = (accessToken) => {
+		this.getUserData(accessToken)
+			.then(userData => {
+				this.setState({
+					userData,
+					accessToken,
+					isLoading: false
+				})
+			})
+			//error out -- learn debugging
+			.catch(err => { 
+				console.log('setGlobalState Error: ', err)
+				localStorage.clear();
+				this.setState({
+					isLoading: false,
+					accessToken: null
+				})
+				return <Redirect to='/authorize' />
+			})
+	}
+
+
+	
+	getUserData = (accessToken) => {
+		// requestUserName = () => {
+			return axios
+					.request({
+						url: "https://oauth.reddit.com/api/v1/me",  
+						headers: {
+							// authorization: "bearer " + localStorage.getItem("access_token"),
+							authorization: "bearer " + accessToken,
+						},
+					})
+
+
+			.then((response) => {
+				console.log("=====PROFILE DATA=====", response, response.data.name);
+				// console.log("=====PROFILE DATA=====", );
+				// username = response.data.name;
+				return response.data
+			})
+			// .catch((err) => {
+			// 	console.log(err);
+			// });
+		
+
+	}
 
 	componentDidMount() {
-		// if (localStorage.getItem('access_token')) 
-
-
+		// If there is an access token aka already logged in --> call getUserData.
 		if (localStorage.getItem('access_token')) {
-			console.log("has token, setting as", localStorage.getItem("access_token"));
+			console.log("has token, setting as", localStorage.getItem("access_token"))
+			this.setGlobalState(localStorage.getItem("access_token"));
 
-			axios
-				.request({
-					url: "https://oauth.reddit.com/api/v1/me",
-					headers: {
-					authorization: "bearer " + localStorage.getItem('access_token'),
-					},
-				})
-				.then((response) => {
-					console.log("=====PROFILE DATA=====", response);
-					console.log("=====PROFILE DATA=====", response.data.name);
-					this.setState({
-					username: response.data.name,
-					});
-					console.log("this.state.username", this.state.username);
-				})
-				.catch((err) => {
-					console.log(err);
-				});
+			// We will handle setState in getUserData above, so we can combine all setState in 1 function
+			// this.setState({
+			// 	accessToken: localStorage.getItem('access_token'),
+			// })
 
-		// setTimeout(() => {
-			this.setState({
-				accessToken: localStorage.getItem('access_token'),
-				isLoading: false
-			})
-			// }, 1500);
 		} else {
 			this.setState({
 				isLoading: false
 			})
 		}
 
-
-		
 	}
+
+	// Retrieves the access token from the authorize component
 
 	setAuthState = (authState) => {
 		if (authState.accessToken){
 			console.log("token is", authState.accessToken);
 			localStorage.setItem("access_token", authState.accessToken);
-			this.setState({
-				accessToken: authState.accessToken,
-				isLoggedIn: true,
-			});
+			// this.setState({
+			// 	accessToken: authState.accessToken,
+			// 	isLoggedIn: true,
+			// });
+			this.setGlobalState(authState.accessToken);
 		}
 	}
 

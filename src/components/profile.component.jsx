@@ -44,7 +44,8 @@ export default class Profile extends React.Component {
 			<div>
 				{this.context.accessToken}
 				<h1>This is the profile Page</h1>
-				<h1>Hello there {this.context.username}</h1>
+				<h1>Hello there {this.context.userData.name}</h1>
+				
 			</div>
 		);
 	}
