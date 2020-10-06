@@ -1,10 +1,11 @@
 import React from 'react';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 export const GlobalContext = React.createContext();
 
-export default class GlobalState extends React.Component {
+
+class GlobalState extends React.Component {
 	constructor(props){
 		super(props);
     this.state = {
@@ -40,7 +41,7 @@ export default class GlobalState extends React.Component {
 					isLoading: false,
 					accessToken: null
 				})
-				return <Redirect to='/authorize' />
+				this.props.history.push('/home');
 			})
 	}
 
@@ -140,3 +141,6 @@ export default class GlobalState extends React.Component {
     	);
 	}
 }
+
+const GlobalStateWithRouter = withRouter(GlobalState);
+export default GlobalStateWithRouter

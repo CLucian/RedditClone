@@ -13,6 +13,7 @@ export default class Authorize extends React.Component {
 
     // will get the code for the bearer token
     let code = paramSearch.get("code");
+    console.log("THIS IS THE CODE", code);
 
     axios
       .post("/login", {

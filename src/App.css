@@ -9,6 +9,7 @@ li, ul {
 
 .App {
   text-align: center;
+  background-color: #222;
 }
 
 
@@ -61,4 +62,73 @@ a {
   height: 100%;
   padding-bottom: 1rem;
   font-size: 1.5rem;
+}
+
+.modal-container {
+  display: flex;
+  justify-content: center;
+  padding-top: 5rem;
+}
+
+
+.modal {
+  width: 30%;
+  height: 20vh;
+  border: 1px solid black;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.main-container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  margin: 2rem;
+}
+
+.post-container {
+  width: 80%;
+  border: 0.1rem solid black;
+  border-radius: 0.3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #222;
+}
+
+.post-thumbnail-container {
+  width: auto;
+  height: 15rem;
+  border: 0.1rem solid #999;
+  border-radius: 0.2rem;
+  display: flex;
+  align-items: center;
+  margin: 3rem;
+
+}
+
+.post-title {
+  color: #f2b01e;
+}
+
+.post-thumbnail {
+  max-height: 20rem;
+  max-width: 14rem;
+}
+
+.main-text-container {
+  /* padding-left: 7rem; */
+  padding: 1rem 3rem 1rem 7rem;
+  width: 100%;
+  /* border: 1px solid black; */
+}
+
+.post-description {
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.post-author {
+  color: #999;
 }

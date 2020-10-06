@@ -3,14 +3,17 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 import GlobalState from './components/GlobalState';
 
 ReactDOM.render(
   <React.StrictMode>
-    <GlobalState>
-      <App />
-    </GlobalState>
+    <Router>
+      <GlobalState>
+        <App />
+      </GlobalState>
+    </Router>
   </React.StrictMode>,
   document.getElementById("root")
 );
