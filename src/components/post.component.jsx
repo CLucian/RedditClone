@@ -1,6 +1,9 @@
 import React from 'react';
 import { GlobalContext } from './GlobalState';
 
+
+import Modal from './Modal';
+import PostModal from './PostModal';
 import Comments from './Comments';
 import { render } from '@testing-library/react';
 
@@ -22,8 +25,13 @@ class Post extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
-
+			moreInfo: false,
+			showModal: false
 		}
+	}
+
+	openMoreInfo = () => {
+
 	}
 
 
@@ -44,11 +52,24 @@ class Post extends React.Component {
   };
 
 
+  openModal = () => {
+		this.setState({
+			showModal: true,
+		})
+	}
+
+	closeModal = () => {
+		this.setState({
+			showModal: false,
+		})
+	}
+
+
 render() {
 
 		return (
 			<div className="main-container">
-				<div className="post-container">
+				<div className="post-container" onClick={this.openModal}>
 					<div className="post-thumbnail-container">
 						<img className="post-thumbnail" src={this.defaultThumbnail()} />
 					</div>
@@ -64,10 +85,12 @@ render() {
 						<div className="post-author">
 							<p>{this.props.postData.data.author}</p>
 						</div>
-						<div className="post-comments">
-							<Comments subreddit={this.props.postData.data.subreddit_name_prefixed} accessToken={this.props.accessToken} postCommentsId={this.props.postData.data.id} />
-						</div>
 					</div>
+				</div>
+				<div> 
+					<Modal closeModal={this.closeModal} isVisible={this.state.showModal} >
+						<PostModal closeModal={this.closeModal} postData={this.props.postData.data} accessToken={this.props.accessToken} />
+					</Modal>
 				</div>
 			</div>
 		);

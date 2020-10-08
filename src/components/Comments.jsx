@@ -26,11 +26,11 @@ class Comments extends React.Component{
 				})
 					.then((response) => {
 					console.log("this is the response for the feed", response);
-					console.log('Comments', response.data[1].data.children[1].data.body)
+					console.log('Comments', response.data[1].data.children)
 					// console.log('this is the response for the feed', typeof(response.data.data.children))
 					this.setState({
 						// firstComment: response[1].data.children.data.replies.data.children[0].body
-						firstComment: response.data[1].data.children[1].data.body,
+						firstComment: response.data[1].data.children[0].data.body,
 					});
 					})
 					.catch((err) => {

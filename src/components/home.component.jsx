@@ -2,6 +2,8 @@ import React from 'react';
 import axios from 'axios';
 
 import Post from './post.component';
+import Modal from './Modal';
+
 import { GlobalContext } from './GlobalState';
 
 
@@ -18,7 +20,8 @@ export default class Home extends React.Component {
 		super(props);
 		this.state = {
 			feedData: null,
-			isLoading: true
+			isLoading: true,
+			showModal: false
 		}
 	}
 
@@ -58,6 +61,8 @@ export default class Home extends React.Component {
    		}
 
 	}
+
+
 	
 	render() {
 		console.log('home context', this.context.accessToken)
@@ -73,9 +78,9 @@ export default class Home extends React.Component {
 		return (
       <div>
         { !this.context.accessToken ?
-          <div className="modal-container">
-            <div className="modal">
-              <p className="modal-header">
+          <div className="error-modal-container">
+            <div className="error-modal">
+              <p className="error-modal-header">
                 There seems to be an error with your credentials, please login
                 again
               </p>
@@ -87,7 +92,6 @@ export default class Home extends React.Component {
         {this.state.feedData.map((postData) => {
           return <Post postData={postData} accessToken={this.context.accessToken} />;
         })}
-        {/* <Post /> */}
       </div>
     );
 	}
