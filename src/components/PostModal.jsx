@@ -8,6 +8,7 @@ class PostModal extends React.Component {
 	}
 
 
+	/// Incorporate an image thumbnail --> also links if clicked
 
 	
 	render() {
@@ -30,13 +31,11 @@ class PostModal extends React.Component {
 					{this.props.postData.selftext}
 				</div>
 				
-				<div className="post-comments">
-					<Comments 
-						subreddit={this.props.postData.subreddit_name_prefixed} 
-						accessToken={this.props.accessToken} 
-						postCommentsId={this.props.postData.id} 
-					/>
-				</div>
+				<Comments 
+					subreddit={this.props.postData.subreddit_name_prefixed} 
+					accessToken={this.props.accessToken} 
+					postCommentsId={this.props.postData.id} 
+				/>
 				<button onClick={this.props.closeModal}>
 					Close
 				</button>

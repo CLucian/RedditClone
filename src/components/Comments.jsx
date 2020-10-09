@@ -5,7 +5,8 @@ class Comments extends React.Component{
 	constructor(props) {
 		super(props)
 		this.state = {
-			firstComment: 'blah blah'
+			comments: 'loading...',
+			isLoading: true
 		}
 	}
 
@@ -29,8 +30,9 @@ class Comments extends React.Component{
 					console.log('Comments', response.data[1].data.children)
 					// console.log('this is the response for the feed', typeof(response.data.data.children))
 					this.setState({
-						// firstComment: response[1].data.children.data.replies.data.children[0].body
-						firstComment: response.data[1].data.children[0].data.body,
+						// firstComment: response.data[1].data.children[0].data.body,
+						comments: response.data[1].data.children,
+						isLoading: false
 					});
 					})
 					.catch((err) => {
@@ -42,10 +44,49 @@ class Comments extends React.Component{
 		 getComments();
 	}
 
+
+	getCommentsChildren = () => {
+
+	}
+
+
 	render() {
+		console.log('comments state: ', this.state.comments)
+		if (this.state.isLoading) {
+			return null
+		}
+
 		return(
-			<div>
-				{this.state.firstComment}
+			<div className="post-comments-container">
+				{
+					this.state.comments.map(comment => (
+						<div className="comment-container">
+							<div className="comment-author">
+								{ comment.data.author }
+							</div>
+							<div className="comment-box">
+								{ comment.data.body }
+							</div>
+							<div>
+								{ 
+									comment.data.replies.data ? 
+										comment.data.replies.data.children.map(childComment => {
+											return (<div className="children-comments">
+												<div className="children-author">
+													{childComment.data.author}
+												</div>
+												<div>
+													{childComment.data.body}
+												</div>
+											</div>
+											)
+										})
+									: null
+								}
+							</div>
+						</div>
+					))
+				}
 			</div>
 		)
 	}

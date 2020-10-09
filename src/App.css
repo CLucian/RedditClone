@@ -206,3 +206,33 @@ a {
   font-size: 1.5rem;
   padding-bottom: 0.25rem;
 }
+
+.post-comments-container {
+  margin-top: 5rem;
+  border: 0.1rem solid black;
+  height: 90%;
+}
+
+.comment-container {
+  margin: 1rem;
+  border: 0.1rem solid black;
+  /* display: flex;
+  justify-content: space-between; */
+}
+
+.comment-box {
+
+}
+
+.comment-author {
+  /* margin-left: 2rem; */
+  color: white;
+}
+
+.children-comments {
+  padding-left: 8rem;
+}
+
+.children-author {
+  color: white;
+}
