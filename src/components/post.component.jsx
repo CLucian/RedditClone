@@ -1,11 +1,13 @@
 import React from 'react';
+import marked from 'marked';
 import { GlobalContext } from './GlobalState';
+
 
 
 import Modal from './Modal';
 import PostModal from './PostModal';
 import Comments from './Comments';
-import { render } from '@testing-library/react';
+// import { render } from '@testing-library/react';
 
 
 
@@ -20,6 +22,7 @@ import { render } from '@testing-library/react';
 // 	}
 
 // }
+
 
 class Post extends React.Component {
 	constructor(props){
@@ -89,7 +92,7 @@ render() {
 				</div>
 				<div> 
 					<Modal closeModal={this.closeModal} isVisible={this.state.showModal} >
-						<PostModal closeModal={this.closeModal} postData={this.props.postData.data} accessToken={this.props.accessToken} />
+						<PostModal closeModal={this.closeModal} thumbnail={this.defaultThumbnail} postData={this.props.postData.data} accessToken={this.props.accessToken} />
 					</Modal>
 				</div>
 			</div>

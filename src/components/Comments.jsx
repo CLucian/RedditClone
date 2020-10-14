@@ -1,6 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 
+
+import Comment from './Comment';
+
 class Comments extends React.Component{
 	constructor(props) {
 		super(props)
@@ -9,6 +12,7 @@ class Comments extends React.Component{
 			isLoading: true
 		}
 	}
+
 
 
 	componentDidMount() {
@@ -45,10 +49,6 @@ class Comments extends React.Component{
 	}
 
 
-	getCommentsChildren = () => {
-
-	}
-
 
 	render() {
 		console.log('comments state: ', this.state.comments)
@@ -57,8 +57,15 @@ class Comments extends React.Component{
 		}
 
 		return(
-			<div className="post-comments-container">
+			<div>
 				{
+					this.state.comments.map((comment) => {
+						return (
+							<Comment key={comment.id} comment={comment} />
+						)
+					})
+				}
+				{/* {
 					this.state.comments.map(comment => (
 						<div className="comment-container">
 							<div className="comment-author">
@@ -86,7 +93,7 @@ class Comments extends React.Component{
 							</div>
 						</div>
 					))
-				}
+				} */}
 			</div>
 		)
 	}

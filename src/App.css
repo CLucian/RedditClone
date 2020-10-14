@@ -174,16 +174,18 @@ a {
 .modal-post-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  /* align-items: center; */
   padding-bottom: 2rem;
 }
 
 .modal-post-title {
   font-size: 3rem;
   text-align: left;
+  padding: 2rem 2rem 2rem 0rem;
 }
 
 .post-details {
+  margin-top: 2rem;
   /* display: flex;
   justify-content: center;
   align-items: center; */
@@ -192,9 +194,10 @@ a {
 
 
 
-.modal-post-description {
-  font-size: 2rem;
-  text-align: left;
+.modal-description {
+  font-size: 1.5rem;
+  margin-bottom: 5rem;
+  /* text-align: left; */
 }
 
 .modal-post-author {
@@ -207,8 +210,21 @@ a {
   padding-bottom: 0.25rem;
 }
 
+.modal-thumbnail-container {
+  width: auto;
+  height: 15rem;
+  border: 0.1rem solid #999;
+  border-radius: 0.2rem;
+  display: flex;
+  align-items: center;
+  margin: 2rem;
+
+}
+
 .post-comments-container {
-  margin-top: 5rem;
+  margin-top: 1rem;
+  margin-left: 2.5rem;
+  padding: 1rem;
   border: 0.1rem solid black;
   height: 90%;
 }
@@ -220,7 +236,7 @@ a {
   justify-content: space-between; */
 }
 
-.comment-box {
+.comments {
 
 }
 
@@ -235,4 +251,9 @@ a {
 
 .children-author {
   color: white;
+}
+
+a {
+  color: yellow;
+  text-decoration: underline;
 }
