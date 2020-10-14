@@ -2,6 +2,8 @@ import React from 'react';
 import marked from "marked";
 import DOMPurify from "dompurify";
 
+import CommentReply from './CommentReply';
+
 
 
 const Comment = (props) => {
@@ -24,8 +26,9 @@ const Comment = (props) => {
 
 	return (
 		<div className="post-comments-container">
-		<div className="comment-author">{props.comment.data.author}</div>
-		<div className="comment" dangerouslySetInnerHTML={getMarkDown(props.comment.data.body)}></div>
+			<div className="comment-author">{props.comment.data.author}</div>
+			<div className="comment" dangerouslySetInnerHTML={getMarkDown(props.comment.data.body)}></div>
+			<CommentReply />
 			{nestedComments}
 		</div>
 	);

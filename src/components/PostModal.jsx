@@ -5,8 +5,10 @@ import DOMPurify from "dompurify";
 
 class PostModal extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = {};
+	super(props);
+	this.state = {
+		commentsLoaded: false
+	}
   }
 
   getMarkDown = () => {
@@ -18,6 +20,8 @@ class PostModal extends React.Component {
   };
 
   /// Incorporate an image thumbnail --> also links if clicked
+
+
 
   render() {
     return (
@@ -31,18 +35,26 @@ class PostModal extends React.Component {
         <div className="modal-post-header">
           <div className="modal-post-title">{this.props.postData.title}</div>
           <div className="modal-thumbnail-container">
-            <img className="post-thumbnail" src={this.props.thumbnail()} alt="thumbnail" />
+            <img
+              className="post-thumbnail"
+              src={this.props.thumbnail()}
+              alt="thumbnail"
+            />
           </div>
         </div>
-        <div className="modal-description" dangerouslySetInnerHTML={this.getMarkDown()}></div>
+        <div
+          className="modal-description"
+          dangerouslySetInnerHTML={this.getMarkDown()}
+        ></div>
         {/* <div className="modal-description">{this.props.postData.selftext}</div> */}
 
         <Comments
           subreddit={this.props.postData.subreddit_name_prefixed}
           accessToken={this.props.accessToken}
           postCommentsId={this.props.postData.id}
+          commentsLoaded={this.commentsLoaded}
         />
-        <button onClick={this.props.closeModal}>Close</button>
+		<button onClick={this.props.closeModal}>Close</button>
       </div>
     );
   }
