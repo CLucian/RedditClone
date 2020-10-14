@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 
 import Post from './post.component';
-import Modal from './Modal';
 
 import { GlobalContext } from './GlobalState';
 
@@ -90,7 +89,7 @@ export default class Home extends React.Component {
 		  : null
         }
         {this.state.feedData.map((postData) => {
-          return <Post postData={postData} accessToken={this.context.accessToken} />;
+          return <Post postData={postData} accessToken={this.context.accessToken} key={postData.data.id} />;
         })}
       </div>
     );

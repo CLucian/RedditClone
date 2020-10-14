@@ -1,8 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import marked from 'marked';
-import DOMPurify from 'dompurify';
-
 import { GlobalContext } from './GlobalState';
 
 
@@ -19,25 +16,14 @@ const getAuthorizationURL = () =>
 
 
 export default class Navbar extends React.Component {
-	constructor(props) {
-		super(props);
-	}
+	
 
-  getMarkDown = () => {
-    const rawMarkup = marked("# Marked in browser\n\nRendered by **marked**.", {sanitize: true});
-    const clean = DOMPurify.sanitize(rawMarkup)
-    return { __html: clean };
-  }
 
-	// clearStorage = () =>  {
-	// 	localStorage.clear();
-	// }
 
 	render() {
 		console.log('username=====', this.context.userData)
 		return (
       <React.Fragment>
-        <div dangerouslySetInnerHTML={this.getMarkDown()}></div>
         <div className="navbar">
           <ul className="navbar-links">
             <li className="list-item">

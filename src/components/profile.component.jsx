@@ -1,9 +1,4 @@
 import React from 'react';
-import axios from 'axios';
-import cors from 'cors';
-
-
-import qs from 'qs';
 
 
 // import GlobalState from './GlobalState';

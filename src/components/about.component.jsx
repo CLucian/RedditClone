@@ -4,9 +4,7 @@ import { GlobalContext } from './GlobalState';
 
 
 export default class About extends React.Component {
-	constructor(props) {
-		super(props);
-	}
+
 	render() {
 		console.log(
 			"global state",

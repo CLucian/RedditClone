@@ -61,39 +61,10 @@ class Comments extends React.Component{
 				{
 					this.state.comments.map((comment) => {
 						return (
-							<Comment key={comment.id} comment={comment} />
+							<Comment key={comment.data.id} comment={comment} />
 						)
 					})
 				}
-				{/* {
-					this.state.comments.map(comment => (
-						<div className="comment-container">
-							<div className="comment-author">
-								{ comment.data.author }
-							</div>
-							<div className="comment-box">
-								{ comment.data.body }
-							</div>
-							<div>
-								{ 
-									comment.data.replies.data ? 
-										comment.data.replies.data.children.map(childComment => {
-											return (<div className="children-comments">
-												<div className="children-author">
-													{childComment.data.author}
-												</div>
-												<div>
-													{childComment.data.body}
-												</div>
-											</div>
-											)
-										})
-									: null
-								}
-							</div>
-						</div>
-					))
-				} */}
 			</div>
 		)
 	}

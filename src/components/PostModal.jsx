@@ -31,7 +31,7 @@ class PostModal extends React.Component {
         <div className="modal-post-header">
           <div className="modal-post-title">{this.props.postData.title}</div>
           <div className="modal-thumbnail-container">
-            <img className="post-thumbnail" src={this.props.thumbnail()} />
+            <img className="post-thumbnail" src={this.props.thumbnail()} alt="thumbnail" />
           </div>
         </div>
         <div className="modal-description" dangerouslySetInnerHTML={this.getMarkDown()}></div>

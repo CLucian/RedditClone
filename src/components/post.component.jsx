@@ -1,12 +1,9 @@
 import React from 'react';
-import marked from 'marked';
-import { GlobalContext } from './GlobalState';
 
 
 
 import Modal from './Modal';
 import PostModal from './PostModal';
-import Comments from './Comments';
 // import { render } from '@testing-library/react';
 
 
@@ -74,7 +71,7 @@ render() {
 			<div className="main-container">
 				<div className="post-container" onClick={this.openModal}>
 					<div className="post-thumbnail-container">
-						<img className="post-thumbnail" src={this.defaultThumbnail()} />
+						<img className="post-thumbnail" src={this.defaultThumbnail()} alt="thumbnail" />
 					</div>
 					<div className="main-text-container">
 						<div className="post-title">
