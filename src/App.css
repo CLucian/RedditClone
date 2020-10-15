@@ -271,3 +271,8 @@ a {
   margin: 0.5 0.5 0.5;
   cursor: pointer;
 }
+
+.comment-input {
+  width: 50rem;
+  height: 20rem;
+}

@@ -28,7 +28,7 @@ const Comment = (props) => {
 		<div className="post-comments-container">
 			<div className="comment-author">{props.comment.data.author}</div>
 			<div className="comment" dangerouslySetInnerHTML={getMarkDown(props.comment.data.body)}></div>
-			<CommentReply />
+			<CommentReply commentId={props.comment.data.parent_id} />
 			{nestedComments}
 		</div>
 	);
