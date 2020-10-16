@@ -9,7 +9,6 @@ class CommentReplyInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-    //   textInput: "",
 	  value: "",
     };
   }
@@ -50,32 +49,37 @@ class CommentReplyInput extends React.Component {
 		alert(this.state.value)
 	}
 
-  handleChange = (e) => {
-    this.setState({
-      value: e.target.value,
-    });
-  };
+	handleChange = (e) => {
+		this.setState({
+			value: e.target.value,
+		});
+	};
 
-  handleSubmit = (e) => {
-	e.preventDefault();
-	this.setState({ value: this.state.value }, this.postComment);
-	
-    // this.postComment();
-  };
+	handleSubmit = (e) => {
+		e.preventDefault();
+		if (this.state.value.length > 0) {
+			this.setState({ value: this.state.value }, this.postComment)
+		} else {
+			alert('Please type something')
+		}
+	};
 
   render() {
     return (
       <div>
         {this.props.showTextBox ? (
-          <form onSubmit={this.handleSubmit}>
-            <input
-              className="comment-input"
-              type="text"
-              value={this.state.textInput}
-              onChange={this.handleChange}
-            />
-            <input type="submit" value="Submit" />
-            <p>{this.state.textInput}</p>
+          <form className="comment-form" onSubmit={this.handleSubmit}>
+            <textarea
+				placeholder="What's on your mind?"
+				type="textarea"
+				wrap="physical"
+				value={this.state.textInput}
+				onChange={this.handleChange}
+            ></textarea>
+            <div className="comment-buttons">
+				<button className="cancel-comment" onClick={this.props.closeReply} type="button">Cancel</button>
+            	<input className="comment-submit" type="submit" value="Submit" onClick={this.props.closeReply} />
+            </div>
             <p>{this.state.value}</p>
           </form>
         ) : null}

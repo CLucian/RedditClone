@@ -26,7 +26,9 @@ class CommentReply extends React.Component {
 					Reply
 				{/* <InputField showTextBox={this.state.showTextBox} /> */}
 				</div>
-				<CommentReplyInput showTextBox={this.state.showTextBox} commentId={this.props.commentId} />
+				<CommentReplyInput showTextBox={this.state.showTextBox}
+					commentId={this.props.commentId} 
+					closeReply={this.handleCommentPost} />
 			</div>
     	);
 	}
