@@ -17,7 +17,7 @@ class Comments extends React.Component{
 
 	componentDidMount() {
 		
-			const getComments = () => {
+		const getComments = () => {
 			if (this.props.accessToken) {
 				// console.log('===============SUBREDDIT========', this.props.subreddit)
 				// console.log('Comments accessToken', this.props.accessToken)
@@ -61,7 +61,7 @@ class Comments extends React.Component{
 				{
 					this.state.comments.map((comment) => {
 						return (
-							<Comment key={comment.data.id} comment={comment} />
+							<Comment key={comment.data.id} comment={comment} commentId={comment.data.parent_id} />
 						)
 					})
 				}

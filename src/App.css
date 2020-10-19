@@ -349,3 +349,7 @@ textarea {
   display: flex;
   justify-content: flex-end;
 }
+
+.moreComments {
+  border: 0.1rem solid black;
+}

@@ -14,7 +14,7 @@ class CommentReplyInput extends React.Component {
   }
 
   postComment = () => {
-		const data = {
+	const data = {
 			api_type: "json",
 			thing_id: this.props.commentId,
 			text: this.state.value,
@@ -30,17 +30,19 @@ class CommentReplyInput extends React.Component {
 		data: qs.stringify(data)
 	})
 		.then((response) => {
-		alert("Your comment has gone through, " + response);
-		console.log('this.state.value', this.state.value)
-		console.log("This is the commentId", this.props.commentId);
-		console.log('this is the response', response)
+			alert("Your comment has gone through, " + response);
+			console.log('this.state.value', this.state.value)
+			console.log("This is the commentId", this.props.commentId);
+			console.log('this is the response', response)
+			this.props.closeReply();
 		})
 		.catch((err) => {
-		console.log(err);
-		alert("There was an error" + err);
-		console.log("accessToken" + this.context.accessToken);
-		console.log("textvalue", this.state.value);
-		console.log("thing_id", this.props.commentId);
+			console.log(err);
+			alert("There was an error" + err);
+			this.props.closeReply();
+			console.log("accessToken" + this.context.accessToken);
+			console.log("textvalue", this.state.value);
+			console.log("thing_id", this.props.commentId);
 		});
     }
 
@@ -76,10 +78,10 @@ class CommentReplyInput extends React.Component {
 				value={this.state.textInput}
 				onChange={this.handleChange}
             ></textarea>
-            <div className="comment-buttons">
-				<button className="cancel-comment" onClick={this.props.closeReply} type="button">Cancel</button>
-            	<input className="comment-submit" type="submit" value="Submit" onClick={this.props.closeReply} />
-            </div>
+				<div className="comment-buttons">
+					<button className="cancel-comment" onClick={this.props.closeReply} type="button">Cancel</button>
+					<button className="comment-submit" type="submit">Submit</button>
+				</div>
             <p>{this.state.value}</p>
           </form>
         ) : null}

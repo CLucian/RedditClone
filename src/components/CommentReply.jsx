@@ -1,5 +1,7 @@
 import React from 'react';
 import CommentReplyInput from './CommentReplyInput';
+
+
 // import InputField from './InputField';
 
 class CommentReply extends React.Component {
@@ -19,7 +21,6 @@ class CommentReply extends React.Component {
 
 
 	render() {
-		console.log('what is this comments id', this.props.commentId)
 		return (
 			<div>
 				<div className="comment-reply" onClick={this.handleCommentPost}>
