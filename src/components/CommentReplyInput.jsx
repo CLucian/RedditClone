@@ -34,6 +34,7 @@ class CommentReplyInput extends React.Component {
 			console.log('this.state.value', this.state.value)
 			console.log("This is the commentId", this.props.commentId);
 			console.log('this is the response', response)
+			this.context.getAndDisplayComment(this.state.value);
 			this.props.closeReply();
 		})
 		.catch((err) => {

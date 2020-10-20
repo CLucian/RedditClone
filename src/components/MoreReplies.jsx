@@ -24,7 +24,7 @@ class MoreReplies extends React.Component{
 
 
 	render() {
-		console.log("this is the commentData", this.props.moreRepliesArray);
+		// console.log("this is the commentData", this.props.moreRepliesArray);
 		return (
       <div>
         {this.props.moreRepliesArray.length > 0 ? (

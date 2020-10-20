@@ -46,7 +46,16 @@ class GlobalState extends React.Component {
 	}
 
 
-	
+
+	getAndDisplayComment = (id, reply) => {
+		const yourReply = {
+			id,
+			reply
+		}
+		return yourReply
+	}
+
+
 	getUserData = (accessToken) => {
 		// requestUserName = () => {
 			return axios
@@ -128,17 +137,18 @@ class GlobalState extends React.Component {
 		console.log("this is the new global state", localStorage.getItem('access_token'));
 		console.log('this is the new global state', this.state.accessToken)
 		return (
-			<GlobalContext.Provider
-			value={{
-				...this.state,
-				setAuthState: this.setAuthState,
-				setLoginStatusOut: this.setLoginStatusOut,
-				setProfileState: this.setProfileState,
-			}}
-			>
-				{this.props.children}
-			</GlobalContext.Provider>
-    	);
+      <GlobalContext.Provider
+        value={{
+          ...this.state,
+          setAuthState: this.setAuthState,
+          setLoginStatusOut: this.setLoginStatusOut,
+          setProfileState: this.setProfileState,
+          getAndDisplayComment: this.getAndDisplayComment
+        }}
+      >
+        {this.props.children}
+      </GlobalContext.Provider>
+    );
 	}
 }
 

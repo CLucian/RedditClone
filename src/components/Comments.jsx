@@ -3,6 +3,41 @@ import axios from 'axios';
 
 
 import Comment from './Comment';
+import {flattenCommentTree} from '../utils/comments';
+
+/* 
+
+	commentMap: {
+		65555: {
+			...comment,
+			// REMOVE `.replies`
+			children: [g9c4lr4, id, id]
+		},
+		65: { 
+			id: g9c4lr4,
+			...comment,
+			children: [id]
+		},
+
+	},
+
+
+
+	{topLevelComments.map(id => {
+		return <Comment 
+			commentMap={commentMap}
+			id={id}
+		/>
+	})} 
+*/
+
+// recursionFnc = () => {
+// 	commentMap = this.state.comments.forEach(commentObj => {
+// 		{ id: commentObj.data}
+// 	})
+// 	return recursionFnc
+// }
+
 
 class Comments extends React.Component{
 	constructor(props) {
@@ -12,6 +47,9 @@ class Comments extends React.Component{
 			isLoading: true
 		}
 	}
+
+
+
 
 
 
@@ -32,6 +70,8 @@ class Comments extends React.Component{
 					.then((response) => {
 					console.log("this is the response for the feed", response);
 					console.log('Comments', response.data[1].data.children)
+					flattenCommentTree(response.data[1].data.children);
+					console.log('Recursion Function', flattenCommentTree(response.data[1].data.children))
 					// console.log('this is the response for the feed', typeof(response.data.data.children))
 					this.setState({
 						// firstComment: response.data[1].data.children[0].data.body,
@@ -52,6 +92,7 @@ class Comments extends React.Component{
 
 	render() {
 		console.log('comments state: ', this.state.comments)
+		// console.log('This is the comment Map', commentMap);
 		if (this.state.isLoading) {
 			return null
 		}
@@ -61,7 +102,10 @@ class Comments extends React.Component{
 				{
 					this.state.comments.map((comment) => {
 						return (
+							<div>
 							<Comment key={comment.data.id} comment={comment} commentId={comment.data.parent_id} />
+							{/* <Recursion commentData={this.state.comments} /> */}
+							</div>
 						)
 					})
 				}

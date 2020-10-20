@@ -4,9 +4,11 @@ import DOMPurify from "dompurify";
 
 import CommentReply from './CommentReply';
 import MoreReplies from './MoreReplies';
+import { GlobalContext } from './GlobalState';
 
 
 const Comment = (props) => {
+	const replyContext = React.useContext(GlobalContext);
 
 	const lastChildObj =
 		(props.comment.data.replies &&
@@ -14,11 +16,32 @@ const Comment = (props) => {
 		props.comment.data.replies.data.children.slice(-1)[0].data.children || []).map(childCommentId => {
 			return childCommentId
 		});
-		console.log("lastChildObj", lastChildObj);
 
-	const nestedComments = (props.comment.data.replies && props.comment.data.replies.data.children || []).map(comment => {
+	
+	const nestedCommentsFunction = () => {
+		if (replyContext.getAndDisplayComment.id && replyContext.getAndDisplayComment.id) {
+			const nestedComments = (props.comment.data.replies && props.comment.data.replies.data.children || []).map(comment => {
+				return <Comment key={comment.data.id} comment={comment} commentText={comment.data.body} type="child" />
+			})
+		}
+	}	
+
+
+	/* const nestedComments = (props.comment.data.replies && props.comment.data.replies.data.children || []).map(comment => {
 		return <Comment key={comment.data.id} comment={comment} commentText={comment.data.body} type="child" />
-	})
+	}) */
+	const nestedComments = props.comment.data?.replies?.data?.children?.map(
+    (comment) => {
+      return (
+        <Comment
+          key={comment.data.id}
+          comment={comment}
+          commentText={comment.data.body}
+          type="child"
+        />
+      );
+    }
+  );
 
 
 
@@ -51,3 +74,5 @@ const Comment = (props) => {
 }
 
 export default Comment;
+
+Comment.contextType = GlobalContext;
