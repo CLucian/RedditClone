@@ -34,16 +34,16 @@ class CommentReplyInput extends React.Component {
 			console.log('this.state.value', this.state.value)
 			console.log("This is the commentId", this.props.commentId);
 			console.log('this is the response', response)
-			this.context.getAndDisplayComment(this.state.value);
+			this.context.getAndDisplayComment(this.props.commentId, this.state.value);
 			this.props.closeReply();
 		})
 		.catch((err) => {
 			console.log(err);
 			alert("There was an error" + err);
 			this.props.closeReply();
-			console.log("accessToken" + this.context.accessToken);
-			console.log("textvalue", this.state.value);
-			console.log("thing_id", this.props.commentId);
+			// console.log("accessToken" + this.context.accessToken);
+			// console.log("textvalue", this.state.value);
+			// console.log("thing_id", this.props.commentId);
 		});
     }
 
