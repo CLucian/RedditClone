@@ -42,7 +42,8 @@ class Comments extends React.Component {
     super(props);
     this.state = {
       comments: "loading...",
-      isLoading: true,
+	  isLoading: true,
+	  parentCommentsArr: ''
     };
   }
 
@@ -60,22 +61,21 @@ class Comments extends React.Component {
           },
         })
           .then((response) => {
-            // console.log("this is the response for the feed", response);
-            // console.log("Comments", response.data[1].data.children);
-            // flattenCommentTree(response.data[1].data.children);
-            // console.log(
-            //   "Recursion Function",
-            //   flattenCommentTree(response.data[1].data.children)
-			// );
+            const responseData = response.data[1].data.children;
+			const parentCommentIdsArr = [];
+      			responseData.forEach((parentComment) => {
+        		parentCommentIdsArr.push(parentComment.data.id);
+      		});
+
 			console.clear()
-			const data = response.data[1].data.children;
-			const commentMap = flattenCommentTree(response.data[1].data.children);
+			const data = responseData;
+			console.log('direct data', data)
+			const commentMap = flattenCommentTree(responseData);
 			console.log('DATA AND COMMENT MAP', data, commentMap);
 
-            // console.log('this is the response for the feed', typeof(response.data.data.children))
             this.setState({
-              // firstComment: response.data[1].data.children[0].data.body,
-              comments: response.data[1].data.children,
+			  comments: commentMap,
+			  parentCommentsArr: parentCommentIdsArr,
               isLoading: false,
             });
           })
@@ -89,7 +89,8 @@ class Comments extends React.Component {
   }
 
   render() {
-    console.log("comments state: ", this.state.comments);
+	console.log("comments", this.state.comments);
+	console.log("comments", this.state.parentCommentsArr);
     // console.log('This is the comment Map', commentMap);
     if (this.state.isLoading) {
       return null;
@@ -97,21 +98,32 @@ class Comments extends React.Component {
 
     return (
       <div>
-        {this.state.comments.map((comment) => {
-          return (
-            <div>
-              <Comment
-                key={comment.data.id}
-                comment={comment}
-                commentId={comment.data.parent_id}
-              />
-              {/* <Recursion commentData={this.state.comments} /> */}
-            </div>
-          );
-        })}
+		  {
+			  this.state.parentCommentsArr.map((parentId) => {
+				return <Comment currentData={this.state.comments[parentId]} commentData={this.state.comments} commentId={parentId} />
+				// this.state.comments[parentId].body
+			  })
+		  }
+		  {/* <Comment commentData={this.state.comments} commentsArr={this.state.parentCommentsArr} /> */}
       </div>
     );
   }
 }
 
 export default Comments;
+
+
+//  {
+//    this.state.comments.map((comment) => {
+//      return (
+//        <div>
+//          <Comment
+//            key={comment.data.id}
+//            comment={comment}
+//            commentId={comment.data.parent_id}
+//          />
+//          {/* <Recursion commentData={this.state.comments} /> */}
+//        </div>
+//      );
+//    });
+//  }
