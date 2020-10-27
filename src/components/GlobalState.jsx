@@ -57,7 +57,6 @@ class GlobalState extends React.Component {
 
 
 	getUserData = (accessToken) => {
-		// requestUserName = () => {
 			return axios
 					.request({
 						url: "https://oauth.reddit.com/api/v1/me",  
@@ -70,13 +69,8 @@ class GlobalState extends React.Component {
 
 			.then((response) => {
 				console.log("=====PROFILE DATA=====", response, response.data.name);
-				// console.log("=====PROFILE DATA=====", );
-				// username = response.data.name;
 				return response.data
 			})
-			// .catch((err) => {
-			// 	console.log(err);
-			// });
 		
 
 	}
@@ -114,12 +108,6 @@ class GlobalState extends React.Component {
 		}
 	}
 
-	// setProfileState = (profileState) => {
-	// 	localStorage.setItem("username", profileState.username);
-	// 		this.setState({
-	// 			username: profileState.username,
-	// 		});
-	// }
 
 	setLoginStatusOut = () => {
 		if (localStorage.getItem('access_token')) {

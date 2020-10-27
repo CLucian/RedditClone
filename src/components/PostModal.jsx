@@ -3,6 +3,7 @@ import Comments from './Comments';
 import marked from "marked";
 import DOMPurify from "dompurify";
 
+
 class PostModal extends React.Component {
   constructor(props) {
 	super(props);
