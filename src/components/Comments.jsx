@@ -24,33 +24,51 @@ class Comments extends React.Component {
         }
     }
 
-    getCommentReply = (commentData, commentReply, commentId) => {
-        this.setState(
-            {
-                replyId: Math.random(),
-                commentReplyStr: commentReply,
-                comments: commentData,
-                parentId: commentId,
+    // getCommentReply = (commentData, commentReply, commentId) => {
+    //     this.setState(
+    //         {
+    //             replyId: Math.random(),
+    //             commentReplyStr: commentReply,
+    //             comments: commentData,
+    //             parentId: commentId,
+    //         },
+    //         this.setCommentReplyData
+    //     )
+    // }
+
+    getCommentReply = (obj) => {
+        this.setState({
+            comments: {
+                ...this.state.comments,
+                [obj.id]: obj,
             },
-            this.setCommentReplyData
-        )
+        })
+        /* const dataObj = {}
+        const id = obj.id
+        dataObj[id] = obj
+        const newObj = Object.assign({}, this.state.comments, dataObj)
+        console.log('=======getCommentReply newObj=========', newObj)
+
+        this.setState({
+            comments: newObj,
+        }) */
     }
 
-    setCommentReplyData = () => {
-        const newDataTree = this.state.comments
-        this.state.comments[this.state.parentId].childIds.push(
-            this.state.replyId
-        )
-        const replyData = {
-            body: this.state.commentReplyStr,
-            author: this.context.userData.name,
-            id: this.state.replyId,
-        }
-        newDataTree[this.state.replyId] = replyData
-        this.setState({
-            comments: newDataTree,
-        })
-    }
+    // setCommentReplyData = () => {
+    //     const newDataTree = this.state.comments
+    //     this.state.comments[this.state.parentId].childIds.push(
+    //         this.state.replyId
+    //     )
+    //     const replyData = {
+    //         body: this.state.commentReplyStr,
+    //         author: this.context.userData.name,
+    //         id: this.state.replyId,
+    //     }
+    //     newDataTree[this.state.replyId] = replyData
+    //     this.setState({
+    //         comments: newDataTree,
+    //     })
+    // }
 
     // if(this.context.newDataTree) {
     // 	this.setState({
@@ -76,7 +94,7 @@ class Comments extends React.Component {
                             parentCommentIdsArr.push(parentComment.data.id)
                         })
 
-                        console.clear()
+                        // console.clear()
                         const data = responseData
                         console.log('direct data', data)
                         const commentMap = flattenCommentTree(responseData)
@@ -100,8 +118,8 @@ class Comments extends React.Component {
     render() {
         // console.log("comments", this.state.comments);
 
-        // console.log("comments", this.state.parentCommentsArr);
-        // console.log('This is the comment Map', commentMap);
+        console.log('comments', this.state.parentCommentsArr)
+        // console.log('This is the comment Map', commentMap)
         if (this.state.isLoading) {
             return null
         }
@@ -119,9 +137,10 @@ class Comments extends React.Component {
                 {this.state.parentCommentsArr.map((parentId) => {
                     return (
                         <Comment
-                            currentData={this.state.comments[parentId]}
+                            // currentData={this.state.comments[parentId]}
                             commentData={this.state.comments}
                             commentId={parentId}
+                            // parent_Id={this.state.comments[parentId].parent_id}
                             getCommentReply={this.getCommentReply}
                         />
                     )

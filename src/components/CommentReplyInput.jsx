@@ -10,13 +10,14 @@ class CommentReplyInput extends React.Component {
         super(props)
         this.state = {
             value: '',
+            responseObject: null,
         }
     }
 
     postComment = () => {
         const data = {
             api_type: 'json',
-            thing_id: this.props.parent_Id,
+            thing_id: this.props.commentData[this.props.commentId].name,
             text: this.state.value,
         }
         Axios({
@@ -33,14 +34,25 @@ class CommentReplyInput extends React.Component {
                 alert('Your comment has gone through, ' + response)
                 console.log('this.state.value', this.state.value)
                 console.log('this is the response', response)
-                this.context.getAndDisplayComment(
-                    this.props.parent_Id,
-                    this.state.value
-                )
+                console.log('response data', response.data)
+                if (response.data.json.errors[0] !== undefined) {
+                    response.data.json.errors[0].map((err) => {
+                        return alert(err)
+                    })
+                } else {
+                    this.props.getCommentReply(
+                        response.data.json.data.things[0].data
+                    )
+                    this.context.getAndDisplayComment(
+                        this.props.parent_Id,
+                        this.state.value
+                    )
+                }
                 this.props.closeReply()
             })
             .catch((err) => {
                 console.log(err)
+                console.log('what is the error', err.data)
                 alert('There was an error' + err)
                 this.props.closeReply()
                 // console.log("accessToken" + this.context.accessToken);
@@ -73,11 +85,6 @@ class CommentReplyInput extends React.Component {
             )
             this.setState({ value: this.state.value }, () => {
                 this.postComment()
-                this.props.getCommentReply(
-                    this.props.commentData,
-                    this.state.value,
-                    this.props.commentId
-                )
             })
         } else {
             alert('Please type something')
@@ -98,6 +105,17 @@ class CommentReplyInput extends React.Component {
             <div>
                 {this.props.showTextBox ? (
                     <form className="comment-form" onSubmit={this.handleSubmit}>
+                        <div>{this.props.commentId}</div>
+                        <div>
+                            {this.props.commentData[this.props.commentId].body}
+                        </div>
+                        <div>
+                            parent_id :
+                            {
+                                this.props.commentData[this.props.commentId]
+                                    .parent_id
+                            }
+                        </div>
                         <textarea
                             placeholder="What's on your mind?"
                             type="textarea"

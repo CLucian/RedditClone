@@ -15,7 +15,7 @@ const Comment = (props) => {
                     commentData={props.commentData}
                     commentId={commentId}
                     getCommentReply={props.getCommentReply}
-                    parent_Id={props.commentData[props.commentId].parent_id}
+                    // parent_Id={props.commentData[commentId].parent_id}
                 />
             )
         }
@@ -47,7 +47,7 @@ const Comment = (props) => {
             <CommentReply
                 getCommentReply={props.getCommentReply}
                 commentId={props.commentId}
-                parent_Id={props.commentData[props.commentId].parent_id}
+                // parent_Id={props.parent_Id}
                 commentData={props.commentData}
             />
             {nestedComments}
