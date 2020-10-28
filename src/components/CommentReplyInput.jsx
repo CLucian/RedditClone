@@ -41,7 +41,8 @@ class CommentReplyInput extends React.Component {
                     })
                 } else {
                     this.props.getCommentReply(
-                        response.data.json.data.things[0].data
+                        response.data.json.data.things[0].data,
+                        this.props.commentId
                     )
                     this.context.getAndDisplayComment(
                         this.props.parent_Id,

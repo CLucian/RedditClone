@@ -24,58 +24,20 @@ class Comments extends React.Component {
         }
     }
 
-    // getCommentReply = (commentData, commentReply, commentId) => {
-    //     this.setState(
-    //         {
-    //             replyId: Math.random(),
-    //             commentReplyStr: commentReply,
-    //             comments: commentData,
-    //             parentId: commentId,
-    //         },
-    //         this.setCommentReplyData
-    //     )
-    // }
+    getCommentReply = (newCommentData, parentId) => {
+        const id = newCommentData.id
+        this.state.comments[parentId].childIds = [
+            ...this.state.comments[parentId].childIds,
+            id,
+        ]
 
-    getCommentReply = (obj) => {
         this.setState({
             comments: {
                 ...this.state.comments,
-                [obj.id]: obj,
+                [newCommentData.id]: newCommentData,
             },
         })
-        /* const dataObj = {}
-        const id = obj.id
-        dataObj[id] = obj
-        const newObj = Object.assign({}, this.state.comments, dataObj)
-        console.log('=======getCommentReply newObj=========', newObj)
-
-        this.setState({
-            comments: newObj,
-        }) */
     }
-
-    // setCommentReplyData = () => {
-    //     const newDataTree = this.state.comments
-    //     this.state.comments[this.state.parentId].childIds.push(
-    //         this.state.replyId
-    //     )
-    //     const replyData = {
-    //         body: this.state.commentReplyStr,
-    //         author: this.context.userData.name,
-    //         id: this.state.replyId,
-    //     }
-    //     newDataTree[this.state.replyId] = replyData
-    //     this.setState({
-    //         comments: newDataTree,
-    //     })
-    // }
-
-    // if(this.context.newDataTree) {
-    // 	this.setState({
-    // 		comments: this.context.newDataTree,
-    // 		isLoading: false
-    // 	})
-    // }
 
     componentDidMount() {
         const getComments = () => {

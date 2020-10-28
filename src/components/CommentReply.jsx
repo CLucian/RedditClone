@@ -20,10 +20,10 @@ class CommentReply extends React.Component {
     render() {
         console.log('commentData in commentReply', this.props.commentData)
         console.log('commentId in commentReply', this.props.commentId)
-        console.log(
-            'parent commentId in commentReply',
-            this.props.commentData[this.props.commentId].parent_id
-        )
+        // console.log(
+        //     'parent commentId in commentReply',
+        //     this.props.commentData[this.props.commentId].parent_id
+        // )
         console.log(
             'body in commentReply',
             this.props.commentData[this.props.commentId].body
@@ -38,7 +38,7 @@ class CommentReply extends React.Component {
                     getCommentReply={this.props.getCommentReply}
                     showTextBox={this.state.showTextBox}
                     commentId={this.props.commentId}
-                    //   parent_Id={this.props.parent_Id}
+                    parent_Id={this.props.parent_Id}
                     closeReply={this.handleCommentPost}
                     commentData={this.props.commentData}
                 />
