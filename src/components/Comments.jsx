@@ -15,22 +15,21 @@ class Comments extends React.Component {
             isLoading: true,
             parentCommentsArr: '',
             replyComment: false,
-
-            replyId: null,
-            parentId: null,
-            commentDataObj: null,
-            commentReplyStr: null,
-            newCommentDataObj: null,
         }
     }
 
-    getCommentReply = (newCommentData, parentId) => {
+    getCommentReply = (newCommentData, commentId) => {
+        //search to see if the id is already logged in the commentMap
         const id = newCommentData.id
-        this.state.comments[parentId].childIds = [
-            ...this.state.comments[parentId].childIds,
-            id,
-        ]
-
+        // check to see if this id already exists from a previous comment made
+        if (!this.state.comments.id) {
+            // if it does not exist then add the id to the parent childIds array
+            this.state.comments[commentId].childIds = [
+                ...this.state.comments[commentId].childIds,
+                id,
+            ]
+        }
+        // add the new comment to the commentMap state OR if edit, replace old comment with new edited comment
         this.setState({
             comments: {
                 ...this.state.comments,
@@ -80,7 +79,7 @@ class Comments extends React.Component {
     render() {
         // console.log("comments", this.state.comments);
 
-        console.log('comments', this.state.parentCommentsArr)
+        // console.log('comments', this.state.parentCommentsArr)
         // console.log('This is the comment Map', commentMap)
         if (this.state.isLoading) {
             return null

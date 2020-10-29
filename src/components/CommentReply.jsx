@@ -1,5 +1,7 @@
 import React from 'react'
 import CommentReplyInput from './CommentReplyInput'
+import CommentEditInput from './CommentEditInput'
+import { GlobalContext } from './GlobalState'
 
 // import InputField from './InputField';
 
@@ -17,9 +19,28 @@ class CommentReply extends React.Component {
         })
     }
 
+    closeCommentPost = () => {
+        this.setState({
+            showTextBox: false,
+        })
+    }
+
+    closeEditPost = () => {
+        this.setState({
+            showEditBox: false,
+        })
+    }
+
+    toggleEdit = () => {
+        this.setState({
+            showEditBox: !this.state.showEditBox,
+        })
+    }
+
     render() {
-        console.log('commentData in commentReply', this.props.commentData)
-        console.log('commentId in commentReply', this.props.commentId)
+        // console.log('commentData in commentReply', this.props.commentData)
+        // console.log('commentId in commentReply', this.props.commentId)
+        // console.log('What is the currnet userData', this.context.userData)
         // console.log(
         //     'parent commentId in commentReply',
         //     this.props.commentData[this.props.commentId].parent_id
@@ -42,9 +63,18 @@ class CommentReply extends React.Component {
                     closeReply={this.handleCommentPost}
                     commentData={this.props.commentData}
                 />
+                <CommentEditInput
+                    commentData={this.props.commentData}
+                    commentId={this.props.commentId}
+                    accessToken={this.context.accessToken}
+                    user={this.context.userData.name}
+                    author={this.props.commentData[this.props.commentId].author}
+                />
             </div>
         )
     }
 }
 
 export default CommentReply
+
+CommentReply.contextType = GlobalContext

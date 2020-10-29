@@ -1,20 +1,17 @@
 import React from 'react'
-import PostComment from './PostComment'
-import Axios from 'axios'
 import qs from 'qs'
+import Axios from 'axios'
 
-import { GlobalContext } from './GlobalState'
-
-class CommentReplyInput extends React.Component {
+class CommentEditInput extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             value: '',
-            responseObject: null,
+            editBox: false,
         }
     }
 
-    postComment = () => {
+    editComment = () => {
         const data = {
             api_type: 'json',
             thing_id: this.props.commentData[this.props.commentId].name,
@@ -24,14 +21,17 @@ class CommentReplyInput extends React.Component {
             method: 'post',
             url: 'https://oauth.reddit.com/api/comment',
             headers: {
-                Authorization: 'bearer ' + this.context.accessToken,
+                Authorization: 'bearer ' + this.props.accessToken,
                 'content-type': 'application/x-www-form-urlencoded',
                 // "Content-Type": "application/x-www-form-urlencoded"
             },
             data: qs.stringify(data),
         })
             .then((response) => {
-                alert('Your comment has gone through, ' + response)
+                alert(
+                    '=========Your commentEdit has gone through=========, ' +
+                        response
+                )
                 // console.log('this.state.value', this.state.value)
                 // console.log('this is the response', response)
                 // console.log('response data', response.data)
@@ -44,18 +44,14 @@ class CommentReplyInput extends React.Component {
                         response.data.json.data.things[0].data,
                         this.props.commentId
                     )
-                    this.context.getAndDisplayComment(
-                        this.props.parent_Id,
-                        this.state.value
-                    )
                 }
-                this.props.closeReply()
+                this.props.closeEditPost()
             })
             .catch((err) => {
                 console.log(err)
                 console.log('what is the error', err.data)
                 alert('There was an error' + err)
-                this.props.closeReply()
+                this.props.closeEditPost()
                 // console.log("accessToken" + this.context.accessToken);
                 // console.log("textvalue", this.state.value);
                 // console.log("thing_id", this.props.commentId);
@@ -72,7 +68,6 @@ class CommentReplyInput extends React.Component {
         e.preventDefault()
 
         if (this.state.value.length > 0) {
-            // console.log(this.props.commentData, this.state.value, this.props.commentId)
             console.log(
                 'submitting',
                 this.props,
@@ -80,34 +75,39 @@ class CommentReplyInput extends React.Component {
                 this.props.commentId
             )
             this.setState({ value: this.state.value }, () => {
-                this.postComment()
+                this.editComment()
             })
         } else {
             alert('Please type something')
         }
+        this.toggleEdit()
+    }
+
+    toggleEdit = () => {
+        this.setState({
+            editBox: !this.state.editBox,
+        })
     }
 
     render() {
-        // console.log('input', this.props.getCommentReply)
-        console.log(
-            'this.props.commentData[commentId]',
-            this.props.commentData[this.props.commentId]
-        )
-        // console.log('this.props.commentData', this.props.commentData)
-        // console.log('this.props.commentId', this.props.commentId)
-        //   console.log('this.props.getCommentReply', this.props.getCommentReply);
-        //   console.log("this.context.accessToken - CommentReplyInput", this.context.accessToken);
-
         return (
             <div>
-                {this.props.showTextBox ? (
+                {this.props.author === this.props.user && (
+                    <button
+                        className="comment-submit"
+                        onClick={this.toggleEdit}
+                    >
+                        Edit
+                    </button>
+                )}
+                {this.state.editBox ? (
                     <form className="comment-form" onSubmit={this.handleSubmit}>
-                        <div>{this.props.commentId}</div>
-                        <div>
-                            {this.props.commentData[this.props.commentId].body}
-                        </div>
+                        {this.props.commentData[this.props.commentId].body}
                         <textarea
-                            placeholder="What's on your mind?"
+                            placeholder={
+                                this.props.commentData[this.props.commentId]
+                                    .body
+                            }
                             type="textarea"
                             wrap="physical"
                             value={this.state.textInput}
@@ -128,15 +128,9 @@ class CommentReplyInput extends React.Component {
                         <p>{this.state.value}</p>
                     </form>
                 ) : null}
-                {/* <PostComment
-          textValue={this.state.value}
-          commentId={this.props.commentId}
-        /> */}
             </div>
         )
     }
 }
 
-export default CommentReplyInput
-
-CommentReplyInput.contextType = GlobalContext
+export default CommentEditInput
