@@ -89,10 +89,10 @@ class CommentReplyInput extends React.Component {
 
     render() {
         // console.log('input', this.props.getCommentReply)
-        console.log(
-            'this.props.commentData[commentId]',
-            this.props.commentData[this.props.commentId]
-        )
+        // console.log(
+        //     'this.props.commentData[commentId]',
+        //     this.props.commentData[this.props.commentId]
+        // )
         // console.log('this.props.commentData', this.props.commentData)
         // console.log('this.props.commentId', this.props.commentId)
         //   console.log('this.props.getCommentReply', this.props.getCommentReply);

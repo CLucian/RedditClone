@@ -45,10 +45,10 @@ class CommentReply extends React.Component {
         //     'parent commentId in commentReply',
         //     this.props.commentData[this.props.commentId].parent_id
         // )
-        console.log(
-            'body in commentReply',
-            this.props.commentData[this.props.commentId].body
-        )
+        // console.log(
+        //     'body in commentReply',
+        //     this.props.commentData[this.props.commentId].body
+        // )
         return (
             <div>
                 <div className="comment-reply" onClick={this.handleCommentPost}>
