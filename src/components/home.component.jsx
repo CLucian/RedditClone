@@ -20,7 +20,37 @@ export default class Home extends React.Component {
             feedData: null,
             isLoading: true,
             showModal: false,
+            listOpen: false,
+            sortBy: 'best',
         }
+    }
+
+    getHomePage = () => {
+        return axios({
+            method: 'GET',
+            url: `https://oauth.reddit.com/${this.state.sortBy}`,
+            headers: {
+                Authorization: 'bearer ' + this.context.accessToken,
+            },
+        })
+            .then((response) => {
+                console.log('this is the raw response for the feed:', response)
+                console.log(
+                    'this is the response for the feed',
+                    response.data.data.children
+                )
+                console.log(
+                    'this is the response for the feed',
+                    typeof response.data.data.children
+                )
+                this.setState({
+                    feedData: response.data.data.children,
+                    isLoading: false,
+                })
+            })
+            .catch((err) => {
+                console.log('Home Component Error: ', err)
+            })
     }
 
     componentDidMount() {
@@ -41,35 +71,52 @@ export default class Home extends React.Component {
             // 			console.log('home component feed data', response.data)
             // 		})
 
-            return axios({
-                method: 'GET',
-                url: `https://oauth.reddit.com/`,
-                headers: {
-                    Authorization: 'bearer ' + this.context.accessToken,
-                },
-            })
-                .then((response) => {
-                    console.log(
-                        'this is the raw response for the feed:',
-                        response
-                    )
-                    console.log(
-                        'this is the response for the feed',
-                        response.data.data.children
-                    )
-                    console.log(
-                        'this is the response for the feed',
-                        typeof response.data.data.children
-                    )
-                    this.setState({
-                        feedData: response.data.data.children,
-                        isLoading: false,
-                    })
-                })
-                .catch((err) => {
-                    console.log('Home Component Error: ', err)
-                })
+            this.getHomePage()
+
+            // return axios({
+            //     method: 'GET',
+            //     url: `https://oauth.reddit.com/`,
+            //     headers: {
+            //         Authorization: 'bearer ' + this.context.accessToken,
+            //     },
+            // })
+            //     .then((response) => {
+            //         console.log(
+            //             'this is the raw response for the feed:',
+            //             response
+            //         )
+            //         console.log(
+            //             'this is the response for the feed',
+            //             response.data.data.children
+            //         )
+            //         console.log(
+            //             'this is the response for the feed',
+            //             typeof response.data.data.children
+            //         )
+            //         this.setState({
+            //             feedData: response.data.data.children,
+            //             isLoading: false,
+            //         })
+            //     })
+            //     .catch((err) => {
+            //         console.log('Home Component Error: ', err)
+            //     })
         }
+    }
+
+    toggleSortBy = () => {
+        this.setState({
+            listOpen: !this.state.listOpen,
+        })
+    }
+
+    selectSortBy = (e) => {
+        this.setState(
+            {
+                sortBy: e.target.value,
+            },
+            this.getHomePage
+        )
     }
 
     render() {
@@ -96,6 +143,37 @@ export default class Home extends React.Component {
                         </div>
                     </div>
                 ) : null}
+                <div className="dd-wrapper">
+                    <div className="dd-header">
+                        <div
+                            className="dd-header-title"
+                            onClick={this.toggleSortBy}
+                        >
+                            Sort By:
+                        </div>
+                    </div>
+                    <select
+                        id="selectBox"
+                        className="sort-by-dd"
+                        onChange={this.selectSortBy}
+                    >
+                        <option className="sort-by-item" value="best">
+                            Best
+                        </option>
+                        <option className="sort-by-item" value="hot">
+                            Hot
+                        </option>
+                        <option className="sort-by-item" value="new">
+                            New
+                        </option>
+                        <option className="sort-by-item" value="top">
+                            Top
+                        </option>
+                        <option className="sort-by-item" value="rising">
+                            Rising
+                        </option>
+                    </select>
+                </div>
                 {this.state.feedData.map((postData) => {
                     return (
                         <Post
