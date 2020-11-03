@@ -7,9 +7,9 @@ li, ul {
   padding-left: 0;
 } 
 
-.App {
-  text-align: center;
-  background-color: #222;
+.app {
+  /* text-align: center; */
+  background-color: #fcfcfc;
 }
 
 
@@ -19,12 +19,13 @@ li, ul {
 
 .navbar {
   font-size: 1rem;
-  background: lightblue;
+  background: #fff;
   width: 100%;
   /* display: fixed; */
   font-style: Arial;
   height: 10vh;
   text-decoration: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-links {
@@ -108,10 +109,6 @@ a {
 
 }
 
-.post-title {
-  color: #f2b01e;
-}
-
 .post-thumbnail {
   max-height: 20rem;
   max-width: 14rem;
@@ -119,18 +116,26 @@ a {
 
 .main-text-container {
   /* padding-left: 7rem; */
-  padding: 1rem 3rem 1rem 7rem;
+  /* padding: 1rem 3rem 1rem 7rem; */
   width: 100%;
+  padding: 3rem 2rem 2rem 2rem;
+  
   /* border: 1px solid black; */
 }
 
 .post-description {
   font-size: 1.5rem;
   color: #fff;
+  padding-bottom: 2rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
 }
 
 .post-author {
   color: #999;
+  display: flex;
+
 }
 
 
@@ -254,7 +259,7 @@ a {
 }
 
 a {
-  color: yellow;
+  color: black;
   text-decoration: underline;
 }
 
@@ -353,3 +358,177 @@ textarea {
 .moreComments {
   border: 0.1rem solid black;
 }
+
+
+
+
+
+/* Profile Component */
+.master-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+
+.profile-post-container {
+  position: relative;
+  display: inline-block;
+  background-color: #ffffff;
+  height: 30rem;
+  width: 50%;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  /* box-shadow: 0 1px 2px rgba(0,0,0,0.15); */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+
+  transition: all 0.3s ease-in-out;
+}
+
+.profile-post-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 5px;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  border-radius: 0.5rem;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  transition: opacity 0.3s ease-in-out;
+}
+
+.profile-post-container:hover {
+  transform: scale(1.05, 1.05);
+}
+
+.profile-post-container:hover::after {
+  opacity: 1;
+}
+
+.post-title {
+  /* margin: 1rem; */
+  /* padding-left: 2rem; */
+  /* padding-bottom: 3rem; */
+  padding-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 2.25rem;
+  padding-right: 4rem;
+}
+
+.post-title-text {
+  color: #4a4a4a;
+  padding-right: 2rem;
+}
+
+.post-main-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hr-container {
+  display: flex;
+  justify-content: center;
+  padding-right: 4rem;
+  opacity: 0.5;
+}
+
+.post-score {
+  padding: 0.5rem;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.score-text {
+  color: #5c75f3;
+}
+
+.post-hr {
+  color: #ececec;
+  display: block;
+  height: 0.1rem;
+  border: 0;
+  border-top: 0.1rem solid #ccc;
+  margin: 0;
+  /* padding-right: 4rem; */
+  width: 100%;
+}
+
+.post-description-text {
+  color: #b1b1b1;
+  font-size: 1.5rem;
+  padding-right: 4rem;
+  line-height: 2.5rem;
+  overflow: hidden;
+}
+
+.author-text {
+  color: #5c75f3;
+}
+
+
+.post-sub-info {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 2rem;
+  font-size: 1.2rem;
+}
+
+.post-comment-number {
+  display: flex;
+  justify-content: center;
+  color: #b5b5b5;
+  font-weight: bold;
+}
+
+.post-subreddit {
+  font-size: 1.2rem;
+  padding-top: 0.25rem;
+}
+
+.heart-svg {
+  fill: red;
+  width: 2rem;
+  height: 2rem;
+}
+
+.heart {
+  fill:#B22222  ;
+}
+
+.UpArrowSVG {
+  fill: #5c75f3;
+}
+
+.UpArrowSVG-container {
+  /* padding-bottom: 0.5rem; */
+  /* padding-bottom: 0.2rem; */
+}
+
+.DownArrowSVG-container {
+  /* padding-bottom: 1rem; */
+  /* padding-top: 0.2rem; */
+}
+
+.DownArrowSVG {
+  fill: #ff304f;
+}
+
+.bubbleSVG {
+  fill: #b5b5b5
+}
+
+.readMore {
+  color: black;
+}
+
+/* background color: #fcfcfc */
+/* individual post: #ffffff */
+/* author name blue: #5c75f3 */
+/* title color: #4e4e4e */
+/* post info: #b1b1b1 */
+/* header line color: #ececec */
