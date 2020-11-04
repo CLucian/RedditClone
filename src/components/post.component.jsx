@@ -19,6 +19,8 @@ class Post extends React.Component {
         this.state = {
             moreInfo: false,
             showModal: false,
+            UpArrowClicked: false,
+            DownArrowClicked: false,
         }
     }
 
@@ -62,6 +64,15 @@ class Post extends React.Component {
         }
     }
 
+    getLengthTitle = (description) => {
+        const maxLength = 150
+        if (description.length > maxLength) {
+            return description.substring(0, maxLength) + '...'
+        } else {
+            return description
+        }
+    }
+
     getMarkDown = (markDown) => {
         if (markDown) {
             const rawMarkup = marked(markDown)
@@ -77,6 +88,30 @@ class Post extends React.Component {
     getDate = (unixValue) => {
         const date = moment.unix(unixValue).format('MMM Do YYYY')
         return date
+    }
+
+    handleArrowClick = (vote) => {
+        if (vote === 'up' && this.state.UpArrowClicked) {
+            this.setState({
+                UpArrowClicked: false,
+                DownArrowClicked: false,
+            })
+        } else if (vote === 'down' && this.state.DownArrowClicked) {
+            this.setState({
+                UpArrowClicked: false,
+                DownArrowClicked: false,
+            })
+        } else if (vote === 'up') {
+            this.setState({
+                UpArrowClicked: true,
+                DownArrowClicked: false,
+            })
+        } else if (vote === 'down') {
+            this.setState({
+                UpArrowClicked: false,
+                DownArrowClicked: true,
+            })
+        }
     }
 
     render() {
@@ -96,20 +131,32 @@ class Post extends React.Component {
 
                     <div className="post-main-info">
                         <div className="post-score">
-                            <div className="UpArrowSVG-container">
-                                <UpArrowSVG />
+                            <div
+                                className="UpArrowSVG-container"
+                                onClick={() => this.handleArrowClick('up')}
+                            >
+                                <UpArrowSVG
+                                    arrowClicked={this.state.UpArrowClicked}
+                                />
                             </div>
                             <div className="score-text">
                                 {this.props.postData.data.score}
                             </div>
-                            <div className="DownArrowSVG-container">
-                                <DownArrowSVG />
+                            <div
+                                className="DownArrowSVG-container"
+                                onClick={() => this.handleArrowClick('down')}
+                            >
+                                <DownArrowSVG
+                                    arrowClicked={this.state.DownArrowClicked}
+                                />
                             </div>
                         </div>
                         <div className="main-text-container">
                             <div className="post-title">
                                 <div className="post-title-text">
-                                    {this.props.postData.data.title}
+                                    {this.getLengthTitle(
+                                        this.props.postData.data.title
+                                    )}
                                 </div>
                                 <div className="post-subreddit">
                                     {this.props.postData.data.subreddit}

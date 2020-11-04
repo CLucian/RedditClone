@@ -458,12 +458,22 @@ textarea {
   width: 100%;
 }
 
+.post-date {
+  color: #b8b8b8;
+}
+
 .post-description-text {
   color: #b1b1b1;
   font-size: 1.5rem;
   padding-right: 4rem;
   line-height: 2.5rem;
   overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  word-wrap: break-word;
+  line-height: 2rem;
+  max-height: 11rem;
+  /* -webkit-line-clamp: 4; */
 }
 
 .author-text {
@@ -500,22 +510,35 @@ textarea {
   fill:#B22222  ;
 }
 
-.UpArrowSVG {
+.UpArrowSVGClicked {
   fill: #5c75f3;
+
 }
 
-.UpArrowSVG-container {
-  /* padding-bottom: 0.5rem; */
-  /* padding-bottom: 0.2rem; */
+.UpArrowDiv {
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
 }
 
-.DownArrowSVG-container {
-  /* padding-bottom: 1rem; */
-  /* padding-top: 0.2rem; */
+.UpArrowDiv:hover {
+  transform: scale(1.3, 1.3);
 }
 
-.DownArrowSVG {
+.DownArrowDiv {
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.DownArrowDiv:hover {
+  transform: scale(1.3, 1.3);
+}
+
+.DownArrowSVGClicked {
   fill: #ff304f;
+}
+
+.ArrowNotClicked {
+  fill: #aaaaaa;
 }
 
 .bubbleSVG {
@@ -532,3 +555,5 @@ textarea {
 /* title color: #4e4e4e */
 /* post info: #b1b1b1 */
 /* header line color: #ececec */
+
+/* baseline arrow color: #aaaaaa */
