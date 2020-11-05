@@ -1,5 +1,7 @@
 import React from 'react'
+
 import axios from 'axios'
+import { BrowserRouter as Link } from 'react-router-dom'
 
 import Post from './post.component'
 import Login from './Login'
@@ -141,11 +143,13 @@ export default class Home extends React.Component {
                 </div>
                 {this.state.feedData.map((postData) => {
                     return (
+                        // <Link to={`/r/${postData.data.name}`}>
                         <Post
                             postData={postData}
                             accessToken={this.context.accessToken}
                             key={postData.data.id}
                         />
+                        // </Link>
                     )
                 })}
             </div>

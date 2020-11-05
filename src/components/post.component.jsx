@@ -1,7 +1,9 @@
 import React from 'react'
+import { BrowserRouter as Link } from 'react-router-dom'
 
 import Modal from './Modal'
 import PostModal from './PostModal'
+import { GlobalContext } from './GlobalState'
 
 import Axios from 'axios'
 import qs from 'qs'
@@ -15,6 +17,8 @@ import UpArrowSVG from './svg-components/UpArrow'
 import DownArrowSVG from './svg-components/DownArrow'
 import AuthorSVG from './svg-components/Author'
 
+import CurrentPost from './CurrentPost'
+
 class Post extends React.Component {
     constructor(props) {
         super(props)
@@ -23,13 +27,13 @@ class Post extends React.Component {
             showModal: false,
             UpArrowClicked: false,
             DownArrowClicked: false,
-            voteValue: 0,
+            voteVal: 0,
         }
     }
 
-    postVote = () => {
+    postVote = (voteVal) => {
         const data = {
-            dir: this.state.voteValue,
+            dir: voteVal.toString(),
             id: this.props.postData.data.name,
         }
         Axios({
@@ -38,35 +42,14 @@ class Post extends React.Component {
             headers: {
                 Authorization: 'bearer ' + this.context.accessToken,
                 'content-type': 'application/x-www-form-urlencoded',
-                // "Content-Type": "application/x-www-form-urlencoded"
             },
             data: qs.stringify(data),
         })
             .then((response) => {
-                // console.log('this.state.value', this.state.value)
-                // console.log('this is the response', response)
                 console.log('response data', response)
-                //     if (response.data.json.errors[0] !== undefined) {
-                //         response.data.json.errors[0].map((err) => {
-                //             return alert(err)
-                //         })
-                //     } else {
-                //         this.props.getCommentReply(
-                //             response.data.json.data.things[0].data,
-                //             this.props.commentId
-                //         )
-                //         this.context.getAndDisplayComment(
-                //             this.props.parent_Id,
-                //             this.state.value
-                //         )
-                //     }
-                //     this.props.closeReply()
             })
             .catch((err) => {
                 console.log(err)
-                // console.log('what is the error', err.data)
-                // alert('There was an error' + err)
-                // this.props.closeReply()
             })
     }
 
@@ -135,37 +118,32 @@ class Post extends React.Component {
     }
 
     handleArrowClick = (vote) => {
-        if (vote === 'up' && this.state.UpArrowClicked) {
-            this.setState({
-                UpArrowClicked: false,
-                DownArrowClicked: false,
-                voteValue: 0,
-            })
-        } else if (vote === 'down' && this.state.DownArrowClicked) {
-            this.setState({
-                UpArrowClicked: false,
-                DownArrowClicked: false,
-                voteValue: 0,
-            })
-        } else if (vote === 'up') {
-            this.setState({
-                UpArrowClicked: true,
-                DownArrowClicked: false,
-                voteValue: 1,
-            })
-        } else if (vote === 'down') {
-            this.setState({
-                UpArrowClicked: false,
-                DownArrowClicked: true,
-                voteValue: -1,
-            })
+        let voteValue
+
+        if (vote === 1 && this.state.voteVal === 1) {
+            voteValue = 0
+        } else if (vote === -1 && this.state.voteVal === -1) {
+            voteValue = 0
+        } else if (vote === 1) {
+            voteValue = 1
+        } else if (vote === -1) {
+            voteValue = -1
+        } else {
+            console.log('something went wrong', vote)
         }
-        this.postVote()
+
+        this.setState(
+            {
+                voteVal: voteValue,
+            },
+            () => this.postVote(voteValue)
+        )
     }
 
     handleScoreChange = (voteValue) => {}
 
     render() {
+        console.log('post voteVal', this.state.voteVal)
         return (
             <div className="master-container">
                 <div
@@ -184,35 +162,37 @@ class Post extends React.Component {
                         <div className="post-score">
                             <div
                                 className="UpArrowSVG-container"
-                                onClick={() => this.handleArrowClick('up')}
+                                onClick={() => this.handleArrowClick(1)}
                             >
-                                <UpArrowSVG
-                                    arrowClicked={this.state.UpArrowClicked}
-                                />
+                                <UpArrowSVG isActive={this.state.voteVal} />
                             </div>
                             <div className="score-text">
                                 {this.props.postData.data.score}
                             </div>
                             <div
                                 className="DownArrowSVG-container"
-                                onClick={() => this.handleArrowClick('down')}
+                                onClick={() => this.handleArrowClick(-1)}
                             >
-                                <DownArrowSVG
-                                    arrowClicked={this.state.DownArrowClicked}
-                                />
+                                <DownArrowSVG isActive={this.state.voteVal} />
                             </div>
                         </div>
                         <div className="main-text-container">
+                            {/* wrap this title with a link that sets a query param */}
                             <div className="post-title">
-                                <div className="post-title-text">
-                                    {this.getLengthTitle(
-                                        this.props.postData.data.title
-                                    )}
-                                </div>
+                                <Link
+                                    to={`/post/${this.props.postData.data.name}`}
+                                >
+                                    <div className="post-title-text">
+                                        {this.getLengthTitle(
+                                            this.props.postData.data.title
+                                        )}
+                                    </div>
+                                </Link>
                                 <div className="post-subreddit">
                                     {this.props.postData.data.subreddit}
                                 </div>
                             </div>
+
                             <div className="post-description">
                                 <div
                                     className="post-description-text"
@@ -252,8 +232,8 @@ class Post extends React.Component {
                             <div>{this.props.postData.data.subreddit}</div>
                         </div> */}
                     </div>
-                    {/* </div> */}
                 </div>
+                {/* </div> */}
                 <div>
                     <Modal
                         closeModal={this.closeModal}
@@ -272,6 +252,6 @@ class Post extends React.Component {
     }
 }
 
-// Post.contextType = GlobalContext;
+Post.contextType = GlobalContext
 
 export default Post
