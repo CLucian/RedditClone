@@ -145,14 +145,14 @@ a {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	position: absolute;
-	background-color: rgba(0,0,0,0.3);
 	width: 100%;
 	height: 100%;
 	position: fixed;
 	top: 0;
 	left: 0;
-	z-index: 100;
+  z-index: 99;
+  /* transform:scale(0); */
+  
 }
 
 .modal-info-container {
@@ -165,11 +165,20 @@ a {
 	height: 80%;
 	z-index: 1;
 	overflow: auto;
-	/* // min-width: 32rem; */
+  /* // min-width: 32rem; */
+  /* transform: scale(0); */
+  /* animation: blowU */
 }
 
+.modal-open {
+  z-index: 0;
+  transform: scale(1);
+}
+
+
 .modal-bg {
-	position: absolute;
+  position: absolute;
+  background:rgba(0,0,0,.7);
 	top: 0;
 	left: 0;
 	height: 100%;
@@ -548,6 +557,10 @@ textarea {
 
 .readMore {
   color: black;
+}
+
+.postLinks {
+  text-decoration: none;
 }
 
 /* background color: #fcfcfc */

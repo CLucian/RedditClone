@@ -8,6 +8,11 @@ import Authorize from './components/authorize.component'
 import ErrorPage from './components/errorPage.component'
 import Navbar from './components/navbar.component'
 import Profile from './components/profile.component'
+import Posts from './components/post.component'
+import PostContainer from './components/PostContainer'
+
+import test from './components/test'
+
 import { GlobalContext } from './components/GlobalState'
 
 class App extends React.Component {
@@ -34,9 +39,9 @@ class App extends React.Component {
                         <Route path="/about" component={About} />
                         <Route path="/authorize" component={Authorize} />
                         <Route path="/profile" component={Profile} />
-                        <Route path="/post" />
                         <Route path="/" component={ErrorPage} />
                     </Switch>
+                    <Route path="/" component={PostContainer} />
                 </div>
                 {/* add a route here with path /, the component used in the route will check
           for a query param, eg: post_id=some_id

@@ -5,6 +5,7 @@ import { BrowserRouter as Link } from 'react-router-dom'
 
 import Post from './post.component'
 import Login from './Login'
+import Modal from './Modal'
 
 import { GlobalContext } from './GlobalState'
 
@@ -141,10 +142,24 @@ export default class Home extends React.Component {
                         </option>
                     </select>
                 </div>
+                {/* <div>
+                    <Modal
+                        closeModal={this.closeModal}
+                        isVisible={this.state.showModal}
+                    >
+                        <PostModal
+                            closeModal={this.closeModal}
+                            thumbnail={this.defaultThumbnail}
+                            postData={this.props.postData.data}
+                            accessToken={this.props.accessToken}
+                        />
+                    </Modal>
+                </div> */}
                 {this.state.feedData.map((postData) => {
                     return (
                         // <Link to={`/r/${postData.data.name}`}>
                         <Post
+                            onClick={this.openModal}
                             postData={postData}
                             accessToken={this.context.accessToken}
                             key={postData.data.id}

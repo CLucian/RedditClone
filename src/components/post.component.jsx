@@ -1,8 +1,9 @@
 import React from 'react'
-import { BrowserRouter as Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import Modal from './Modal'
 import PostModal from './PostModal'
+import Login from './Login'
 import { GlobalContext } from './GlobalState'
 
 import Axios from 'axios'
@@ -16,8 +17,6 @@ import BubbleSVG from './svg-components/Bubble'
 import UpArrowSVG from './svg-components/UpArrow'
 import DownArrowSVG from './svg-components/DownArrow'
 import AuthorSVG from './svg-components/Author'
-
-import CurrentPost from './CurrentPost'
 
 class Post extends React.Component {
     constructor(props) {
@@ -143,7 +142,14 @@ class Post extends React.Component {
     handleScoreChange = (voteValue) => {}
 
     render() {
+        console.log(this.props.postData)
         console.log('post voteVal', this.state.voteVal)
+        {
+            if (!this.props.postData) {
+                return <Login />
+            }
+        }
+
         return (
             <div className="master-container">
                 <div
@@ -180,7 +186,11 @@ class Post extends React.Component {
                             {/* wrap this title with a link that sets a query param */}
                             <div className="post-title">
                                 <Link
-                                    to={`/post/${this.props.postData.data.name}`}
+                                    id="modal-open"
+                                    className="postLinks"
+                                    to={{
+                                        search: `?post_id=${this.props.postData.data.name}`,
+                                    }}
                                 >
                                     <div className="post-title-text">
                                         {this.getLengthTitle(
@@ -228,13 +238,10 @@ class Post extends React.Component {
                             &nbsp;
                             <div>{this.props.postData.data.num_comments}</div>
                         </div>
-                        {/* <div className="post-subreddit">
-                            <div>{this.props.postData.data.subreddit}</div>
-                        </div> */}
                     </div>
                 </div>
-                {/* </div> */}
-                <div>
+                {/* <PostContainer /> */}
+                {/* <div>
                     <Modal
                         closeModal={this.closeModal}
                         isVisible={this.state.showModal}
@@ -246,7 +253,7 @@ class Post extends React.Component {
                             accessToken={this.props.accessToken}
                         />
                     </Modal>
-                </div>
+                </div> */}
             </div>
         )
     }
