@@ -8,7 +8,7 @@ const UpArrow = (props) => {
             return 'ArrowNotClicked'
         }
     }
-    console.log('arrowUp voteVal', props.isActive)
+    // console.log('arrowUp voteVal', props.isActive)
     return (
         <div className="UpArrowDiv">
             <svg

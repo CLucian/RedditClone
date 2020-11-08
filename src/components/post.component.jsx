@@ -142,8 +142,8 @@ class Post extends React.Component {
     handleScoreChange = (voteValue) => {}
 
     render() {
-        console.log(this.props.postData)
-        console.log('post voteVal', this.state.voteVal)
+        // console.log(this.props.postData)
+        // console.log('post voteVal', this.state.voteVal)
         {
             if (!this.props.postData) {
                 return <Login />

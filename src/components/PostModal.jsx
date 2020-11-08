@@ -18,41 +18,50 @@ class PostModal extends React.Component {
         super(props)
         this.state = {
             commentsLoaded: false,
+            data: '',
         }
     }
 
-    getPostById = () => {
-        // const data = {
-        //     api_type: 'json',
-        //     names: this.props.commentData[this.props.commentId].name,
-        //     text: this.state.value,
-        // }
-        Axios({
-            method: 'get',
-            url: `https://oauth.reddit.com/by_id/t3_josjux`,
-            headers: {
-                Authorization: 'bearer ' + this.context.accessToken,
-                'content-type': 'application/x-www-form-urlencoded',
-            },
-            data: null,
-            // ,
-            // data: qs.stringify(data),
-        })
-            .then((response) => {
-                console.log('getPostById modal get req response', response)
+    componentDidMount() {
+        const getPostById = () => {
+            // const data = {
+            //     api_type: 'json',
+            //     names: this.props.commentData[this.props.commentId].name,
+            //     text: this.state.value,
+            // }
+            Axios({
+                method: 'get',
+                url: `https://oauth.reddit.com/by_id/${this.props.postId}`,
+                headers: {
+                    Authorization: 'bearer ' + this.context.accessToken,
+                    'content-type': 'application/x-www-form-urlencoded',
+                },
+                data: null,
+                // ,
+                // data: qs.stringify(data),
             })
-            .catch((err) => {
-                console.log(err)
-                console.log('what is the error', err.data)
-            })
+                .then((response) => {
+                    console.log('getPostById modal get req response', response)
+                    this.setState({
+                        data: response.data.data.children[0].data,
+                    })
+                })
+                .catch((err) => {
+                    console.log(err)
+                    console.log('what is the error', err.data)
+                })
+        }
+        getPostById()
     }
 
     getMarkDown = () => {
-        const rawMarkup = marked(this.props.postData.selftext, {
-            sanitize: true,
-        })
-        const clean = DOMPurify.sanitize(rawMarkup)
-        return { __html: clean }
+        if (this.state.data) {
+            const rawMarkup = marked(this.state.data.selftext, {
+                sanitize: true,
+            })
+            const clean = DOMPurify.sanitize(rawMarkup)
+            return { __html: clean }
+        }
     }
 
     getDate = (unixValue) => {
@@ -63,33 +72,35 @@ class PostModal extends React.Component {
     /// Incorporate an image thumbnail --> also links if clicked
 
     render() {
+        // this.getPostById(this.props.postId)
         // console.log('post_id  in the modal Component', post_id)
         // console.log('search in post modal', search)
         // console.log('this is the location of query string', this.props.location)
-        console.log('this.props.postData', this.props.postData)
+        console.log('this.state.data', this.state.data)
+        // console.log()
+        if (!this.state.data) {
+            return null
+        }
+
         return (
             <div className="modal-post-content">
                 <div className="post-details">
                     <div className="modal-post-subreddit">
-                        {/* {this.props.postData.subreddit_name_prefixed} */}
-                        asdfasdf
+                        {this.state.data.subreddit}
                     </div>
                     <button onClick={this.props.clearHistory}>
                         Clear History
                     </button>
                     <div className="modal-post-author">
-                        {/* {this.props.postData.author} */}
-                        asdfasdf
+                        {this.state.data.author}
                     </div>
                 </div>
                 <div className="modal-post-header">
                     <div className="modal-post-title">
-                        {/* {this.props.postData.title} */}
-                        asdf
+                        {this.state.data.title}
                     </div>
                     <div className="modal-post-date">
-                        {/* {this.getDate(this.props.postData.created)} */}
-                        asdf
+                        {this.getDate(this.state.data.created)}
                     </div>
                     <div className="modal-thumbnail-container">
                         <img
@@ -101,17 +112,18 @@ class PostModal extends React.Component {
                 </div>
                 <div
                     className="modal-description"
-                    // dangerouslySetInnerHTML={this.getMarkDown()}
+                    dangerouslySetInnerHTML={this.getMarkDown()}
                 ></div>
                 {/* <div className="modal-description">{this.props.postData.selftext}</div> */}
 
                 <Comments
-                // subreddit={this.props.postData.subreddit_name_prefixed}
-                // accessToken={this.props.accessToken}
-                // postCommentsId={this.props.postData.id}
-                // commentsLoaded={this.commentsLoaded}
+                    subreddit={this.state.data.subreddit_name_prefixed}
+                    accessToken={this.context.accessToken}
+                    postCommentsId={this.state.data.id}
+                    commentsLoaded={this.commentsLoaded}
+                    data={this.state.data}
                 />
-                {/* <button onClick={this.props.closeModal}>Close</button> */}
+                <button onClick={this.props.closeModal}>Close</button>
             </div>
         )
     }

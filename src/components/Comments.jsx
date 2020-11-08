@@ -18,6 +18,12 @@ class Comments extends React.Component {
         }
     }
 
+    componentDidMount() {
+        if (this.props.data) {
+            this.getComments()
+        }
+    }
+
     getCommentReply = (newCommentData, commentId) => {
         //search to see if the id is already logged in the commentMap
         const id = newCommentData.id
@@ -38,62 +44,56 @@ class Comments extends React.Component {
         })
     }
 
-    componentDidMount() {
-        const getComments = () => {
-            if (this.props.accessToken) {
-                return axios({
-                    method: 'GET',
-                    url: `https://oauth.reddit.com/${this.props.subreddit}/comments/${this.props.postCommentsId}`,
-                    headers: {
-                        Authorization: 'bearer ' + this.props.accessToken,
-                    },
+    getComments = () => {
+        console.log('in get comments', this.props.subreddit)
+        // console.log('in get comments', this.props.postCom)
+        if (this.props.accessToken && this.props.data) {
+            return axios({
+                method: 'GET',
+                url: `https://oauth.reddit.com/${this.props.subreddit}/comments/${this.props.postCommentsId}`,
+                headers: {
+                    Authorization: 'bearer ' + this.props.accessToken,
+                },
+            })
+                .then((response) => {
+                    const responseData = response.data[1].data.children
+                    const parentCommentIdsArr = []
+                    responseData.forEach((parentComment) => {
+                        parentCommentIdsArr.push(parentComment.data.id)
+                    })
+
+                    // console.clear()
+                    const data = responseData
+                    console.log('direct data', data)
+                    const commentMap = flattenCommentTree(responseData)
+                    console.log('DATA AND COMMENT MAP', data, commentMap)
+
+                    this.setState({
+                        comments: commentMap,
+                        parentCommentsArr: parentCommentIdsArr,
+                        isLoading: false,
+                    })
                 })
-                    .then((response) => {
-                        const responseData = response.data[1].data.children
-                        const parentCommentIdsArr = []
-                        responseData.forEach((parentComment) => {
-                            parentCommentIdsArr.push(parentComment.data.id)
-                        })
-
-                        // console.clear()
-                        const data = responseData
-                        console.log('direct data', data)
-                        const commentMap = flattenCommentTree(responseData)
-                        console.log('DATA AND COMMENT MAP', data, commentMap)
-
-                        this.setState({
-                            comments: commentMap,
-                            parentCommentsArr: parentCommentIdsArr,
-                            isLoading: false,
-                        })
-                    })
-                    .catch((err) => {
-                        console.log('Home Component Error: ', err)
-                    })
-            }
+                .catch((err) => {
+                    console.log('Home Component Error: ', err)
+                })
         }
-
-        getComments()
     }
 
     render() {
-        // console.log("comments", this.state.comments);
+        console.log(
+            'this.props.data from the postModal in Comments now',
+            this.props.data
+        )
+        console.log('author in comments', this.props.data.author)
+        console.log('subreddit', this.props.subreddit)
+        console.log('postCommentsId', this.props.postCommentsId)
 
-        // console.log('comments', this.state.parentCommentsArr)
-        // console.log('This is the comment Map', commentMap)
         if (this.state.isLoading) {
             return null
         }
 
-        // debugger
         return (
-            //   <CommentContext.Provider
-            //     value={{
-            //       ...this.state,
-            //       getCommentReply: this.getCommentReply,
-            //       setCommentReplyData: this.setCommentReplyData,
-            //     }}
-            //   >
             <div>
                 {this.state.parentCommentsArr.map((parentId) => {
                     return (
@@ -105,11 +105,8 @@ class Comments extends React.Component {
                             getCommentReply={this.getCommentReply}
                         />
                     )
-                    // this.state.comments[parentId].body
                 })}
-                {/* <Comment commentData={this.state.comments} commentsArr={this.state.parentCommentsArr} /> */}
             </div>
-            //   </CommentContext.Provider>
         )
     }
 }
@@ -117,18 +114,3 @@ class Comments extends React.Component {
 export default Comments
 
 Comments.contextType = GlobalContext
-
-//  {
-//    this.state.comments.map((comment) => {
-//      return (
-//        <div>
-//          <Comment
-//            key={comment.data.id}
-//            comment={comment}
-//            commentId={comment.data.parent_id}
-//          />
-//          {/* <Recursion commentData={this.state.comments} /> */}
-//        </div>
-//      );
-//    });
-//  }

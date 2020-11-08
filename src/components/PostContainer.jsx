@@ -49,6 +49,8 @@ class PostContainer extends React.Component {
                 >
                     <PostModal
                         clearHistory={this.clearHistory}
+                        postId={postId}
+                        closeModal={this.closeModal}
                         // closeModal={this.closeModal}
                         // thumbnail={this.defaultThumbnail}
                         // postData={this.props.postData.data}
