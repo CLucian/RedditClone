@@ -5,23 +5,19 @@ import DOMPurify from 'dompurify'
 import CommentReply from './CommentReply'
 import MoreReplies from './MoreReplies'
 import { GlobalContext } from './GlobalState'
+import { render } from '@testing-library/react'
 
-const Comment = (props) => {
-    const replyContext = React.useContext(GlobalContext)
-    const nestedComments = props.commentData[props.commentId]?.childIds?.map(
-        (commentId) => {
-            return (
-                <Comment
-                    commentData={props.commentData}
-                    commentId={commentId}
-                    getCommentReply={props.getCommentReply}
-                    // parent_Id={props.commentData[commentId].parent_id}
-                />
-            )
+// const replyContext = React.useContext(GlobalContext)
+
+class Comment extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            isCollapsed: '',
         }
-    )
+    }
 
-    const getMarkDown = (markDown) => {
+    getMarkDown = (markDown) => {
         if (markDown) {
             const rawMarkup = marked(markDown)
             const clean = DOMPurify.sanitize(rawMarkup)
@@ -33,26 +29,65 @@ const Comment = (props) => {
         }
     }
 
-    return (
-        <div className="post-comments-container">
-            <div className="comment-author">
-                {props.commentData[props.commentId]?.author}
-            </div>
-            <div
-                className="comment"
-                dangerouslySetInnerHTML={getMarkDown(
-                    props.commentData[props.commentId]?.body
-                )}
-            ></div>
-            <CommentReply
-                getCommentReply={props.getCommentReply}
-                commentId={props.commentId}
-                // parent_Id={props.parent_Id}
-                commentData={props.commentData}
+    nestedComments = this.props.commentData[
+        this.props.commentId
+    ]?.childIds?.map((commentId) => {
+        return (
+            <Comment
+                commentData={this.props.commentData}
+                commentId={commentId}
+                getCommentReply={this.props.getCommentReply}
+                // parent_Id={props.commentData[commentId].parent_id}
             />
-            {nestedComments}
-        </div>
-    )
+        )
+    })
+
+    collapseComments = () => {
+        this.setState({
+            isCollapsed: !this.state.isCollapsed,
+        })
+    }
+
+    //in render display null if you shouldn't display it
+    render() {
+        // if (this.state.isCollapsed) {
+        //     return null
+        // }
+        console.log('isCollapsed?', this.props.isCollapsed)
+
+        return (
+            <div className="post-comments-container">
+                <div className="comment-author">
+                    {this.props.commentData[this.props.commentId]?.author}
+                </div>
+                <div className="comment-text-body">
+                    <div>
+                        <button
+                            onClick={this.collapseComments}
+                            className="collapse-thread"
+                        >
+                            -
+                        </button>
+                    </div>
+                    <div
+                        className="comment"
+                        dangerouslySetInnerHTML={this.getMarkDown(
+                            this.props.commentData[this.props.commentId]?.body
+                        )}
+                    ></div>
+                </div>
+                {this.state.isCollapsed ? null : (
+                    <CommentReply
+                        getCommentReply={this.props.getCommentReply}
+                        commentId={this.props.commentId}
+                        // parent_Id={props.parent_Id}
+                        commentData={this.props.commentData}
+                    />
+                )}
+                {this.state.isCollapsed ? null : this.nestedComments}
+            </div>
+        )
+    }
 }
 
 export default Comment

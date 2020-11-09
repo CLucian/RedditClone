@@ -51,23 +51,6 @@ class Post extends React.Component {
             })
     }
 
-    // defaultThumbnail = () => {
-    //     const default1 = 'default'
-    //     const default2 = 'self'
-    //     const defaultURLImg =
-    //         'https://momentummartialarts.ca/wp-content/uploads/2017/04/default-image-720x530.jpg'
-
-    //     if (this.props.postData.data.thumbnail === default1) {
-    //         return defaultURLImg
-    //     } else if (this.props.postData.data.thumbnail === default2) {
-    //         return defaultURLImg
-    //     } else if (this.props.postData.data.thumbnail.length < 6) {
-    //         return defaultURLImg
-    //     } else {
-    //         return this.props.postData.data.thumbnail
-    //     }
-    // }
-
     openModal = () => {
         this.setState({
             showModal: true,
@@ -183,7 +166,6 @@ class Post extends React.Component {
                             </div>
                         </div>
                         <div className="main-text-container">
-                            {/* wrap this title with a link that sets a query param */}
                             <div className="post-title">
                                 <Link
                                     id="modal-open"
@@ -240,20 +222,6 @@ class Post extends React.Component {
                         </div>
                     </div>
                 </div>
-                {/* <PostContainer /> */}
-                {/* <div>
-                    <Modal
-                        closeModal={this.closeModal}
-                        isVisible={this.state.showModal}
-                    >
-                        <PostModal
-                            closeModal={this.closeModal}
-                            thumbnail={this.defaultThumbnail}
-                            postData={this.props.postData.data}
-                            accessToken={this.props.accessToken}
-                        />
-                    </Modal>
-                </div> */}
             </div>
         )
     }

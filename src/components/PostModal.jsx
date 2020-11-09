@@ -54,6 +54,23 @@ class PostModal extends React.Component {
         getPostById()
     }
 
+    defaultThumbnail = () => {
+        const default1 = 'default'
+        const default2 = 'self'
+        const defaultURLImg =
+            'https://momentummartialarts.ca/wp-content/uploads/2017/04/default-image-720x530.jpg'
+
+        if (this.props.postData.data.thumbnail === default1) {
+            return defaultURLImg
+        } else if (this.props.postData.data.thumbnail === default2) {
+            return defaultURLImg
+        } else if (this.props.postData.data.thumbnail.length < 6) {
+            return defaultURLImg
+        } else {
+            return this.props.postData.data.thumbnail
+        }
+    }
+
     getMarkDown = () => {
         if (this.state.data) {
             const rawMarkup = marked(this.state.data.selftext, {
@@ -65,7 +82,7 @@ class PostModal extends React.Component {
     }
 
     getDate = (unixValue) => {
-        const date = moment.unix(unixValue).format('DD-MM-YYYY h:mm:ss')
+        const date = moment.unix(unixValue).format('DD-MM-YYYY')
         return date
     }
 
@@ -84,31 +101,46 @@ class PostModal extends React.Component {
 
         return (
             <div className="modal-post-content">
+                <button
+                    className="close-modal-btn"
+                    onClick={this.props.closeModal}
+                >
+                    Close
+                </button>
                 <div className="post-details">
-                    <div className="modal-post-subreddit">
-                        {this.state.data.subreddit}
+                    <div className="author-subreddit-container">
+                        <div className="modal-post-subreddit">
+                            {this.state.data.subreddit}
+                        </div>
+                        <div className="modal-post-author">
+                            {this.state.data.author}
+                        </div>
                     </div>
-                    <button onClick={this.props.clearHistory}>
+                    {/* <button onClick={this.props.clearHistory}>
                         Clear History
-                    </button>
-                    <div className="modal-post-author">
-                        {this.state.data.author}
+                    </button> */}
+
+                    <div className="modal-post-date">
+                        {this.getDate(this.state.data.created)}
                     </div>
                 </div>
                 <div className="modal-post-header">
                     <div className="modal-post-title">
                         {this.state.data.title}
                     </div>
-                    <div className="modal-post-date">
+                    {/* <div className="modal-post-date">
                         {this.getDate(this.state.data.created)}
-                    </div>
-                    <div className="modal-thumbnail-container">
-                        <img
-                            className="post-thumbnail"
-                            // src={this.props.thumbnail()}
-                            alt="thumbnail"
-                        />
-                    </div>
+                    </div> */}
+                    {this.state.data.thumbnail !== 'self' ? (
+                        <div className="modal-thumbnail-container">
+                            <img
+                                className="post-thumbnail"
+                                // src={this.thumbnail()}
+                                src={this.state.data.thumbnail}
+                                alt="thumbnail"
+                            />
+                        </div>
+                    ) : null}
                 </div>
                 <div
                     className="modal-description"
@@ -123,7 +155,6 @@ class PostModal extends React.Component {
                     commentsLoaded={this.commentsLoaded}
                     data={this.state.data}
                 />
-                <button onClick={this.props.closeModal}>Close</button>
             </div>
         )
     }
