@@ -293,11 +293,42 @@ a {
   justify-content: space-between; */
 }
 
+.collapse-thread {
+  margin-right: 2rem;
+}
+
+.upvotes {
+  display: flex;
+  /* flex-direction: column; */
+  /* justify-content: center; */
+  flex-direction: column;
+  /* align-items: center; */
+}
+
+.closeSVG {
+  fill: #bbbbbb;
+  text-align: right;
+  cursor: pointer;
+}
+
+.comment-score {
+  text-align: center;
+  color: #5c75f3;
+  font-size: 1.5rem;
+}
+
+.upvote-arrows {
+  /* display: flex;
+  align-items: center; */
+}
+
+
 .comment-text-body {
   display: flex;
-  justify-content: left;
+  /* justify-content: left; */
+  /* justify-content: center; */
   padding: 1rem;
-  /* align-items: center; */
+  align-items: center;
 }
 
 .comment {

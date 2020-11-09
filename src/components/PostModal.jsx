@@ -1,6 +1,7 @@
 import React from 'react'
 // import { useLocation } from 'react-router-dom'
 
+import Close from './svg-components/Close'
 import Comments from './Comments'
 import { GlobalContext } from './GlobalState'
 
@@ -101,12 +102,11 @@ class PostModal extends React.Component {
 
         return (
             <div className="modal-post-content">
-                <button
+                <Close
                     className="close-modal-btn"
                     onClick={this.props.closeModal}
-                >
-                    Close
-                </button>
+                />
+
                 <div className="post-details">
                     <div className="author-subreddit-container">
                         <div className="modal-post-subreddit">

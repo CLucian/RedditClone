@@ -122,8 +122,6 @@ class Post extends React.Component {
         )
     }
 
-    handleScoreChange = (voteValue) => {}
-
     render() {
         {
             if (!this.props.postData) {
