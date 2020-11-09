@@ -238,7 +238,7 @@ a {
 .post-comments-container {
   margin-top: 1rem;
   margin-left: 2.5rem;
-  padding: 1rem;
+  padding: 3rem;
   border: 0.1rem solid black;
   height: 90%;
 }
@@ -268,7 +268,7 @@ a {
 }
 
 a {
-  color: black;
+  color: yellow;
   text-decoration: underline;
 }
 

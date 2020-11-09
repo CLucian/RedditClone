@@ -24,9 +24,8 @@ class Post extends React.Component {
         this.state = {
             moreInfo: false,
             showModal: false,
-            UpArrowClicked: false,
-            DownArrowClicked: false,
             voteVal: 0,
+            updatedScore: '',
         }
     }
 
@@ -52,22 +51,22 @@ class Post extends React.Component {
             })
     }
 
-    defaultThumbnail = () => {
-        const default1 = 'default'
-        const default2 = 'self'
-        const defaultURLImg =
-            'https://momentummartialarts.ca/wp-content/uploads/2017/04/default-image-720x530.jpg'
+    // defaultThumbnail = () => {
+    //     const default1 = 'default'
+    //     const default2 = 'self'
+    //     const defaultURLImg =
+    //         'https://momentummartialarts.ca/wp-content/uploads/2017/04/default-image-720x530.jpg'
 
-        if (this.props.postData.data.thumbnail === default1) {
-            return defaultURLImg
-        } else if (this.props.postData.data.thumbnail === default2) {
-            return defaultURLImg
-        } else if (this.props.postData.data.thumbnail.length < 6) {
-            return defaultURLImg
-        } else {
-            return this.props.postData.data.thumbnail
-        }
-    }
+    //     if (this.props.postData.data.thumbnail === default1) {
+    //         return defaultURLImg
+    //     } else if (this.props.postData.data.thumbnail === default2) {
+    //         return defaultURLImg
+    //     } else if (this.props.postData.data.thumbnail.length < 6) {
+    //         return defaultURLImg
+    //     } else {
+    //         return this.props.postData.data.thumbnail
+    //     }
+    // }
 
     openModal = () => {
         this.setState({
@@ -134,6 +133,7 @@ class Post extends React.Component {
         this.setState(
             {
                 voteVal: voteValue,
+                updatedScore: this.props.postData.data.score + voteValue,
             },
             () => this.postVote(voteValue)
         )
@@ -142,8 +142,6 @@ class Post extends React.Component {
     handleScoreChange = (voteValue) => {}
 
     render() {
-        // console.log(this.props.postData)
-        // console.log('post voteVal', this.state.voteVal)
         {
             if (!this.props.postData) {
                 return <Login />
@@ -173,7 +171,9 @@ class Post extends React.Component {
                                 <UpArrowSVG isActive={this.state.voteVal} />
                             </div>
                             <div className="score-text">
-                                {this.props.postData.data.score}
+                                {this.state.updatedScore
+                                    ? this.state.updatedScore
+                                    : this.props.postData.data.score}
                             </div>
                             <div
                                 className="DownArrowSVG-container"
