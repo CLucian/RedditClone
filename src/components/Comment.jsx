@@ -7,6 +7,7 @@ import qs from 'qs'
 import CommentReply from './CommentReply'
 import MoreReplies from './MoreReplies'
 import { GlobalContext } from './GlobalState'
+import moment from 'moment'
 
 import DownArrow from '../components/svg-components/DownArrow'
 import UpArrow from '../components/svg-components/UpArrow'
@@ -73,6 +74,11 @@ class Comment extends React.Component {
         )
     }
 
+    getTime = (unixValue) => {
+        const dateMoment = moment.unix(unixValue).fromNow()
+        return dateMoment
+    }
+
     getMarkDown = (markDown) => {
         if (markDown) {
             const rawMarkup = marked(markDown)
@@ -109,12 +115,21 @@ class Comment extends React.Component {
 
     //in render display null if you shouldn't display it
     render() {
-        // console.log('comment this.props.commentData', this.props.commentData)
+        console.log('getTime', this.getTime())
+        console.log('comment this.props.commentData', this.props.commentData)
 
         return (
             <div className="post-comments-container">
-                <div className="comment-author">
-                    {this.props.commentData[this.props.commentId]?.author}
+                <div className="comment-author-time-container">
+                    <div className="comment-author">
+                        {this.props.commentData[this.props.commentId]?.author}
+                    </div>
+                    <div className="comment-date">
+                        {this.getTime(
+                            this.props.commentData[this.props.commentId]
+                                ?.created_utc
+                        )}
+                    </div>
                 </div>
                 <div className="comment-text-body">
                     <div className="collapse-master-container">

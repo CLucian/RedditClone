@@ -66,7 +66,7 @@ class PostModal extends React.Component {
     }
 
     getDate = (unixValue) => {
-        const date = moment.unix(unixValue).format('DD-MM-YYYY')
+        const date = moment.unix(unixValue).format('dddd, MMMM Do YYYY')
         return date
     }
 
@@ -104,7 +104,7 @@ class PostModal extends React.Component {
                     </button> */}
 
                     <div className="modal-post-date">
-                        {this.getDate(this.state.data.created)}
+                        {this.getDate(this.state.data.created_utc)}
                     </div>
                 </div>
                 <div className="modal-post-header">
@@ -115,7 +115,8 @@ class PostModal extends React.Component {
                         {this.getDate(this.state.data.created)}
                     </div> */}
                     {this.state.data.thumbnail !== 'self' &&
-                    this.state.data.thumbnail !== 'thumbnail' ? (
+                    this.state.data.thumbnail !== 'thumbnail' &&
+                    this.state.data.thumbnail !== 'default' ? (
                         <div className="modal-thumbnail-container">
                             <img
                                 className="post-thumbnail"

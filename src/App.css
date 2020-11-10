@@ -164,7 +164,7 @@ a {
 	border-radius: 0.4rem;
 	border: 1px solid #fcfcfc;
 	padding: 5rem;
-	width: 50%;
+	width: 60%;
 	height: 80%;
 	z-index: 1;
   overflow: auto;
@@ -393,11 +393,13 @@ svg {
   text-align: center;
   color: #5c75f3;
   font-size: 1.5rem;
+  margin-bottom: 0.2rem;
 }
 
 .upvote-arrows {
   /* display: flex;
   align-items: center; */
+  text-align: center;
 }
 
 
@@ -405,12 +407,12 @@ svg {
   display: flex;
   /* justify-content: left; */
   /* justify-content: center; */
-  padding: 1rem;
+  padding: 0.5rem;
   align-items: center;
 }
 
 .comment {
-  padding-left: 1rem;
+  padding-left: 2rem;
 }
 
 .comment p {
@@ -423,6 +425,16 @@ svg {
   color: #5c75f3;
   /* color: #b1b1b1; */
   font-size: 1.5rem;
+}
+
+.comment-author-time-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.comment-date {
+  font-size: 1rem;
 }
 
 .children-comments {
