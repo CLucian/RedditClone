@@ -85,18 +85,21 @@ class Comment extends React.Component {
         }
     }
 
-    nestedComments = this.props.commentData[
-        this.props.commentId
-    ]?.childIds?.map((commentId) => {
-        return (
-            <Comment
-                commentData={this.props.commentData}
-                commentId={commentId}
-                getCommentReply={this.props.getCommentReply}
-                // parent_Id={props.commentData[commentId].parent_id}
-            />
+    // nestedcomments = () => []
+    getComments = () => {
+        return this.props.commentData[this.props.commentId]?.childIds?.map(
+            (commentId) => {
+                return (
+                    <Comment
+                        commentData={this.props.commentData}
+                        commentId={commentId}
+                        getCommentReply={this.props.getCommentReply}
+                        // parent_Id={props.commentData[commentId].parent_id}
+                    />
+                )
+            }
         )
-    })
+    }
 
     collapseComments = () => {
         this.setState({
@@ -171,7 +174,7 @@ class Comment extends React.Component {
                     // parent_Id={props.parent_Id}
                     commentData={this.props.commentData}
                 />
-                {this.state.isCollapsed ? null : this.nestedComments}
+                {!this.state.isCollapsed && this.getComments()}
             </div>
         )
     }
