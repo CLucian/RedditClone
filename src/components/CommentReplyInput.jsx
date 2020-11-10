@@ -1,5 +1,4 @@
 import React from 'react'
-import PostComment from './PostComment'
 import Axios from 'axios'
 import qs from 'qs'
 

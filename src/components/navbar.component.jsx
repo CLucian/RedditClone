@@ -20,6 +20,7 @@ export default class Navbar extends React.Component {
             <React.Fragment>
                 <div className="navbar">
                     <ul className="navbar-links">
+                        <div className="menu">Menu</div>
                         <li className="list-item">
                             <Link to="/">Home</Link>
                         </li>
@@ -31,6 +32,15 @@ export default class Navbar extends React.Component {
                         )}
                         <li className="list-item">
                             <Link to="/about">About</Link>
+                        </li>
+                        <li className="list-item">
+                            <Link to="/about">Explore Topics</Link>
+                        </li>
+                        <li className="list-item">
+                            <Link to="/about">My Comments</Link>
+                        </li>
+                        <li className="list-item">
+                            <Link to="/about">My Topics</Link>
                         </li>
                         <li className="list-item">
                             <Link to="/profile">Profile</Link>

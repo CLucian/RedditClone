@@ -8,6 +8,7 @@ import Login from './Login'
 import Modal from './Modal'
 
 import { GlobalContext } from './GlobalState'
+import SortByMenu from './SortByMenu'
 
 const CLIENT_ID = 'MMej7E1hI1x82A'
 const REDIRECT_URI = 'http://localhost:3000/authorize'
@@ -142,19 +143,7 @@ export default class Home extends React.Component {
                         </option>
                     </select>
                 </div>
-                {/* <div>
-                    <Modal
-                        closeModal={this.closeModal}
-                        isVisible={this.state.showModal}
-                    >
-                        <PostModal
-                            closeModal={this.closeModal}
-                            thumbnail={this.defaultThumbnail}
-                            postData={this.props.postData.data}
-                            accessToken={this.props.accessToken}
-                        />
-                    </Modal>
-                </div> */}
+                <SortByMenu />
                 {this.state.feedData.map((postData) => {
                     return (
                         // <Link to={`/r/${postData.data.name}`}>

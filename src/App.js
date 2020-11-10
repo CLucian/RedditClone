@@ -14,6 +14,7 @@ import PostContainer from './components/PostContainer'
 import test from './components/test'
 
 import { GlobalContext } from './components/GlobalState'
+import TopNavbar from './components/TopNavbar'
 
 class App extends React.Component {
     constructor(props) {
@@ -30,18 +31,22 @@ class App extends React.Component {
 
         return (
             <div className="app">
-                <div className="TODO-left-nav">
-                    <Navbar />
-                </div>
-                <div className="TODO-main-routes">
-                    <Switch>
-                        <Route path="/" exact component={Home} />
-                        <Route path="/about" component={About} />
-                        <Route path="/authorize" component={Authorize} />
-                        <Route path="/profile" component={Profile} />
-                        <Route path="/" component={ErrorPage} />
-                    </Switch>
-                    <Route path="/" component={PostContainer} />
+                <TopNavbar />
+                <div className="master-app-container">
+                    <div className="left-side-app">
+                        <Navbar />
+                    </div>
+                    <div className="main-routes">
+                        <Switch>
+                            <Route path="/" exact component={Home} />
+                            <Route path="/about" component={About} />
+                            <Route path="/authorize" component={Authorize} />
+                            <Route path="/profile" component={Profile} />
+                            <Route path="/" component={ErrorPage} />
+                        </Switch>
+                        <Route path="/" component={PostContainer} />
+                    </div>
+                    <div className="right-side-app"></div>
                 </div>
                 {/* add a route here with path /, the component used in the route will check
           for a query param, eg: post_id=some_id

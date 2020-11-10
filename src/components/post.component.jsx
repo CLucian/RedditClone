@@ -26,7 +26,38 @@ class Post extends React.Component {
             showModal: false,
             voteVal: 0,
             updatedScore: '',
+            isLoading: true,
+            authorImg: '',
         }
+    }
+
+    componentDidMount() {
+        const getAuthorAvatar = () => {
+            const data = {
+                id: this.props.postData.data.author,
+            }
+            return Axios({
+                method: 'GET',
+                url: `https://oauth.reddit.com/user/${this.props.postData.data.author}/about`,
+                headers: {
+                    Authorization: 'bearer ' + this.context.accessToken,
+                },
+                data: qs.stringify(data),
+            })
+                .then((response) => {
+                    console.log('this is the author response', response)
+                    const dataImg = response.data.data.icon_img
+                    const modifiedImg = dataImg.split('?width')[0]
+                    this.setState({
+                        authorImg: modifiedImg,
+                        isLoading: false,
+                    })
+                })
+                .catch((err) => {
+                    console.log('Avatar fetch error ', err)
+                })
+        }
+        getAuthorAvatar()
     }
 
     postVote = (voteVal) => {
@@ -123,9 +154,12 @@ class Post extends React.Component {
     }
 
     render() {
+        console.log('this.state.authorImg', this.state.authorImg)
         {
             if (!this.props.postData) {
                 return <Login />
+            } else if (!this.state.authorImg) {
+                return '...Loading'
             }
         }
 
@@ -203,6 +237,12 @@ class Post extends React.Component {
                     </div> */}
                     <div className="post-sub-info">
                         <div className="post-author">
+                            <div className="author-img-container">
+                                <img
+                                    className="author-img"
+                                    src={this.state.authorImg}
+                                />
+                            </div>
                             Posted by:
                             <div className="author-text">
                                 &nbsp; {this.props.postData.data.author}

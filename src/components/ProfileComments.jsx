@@ -61,7 +61,7 @@ class ProfileComments extends React.Component {
             subreddit,
             body,
             num_comments,
-            created,
+            created_utc,
             score,
         } = this.props.childData.data
 
@@ -136,7 +136,7 @@ class ProfileComments extends React.Component {
                         </div>
                         <div className="post-date">
                             <div>
-                                Commented on &nbsp;{this.getDate(created)}
+                                Commented on &nbsp;{this.getDate(created_utc)}
                             </div>
                         </div>
                         <div className="post-comment-number">
