@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 
+import Loader from './svg-components/Loader'
 import { GlobalContext } from './GlobalState'
 import Comment from './Comment'
 import { flattenCommentTree } from '../utils/comments'
@@ -90,7 +91,7 @@ class Comments extends React.Component {
         console.log('postCommentsId', this.props.postCommentsId)
 
         if (this.state.isLoading) {
-            return null
+            return <Loader />
         }
 
         return (

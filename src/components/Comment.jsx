@@ -7,8 +7,11 @@ import qs from 'qs'
 import CommentReply from './CommentReply'
 import MoreReplies from './MoreReplies'
 import { GlobalContext } from './GlobalState'
+
 import DownArrow from '../components/svg-components/DownArrow'
 import UpArrow from '../components/svg-components/UpArrow'
+import Collapse from './svg-components/Collapse'
+import UnCollapse from './svg-components/UnCollapse'
 
 // const replyContext = React.useContext(GlobalContext)
 
@@ -16,7 +19,7 @@ class Comment extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            isCollapsed: '',
+            isCollapsed: false,
             voteVal: 0,
             updatedScore: '',
         }
@@ -103,7 +106,7 @@ class Comment extends React.Component {
 
     //in render display null if you shouldn't display it
     render() {
-        console.log('comment this.props.commentData', this.props.commentData)
+        // console.log('comment this.props.commentData', this.props.commentData)
 
         return (
             <div className="post-comments-container">
@@ -111,13 +114,29 @@ class Comment extends React.Component {
                     {this.props.commentData[this.props.commentId]?.author}
                 </div>
                 <div className="comment-text-body">
-                    <div>
-                        <button
-                            onClick={this.collapseComments}
-                            className="collapse-thread"
-                        >
-                            -
-                        </button>
+                    <div className="collapse-master-container">
+                        {this.props.commentData[this.props.commentId]?.childIds
+                            .length > 0 ? (
+                            // <button
+                            //     onClick={this.collapseComments}
+                            //     className="collapse-thread"
+                            // >
+                            //     -
+                            // </button>
+
+                            <div
+                                className="collapse-container"
+                                onClick={this.collapseComments}
+                            >
+                                <Collapse
+                                    isCollapsed={this.state.isCollapsed}
+                                />
+
+                                <UnCollapse
+                                    isCollapsed={this.state.isCollapsed}
+                                />
+                            </div>
+                        ) : null}
                     </div>
                     <div className="upvotes">
                         <div

@@ -55,23 +55,6 @@ class PostModal extends React.Component {
         getPostById()
     }
 
-    defaultThumbnail = () => {
-        const default1 = 'default'
-        const default2 = 'self'
-        const defaultURLImg =
-            'https://momentummartialarts.ca/wp-content/uploads/2017/04/default-image-720x530.jpg'
-
-        if (this.props.postData.data.thumbnail === default1) {
-            return defaultURLImg
-        } else if (this.props.postData.data.thumbnail === default2) {
-            return defaultURLImg
-        } else if (this.props.postData.data.thumbnail.length < 6) {
-            return defaultURLImg
-        } else {
-            return this.props.postData.data.thumbnail
-        }
-    }
-
     getMarkDown = () => {
         if (this.state.data) {
             const rawMarkup = marked(this.state.data.selftext, {
@@ -131,12 +114,13 @@ class PostModal extends React.Component {
                     {/* <div className="modal-post-date">
                         {this.getDate(this.state.data.created)}
                     </div> */}
-                    {this.state.data.thumbnail !== 'self' ? (
+                    {this.state.data.thumbnail !== 'self' &&
+                    this.state.data.thumbnail !== 'thumbnail' ? (
                         <div className="modal-thumbnail-container">
                             <img
                                 className="post-thumbnail"
-                                // src={this.thumbnail()}
                                 src={this.state.data.thumbnail}
+                                // src={this.state.data.thumbnail}
                                 alt="thumbnail"
                             />
                         </div>

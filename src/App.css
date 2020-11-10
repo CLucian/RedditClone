@@ -216,7 +216,7 @@ a {
   display: flex;
   justify-content: space-between;
   /* align-items: center; */
-  padding-bottom: 2rem;
+  /* padding-bottom: 2rem; */
 }
 
 .modal-post-title {
@@ -281,7 +281,7 @@ a {
 .post-comments-container {
   margin-top: 1rem;
   margin-left: 2.5rem;
-  padding: 3rem;
+  padding: 2rem;
   border-left: 0.1rem solid #b1b1b1;
   height: 90%;
 }
@@ -297,11 +297,32 @@ a {
   margin-right: 2rem;
 }
 
+.collapse-master-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.collapse-container {
+  align-items: center;
+  cursor: pointer;
+  padding-top: 0.4rem;
+}
+
+.uncollapseSVG {
+  fill: #b1b1b1;
+}
+
+.collapseSVG {
+  fill: #b1b1b1;
+}
+
 .upvotes {
   display: flex;
   /* flex-direction: column; */
   /* justify-content: center; */
   flex-direction: column;
+  padding-left: 2rem;
   /* align-items: center; */
 }
 
@@ -309,6 +330,63 @@ a {
   fill: #bbbbbb;
   text-align: right;
   cursor: pointer;
+}
+
+
+
+
+.loader {
+  fill: #5c75f3;
+  /* animation-name: rotate; */
+  /* animation-duration: 2s;
+  animation-iteration-count: infinite;
+  transform-origin: 50% 50%;
+  display:-nline-block; */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8rem;
+  height: 8rem;
+  animation: spin 1s linear infinite;
+  margin: -4rem 0 0 -4rem;
+  
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+    transform: rotate(360deg);
+  };
+}
+
+/* 
+svg {
+  animation: rotate 5s linear infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% { 
+    transform: rotate(360deg);
+  }
+} */
+
+/* @-webkit-keyframes rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to { 
+    -webkit-transform: rotate(360deg);
+  }
+} */
+
+
+.loader {
+  
 }
 
 .comment-score {
