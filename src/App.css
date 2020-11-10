@@ -698,29 +698,30 @@ textarea {
   align-items: center;
   background-color: #ececec;
   border-radius: 10%;
+  cursor: pointer;
 }
 
 .HotSVG {
-  width: 3rem;
+  width: 2rem;
   height: auto;
 }
 
 .BestSVG {
-  width: 3rem;
+  width: 2rem;
   height: auto;
 }
 .RisingSVG {
-  width: 3rem;
+  width: 2rem;
   height: auto;
 }
 
 .TopSVG {
-  width: 3rem;
+  width: 2rem;
   height: auto;
 }
 
 .NewSVG {
-  width: 3rem;
+  width: 2rem;
   height: auto;
 }
 

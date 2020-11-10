@@ -7,6 +7,12 @@ import Post from './post.component'
 import Login from './Login'
 import Modal from './Modal'
 
+import BestSVG from './svg-components/BestSVG'
+import HotSVG from './svg-components/HotSVG'
+import NewSVG from './svg-components/NewSVG'
+import RisingSVG from './svg-components/RisingSVG'
+import TopSVG from './svg-components/TopSVG'
+
 import { GlobalContext } from './GlobalState'
 import SortByMenu from './SortByMenu'
 
@@ -30,10 +36,10 @@ export default class Home extends React.Component {
         }
     }
 
-    getHomePage = () => {
+    getHomePage = (sortBy = 'best') => {
         return axios({
             method: 'GET',
-            url: `https://oauth.reddit.com/${this.state.sortBy}`,
+            url: `https://oauth.reddit.com/${sortBy}`,
             headers: {
                 Authorization: 'bearer ' + this.context.accessToken,
             },
@@ -143,7 +149,48 @@ export default class Home extends React.Component {
                         </option>
                     </select>
                 </div>
-                <SortByMenu />
+                <div className="sort-container">
+                    <div className="sortByMenuContainer">
+                        <div className="sort-by-text">Sort By:</div>
+                        <div
+                            onClick={() => this.getHomePage('best')}
+                            className="menu-svg-container"
+                        >
+                            <BestSVG />
+                            <div className="sort-by-text">Best</div>
+                        </div>
+                        <div
+                            onClick={() => this.getHomePage('hot')}
+                            className="menu-svg-container"
+                        >
+                            <HotSVG />
+                            <div className="sort-by-text">Hot</div>
+                        </div>
+                        <div
+                            onClick={() => this.getHomePage('new')}
+                            className="menu-svg-container"
+                        >
+                            <NewSVG />
+                            <div className="sort-by-text">New</div>
+                        </div>
+                        <div
+                            onClick={() => this.getHomePage('top')}
+                            className="menu-svg-container"
+                        >
+                            <TopSVG />
+                            <div className="sort-by-text">Top</div>
+                        </div>
+                        <div
+                            onClick={() => this.getHomePage('rising')}
+                            className="menu-svg-container"
+                        >
+                            <RisingSVG />
+                            <div className="sort-by-text">Rising</div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* <SortByMenu /> */}
                 {this.state.feedData.map((postData) => {
                     return (
                         // <Link to={`/r/${postData.data.name}`}>
