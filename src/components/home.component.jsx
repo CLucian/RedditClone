@@ -33,6 +33,7 @@ export default class Home extends React.Component {
             showModal: false,
             listOpen: false,
             sortBy: 'best',
+            clicked: '',
         }
     }
 
@@ -82,20 +83,23 @@ export default class Home extends React.Component {
         })
     }
 
-    selectSortBy = (e) => {
+    handleClick = (category) => {
         this.setState(
             {
-                sortBy: e.target.value,
+                sortBy: category,
             },
-            this.getHomePage
+            () => this.getHomePage(category)
         )
     }
 
+    setActiveSort = (e) => {}
+
     render() {
-        console.log('home context', this.context.accessToken)
-        console.log('type of', typeof 'hello')
-        console.log('this is the feedData state', this.state.feedData)
-        console.log('this is the feedData state', typeof this.state.feedData)
+        console.log('this.state.clicked', this.state.sortBy)
+        // console.log('home context', this.context.accessToken)
+        // console.log('type of', typeof 'hello')
+        // console.log('this is the feedData state', this.state.feedData)
+        // console.log('this is the feedData state', typeof this.state.feedData)
         // console.log("feedData state", typeof(this.state.feedData.children));
         // console.log('feedData children', this.state.feedData);
         // if (!this.context.accessToken) {
@@ -153,36 +157,46 @@ export default class Home extends React.Component {
                     <div className="sortByMenuContainer">
                         <div className="sort-by-text">Sort By:</div>
                         <div
-                            onClick={() => this.getHomePage('best')}
+                            // onClick={() => this.getHomePage('best')}
+                            onClick={() => this.handleClick('best')}
                             className="menu-svg-container"
+                            id={this.state.sortBy === 'best' && 'best'}
                         >
                             <BestSVG />
                             <div className="sort-by-text">Best</div>
                         </div>
                         <div
-                            onClick={() => this.getHomePage('hot')}
+                            // onClick={() => this.getHomePage('hot')}
+                            onClick={() => this.handleClick('hot')}
                             className="menu-svg-container"
+                            id={this.state.sortBy === 'hot' && 'hot'}
                         >
                             <HotSVG />
                             <div className="sort-by-text">Hot</div>
                         </div>
                         <div
-                            onClick={() => this.getHomePage('new')}
+                            // onClick={() => this.getHomePage('new')}
+                            onClick={() => this.handleClick('new')}
                             className="menu-svg-container"
+                            id={this.state.sortBy === 'new' && 'new'}
                         >
                             <NewSVG />
                             <div className="sort-by-text">New</div>
                         </div>
                         <div
-                            onClick={() => this.getHomePage('top')}
+                            // onClick={() => this.getHomePage('top')}
+                            onClick={() => this.handleClick('top')}
                             className="menu-svg-container"
+                            id={this.state.sortBy === 'top' && 'top'}
                         >
                             <TopSVG />
                             <div className="sort-by-text">Top</div>
                         </div>
                         <div
-                            onClick={() => this.getHomePage('rising')}
+                            // onClick={() => this.getHomePage('rising')}
+                            onClick={() => this.handleClick('rising')}
                             className="menu-svg-container"
+                            id={this.state.sortBy === 'rising' && 'rising'}
                         >
                             <RisingSVG />
                             <div className="sort-by-text">Rising</div>

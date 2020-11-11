@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { GlobalContext } from './GlobalState'
 
 import Login from './Login'
@@ -14,6 +14,11 @@ const getAuthorizationURL = () =>
     `https://www.reddit.com/api/v1/authorize?client_id=${CLIENT_ID}&response_type=code&state=${Math.random()}&redirect_uri=${REDIRECT_URI}&duration=${DURATION}&scope=${SCOPE}`
 
 export default class Navbar extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {}
+    }
+
     render() {
         console.log('username=====', this.context.userData)
         return (
@@ -22,7 +27,7 @@ export default class Navbar extends React.Component {
                     <ul className="navbar-links">
                         <div className="menu">Menu</div>
                         <li className="list-item">
-                            <Link to="/">Home</Link>
+                            <NavLink to="/">Home</NavLink>
                         </li>
                         {this.context.accessToken ? null : (
                             <li className="list-item">
@@ -31,19 +36,19 @@ export default class Navbar extends React.Component {
                             </li>
                         )}
                         <li className="list-item">
-                            <Link to="/about">About</Link>
+                            <NavLink to="/about">About</NavLink>
                         </li>
                         <li className="list-item">
-                            <Link to="/about">Explore Topics</Link>
+                            <NavLink to="/Explore">Explore Topics</NavLink>
                         </li>
                         <li className="list-item">
-                            <Link to="/about">My Comments</Link>
+                            <NavLink to="/Comments">My Comments</NavLink>
                         </li>
                         <li className="list-item">
-                            <Link to="/about">My Topics</Link>
+                            <NavLink to="/Topics">My Topics</NavLink>
                         </li>
                         <li className="list-item">
-                            <Link to="/profile">Profile</Link>
+                            <NavLink to="/profile">Profile</NavLink>
                         </li>
                         {/* {this.context.accessToken ? (
               <li className="list-item">

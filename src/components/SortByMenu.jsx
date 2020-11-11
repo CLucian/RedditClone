@@ -12,31 +12,41 @@ class SortByMenu extends React.Component {
     render() {
         return (
             <>
-                <div className="sort-container">
+                {/* <div className="sort-container">
                     <div className="sortByMenuContainer">
                         <div className="sort-by-text">Sort By:</div>
                         <div className="menu-svg-container">
-                            <BestSVG />
-                            <div className="sort-by-text">Best</div>
+                            <div>
+                                <BestSVG />
+                                <div className="sort-by-text">Best</div>
+                            </div>
                         </div>
                         <div className="menu-svg-container">
-                            <HotSVG />
-                            <div className="sort-by-text">Hot</div>
+                            <div className="Hot-container">
+                                <HotSVG />
+                                <div className="sort-by-text">Hot</div>
+                            </div>
                         </div>
                         <div className="menu-svg-container">
-                            <NewSVG />
-                            <div className="sort-by-text">New</div>
+                            <div className="New-container">
+                                <NewSVG />
+                                <div className="sort-by-text">New</div>
+                            </div>
                         </div>
                         <div className="menu-svg-container">
-                            <TopSVG />
-                            <div className="sort-by-text">Top</div>
+                            <div className="Top-container">
+                                <TopSVG />
+                                <div className="sort-by-text">Top</div>
+                            </div>
                         </div>
                         <div className="menu-svg-container">
-                            <RisingSVG />
-                            <div className="sort-by-text">Rising</div>
+                            <div className="Rising-container">
+                                <RisingSVG />
+                                <div className="sort-by-text">Rising</div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </>
         )
     }
