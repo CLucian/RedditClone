@@ -154,14 +154,12 @@ export default class Home extends React.Component {
                 </div>
                 {this.state.feedData.map((postData) => {
                     return (
-                        // <Link to={`/r/${postData.data.name}`}>
                         <Post
                             onClick={this.openModal}
                             postData={postData}
                             accessToken={this.context.accessToken}
                             key={postData.data.id}
                         />
-                        // </Link>
                     )
                 })}
             </div>

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import marked from 'marked'
 import DOMPurify from 'dompurify'
@@ -68,6 +69,15 @@ class ProfileComments extends React.Component {
         }
     }
 
+    getLengthTitle = (description) => {
+        const maxLength = 150
+        if (description.length > maxLength) {
+            return description.substring(0, maxLength) + '...'
+        } else {
+            return description
+        }
+    }
+
     getLength = (description) => {
         const maxLength = 250
         if (description.length > maxLength) {
@@ -97,6 +107,7 @@ class ProfileComments extends React.Component {
     render() {
         const {
             link_title,
+            link_id,
             link_author,
             subreddit,
             body,
@@ -157,9 +168,22 @@ class ProfileComments extends React.Component {
                         </div>
                         <div className="main-text-container">
                             <div className="post-title">
-                                <div className="post-title-text">
-                                    {link_title}
-                                </div>
+                                <Link
+                                    id="modal-open"
+                                    className="postLinks"
+                                    to={{
+                                        search: `?post_id=${link_id}`,
+                                    }}
+                                >
+                                    <div className="post-title-text">
+                                        {this.getLengthTitle(link_title)}
+                                    </div>
+                                </Link>
+                                {/* <Link>
+                                    <div className="post-title-text">
+                                        {link_title}
+                                    </div>
+                                </Link> */}
                                 <div className="post-subreddit">
                                     {subreddit}
                                 </div>
@@ -192,9 +216,7 @@ class ProfileComments extends React.Component {
                         </div>
                         <div className="post-date">
                             <div>
-                                {`Commented on &nbsp; ${this.getDate(
-                                    created_utc
-                                )}`}
+                                {`Commented on ${this.getDate(created_utc)}`}
                             </div>
                         </div>
                         <div className="post-comment-number">
@@ -203,24 +225,6 @@ class ProfileComments extends React.Component {
                             <div>{num_comments}</div>
                         </div>
                     </div>
-                    {/* <div className="post-sub-info">
-                        <div className="post-author">
-                            Posted by:
-                            <div className="author-text">
-                                &nbsp; {link_author}
-                            </div>
-                        </div>
-                        <div className="post-date">
-                            <div>
-                                Commented on &nbsp;{this.getDate(created_utc)}
-                            </div>
-                        </div>
-                        <div className="post-comment-number">
-                            <BubbleSVG />
-                            &nbsp;
-                            <div>{num_comments}</div>
-                        </div>
-                    </div> */}
                 </div>
             </div>
         )

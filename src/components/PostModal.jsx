@@ -85,11 +85,14 @@ class PostModal extends React.Component {
 
         return (
             <div className="modal-post-content">
-                <Close
-                    className="close-modal-btn"
-                    onClick={this.props.closeModal}
-                />
-
+                <div className="close-container">
+                    <div
+                        className="close-svg-container"
+                        onClick={this.props.closeModal}
+                    >
+                        <Close className="close-modal-btn" />
+                    </div>
+                </div>
                 <div className="post-details">
                     <div className="author-subreddit-container">
                         <div className="modal-post-subreddit">

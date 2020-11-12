@@ -10,8 +10,6 @@ class PostContainer extends React.Component {
         this.state = {}
     }
 
-    // i need a componentDidUpdate to see if it to see if theres a postid then i set it to state
-
     // getId = (url) => {
     //     return url.searchParams.get('post_id')
     // }
@@ -23,13 +21,8 @@ class PostContainer extends React.Component {
         this.props.history.push('/')
     }
 
-    clearHistory = () => {
-        this.props.history.push('/')
-    }
-
     render() {
         const { location, history } = this.props
-        // console.log('This is the location in the post container', location)
 
         if (!location.search) {
             return null
@@ -38,24 +31,15 @@ class PostContainer extends React.Component {
         const urlParams = new URLSearchParams(location.search)
         const postId = urlParams.get('post_id')
 
+        console.log('what is location.search', location.search)
+        console.log('what is urlParams', urlParams)
         console.log('what is the currentId in the postContainer', postId)
 
         return (
             <div>
                 <p>This is the PostContainer component</p>
-                <Modal
-                    closeModal={this.closeModal}
-                    // isVisible={this.state.showModal}
-                >
-                    <PostModal
-                        clearHistory={this.clearHistory}
-                        postId={postId}
-                        closeModal={this.closeModal}
-                        // closeModal={this.closeModal}
-                        // thumbnail={this.defaultThumbnail}
-                        // postData={this.props.postData.data}
-                        // accessToken={this.props.accessToken}
-                    />
+                <Modal closeModal={this.closeModal}>
+                    <PostModal postId={postId} closeModal={this.closeModal} />
                 </Modal>
             </div>
         )

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, withRouter } from 'react-router-dom'
 import { GlobalContext } from './GlobalState'
 
 import Login from './Login'
@@ -22,11 +22,11 @@ const menuLinks = [
     { name: 'Profile', route: 'profile' },
 ]
 
-export default class Navbar extends React.Component {
+class Navbar extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            activeRoute: '',
+            activeRoute: this.props.location.pathname.substring(1),
         }
     }
 
@@ -37,6 +37,9 @@ export default class Navbar extends React.Component {
     }
 
     render() {
+        console.log('current location', this.props.location)
+        console.log('current history', this.props.history)
+        // console.log('current url', window.location.href)
         console.log('active Route', this.state.activeRoute)
         console.log('username=====', this.context.userData)
         return (
@@ -137,5 +140,7 @@ export default class Navbar extends React.Component {
         )
     }
 }
+
+export default withRouter(Navbar)
 
 Navbar.contextType = GlobalContext
