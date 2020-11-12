@@ -119,12 +119,38 @@ li, ul {
   height: 100%;
 }
 
+.menu-margin {
+  width: 2%;
+  height: 100%;
+  color: inherit;
+
+  /* background-color: inherit; */
+}
+
+
+
+.activeMargin {
+  background-color: #3d5af1;
+}
+
+.activeText {
+  background-color: rgba(61, 90, 241, 0.2);
+}
+
+.menu-title {
+  width: 95%;
+  height: 100%;
+  background-color: black;
+}
+
 .menu {
   text-align: center;
   font-size: 2rem;
 }
 
 .list-item {
+  /* background-color: inherit; */
+  display: flex;
   padding: 1rem 1rem 1rem 2rem;
   font-size: 1.5rem;
   text-decoration: none;
@@ -751,29 +777,9 @@ textarea {
   fill: #4a4a4a;
 }
 
-#active {
+.active {
   background-color: #ececec;
 }
-
-#hot {
-  background-color: #ececec; 
-}
-#best {
-background-color: #ececec; 
-}
-
-#new {
-background-color: #ececec; 
-}
-
-#top {
-background-color: #ececec; 
-}
-
-#rising {
-background-color: #ececec; 
-}
-
 
 .profile-post-container {
   position: relative;

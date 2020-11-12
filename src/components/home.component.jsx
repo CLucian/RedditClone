@@ -16,6 +16,14 @@ import TopSVG from './svg-components/TopSVG'
 import { GlobalContext } from './GlobalState'
 import SortByMenu from './SortByMenu'
 
+const sortOptions = [
+    { name: 'Best', value: 'best', icon: <BestSVG /> },
+    { name: 'Hot', value: 'hot', icon: <HotSVG /> },
+    { name: 'New', value: 'new', icon: <NewSVG /> },
+    { name: 'Top', value: 'top', icon: <TopSVG /> },
+    { name: 'Rising', value: 'rising', icon: <RisingSVG /> },
+]
+
 const CLIENT_ID = 'MMej7E1hI1x82A'
 const REDIRECT_URI = 'http://localhost:3000/authorize'
 const DURATION = 'permanent'
@@ -122,89 +130,28 @@ export default class Home extends React.Component {
                         </div>
                     </div>
                 ) : null}
-                <div className="dd-wrapper">
-                    <div className="dd-header">
-                        <div
-                            className="dd-header-title"
-                            onClick={this.toggleSortBy}
-                        >
-                            Sort By:
-                        </div>
-                    </div>
-                    <select
-                        id="selectBox"
-                        className="sort-by-dd"
-                        onChange={this.selectSortBy}
-                    >
-                        <option className="sort-by-item" value="best">
-                            Best
-                        </option>
-                        <option className="sort-by-item" value="hot">
-                            Hot
-                        </option>
-                        <option className="sort-by-item" value="new">
-                            New
-                        </option>
-                        <option className="sort-by-item" value="top">
-                            Top
-                        </option>
-                        <option className="sort-by-item" value="rising">
-                            Rising
-                        </option>
-                    </select>
-                </div>
                 <div className="sort-container">
                     <div className="sortByMenuContainer">
                         <div className="sort-by-text">Sort By:</div>
-                        <div
-                            // onClick={() => this.getHomePage('best')}
-                            onClick={() => this.handleClick('best')}
-                            className="menu-svg-container"
-                            id={this.state.sortBy === 'best' && 'best'}
-                        >
-                            <BestSVG />
-                            <div className="sort-by-text">Best</div>
-                        </div>
-                        <div
-                            // onClick={() => this.getHomePage('hot')}
-                            onClick={() => this.handleClick('hot')}
-                            className="menu-svg-container"
-                            id={this.state.sortBy === 'hot' && 'hot'}
-                        >
-                            <HotSVG />
-                            <div className="sort-by-text">Hot</div>
-                        </div>
-                        <div
-                            // onClick={() => this.getHomePage('new')}
-                            onClick={() => this.handleClick('new')}
-                            className="menu-svg-container"
-                            id={this.state.sortBy === 'new' && 'new'}
-                        >
-                            <NewSVG />
-                            <div className="sort-by-text">New</div>
-                        </div>
-                        <div
-                            // onClick={() => this.getHomePage('top')}
-                            onClick={() => this.handleClick('top')}
-                            className="menu-svg-container"
-                            id={this.state.sortBy === 'top' && 'top'}
-                        >
-                            <TopSVG />
-                            <div className="sort-by-text">Top</div>
-                        </div>
-                        <div
-                            // onClick={() => this.getHomePage('rising')}
-                            onClick={() => this.handleClick('rising')}
-                            className="menu-svg-container"
-                            id={this.state.sortBy === 'rising' && 'rising'}
-                        >
-                            <RisingSVG />
-                            <div className="sort-by-text">Rising</div>
-                        </div>
+                        {sortOptions.map((option) => (
+                            <div
+                                // onClick={() => this.getHomePage('best')}
+                                onClick={() => this.handleClick(option.value)}
+                                className={`menu-svg-container ${
+                                    this.state.sortBy === option.value
+                                        ? 'active'
+                                        : ''
+                                }`}
+                                // id={this.state.sortBy === 'best' && 'best'}
+                            >
+                                {option.icon}
+                                <div className="sort-by-text">
+                                    {option.name}
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
-
-                {/* <SortByMenu /> */}
                 {this.state.feedData.map((postData) => {
                     return (
                         // <Link to={`/r/${postData.data.name}`}>
