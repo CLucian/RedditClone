@@ -3,6 +3,8 @@ import React from 'react'
 import marked from 'marked'
 import DOMPurify from 'dompurify'
 import moment from 'moment'
+import Axios from 'axios'
+import qs from 'qs'
 
 import HeartSVG from './svg-components/Heart'
 import BubbleSVG from './svg-components/Bubble'
@@ -13,7 +15,45 @@ import AuthorSVG from './svg-components/Author'
 class ProfileComments extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {}
+        this.state = {
+            authorImg: '',
+            isLoading: true,
+        }
+    }
+
+    componentDidMount() {
+        const getAuthorAvatar = () => {
+            if (this.props.childData.data.link_author === '[deleted]') {
+                this.setState({
+                    isLoading: false,
+                })
+            } else {
+                const data = {
+                    id: this.props.childData.data.link_author,
+                }
+                return Axios({
+                    method: 'GET',
+                    url: `https://oauth.reddit.com/user/${this.props.childData.data.link_author}/about`,
+                    headers: {
+                        Authorization: 'bearer ' + this.props.accessToken,
+                    },
+                    data: qs.stringify(data),
+                })
+                    .then((response) => {
+                        console.log('this is the author response', response)
+                        const dataImg = response.data.data.icon_img
+                        const modifiedImg = dataImg.split('?width')[0]
+                        this.setState({
+                            authorImg: modifiedImg,
+                            isLoading: false,
+                        })
+                    })
+                    .catch((err) => {
+                        console.log('Avatar fetch error ', err)
+                    })
+            }
+        }
+        getAuthorAvatar()
     }
 
     getMarkDown = (markDown) => {
@@ -64,6 +104,16 @@ class ProfileComments extends React.Component {
             created_utc,
             score,
         } = this.props.childData.data
+
+        console.log('author state', this.state.authorImg)
+        console.log(
+            'this is the props for profile comments',
+            this.props.childData
+        )
+
+        // if (this.state.isLoading) {
+        //     return '...Loading'
+        // }
 
         return (
             // <div className="master-container">
@@ -129,6 +179,32 @@ class ProfileComments extends React.Component {
                     </div>
                     <div className="post-sub-info">
                         <div className="post-author">
+                            <div className="author-img-container">
+                                <img
+                                    className="author-img"
+                                    src={this.state.authorImg}
+                                />
+                            </div>
+                            Posted by:
+                            <div className="author-text">
+                                &nbsp; {link_author}
+                            </div>
+                        </div>
+                        <div className="post-date">
+                            <div>
+                                {`Commented on &nbsp; ${this.getDate(
+                                    created_utc
+                                )}`}
+                            </div>
+                        </div>
+                        <div className="post-comment-number">
+                            <BubbleSVG />
+                            &nbsp;
+                            <div>{num_comments}</div>
+                        </div>
+                    </div>
+                    {/* <div className="post-sub-info">
+                        <div className="post-author">
                             Posted by:
                             <div className="author-text">
                                 &nbsp; {link_author}
@@ -144,7 +220,7 @@ class ProfileComments extends React.Component {
                             &nbsp;
                             <div>{num_comments}</div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         )

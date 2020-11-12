@@ -51,6 +51,7 @@ export default class Profile extends React.Component {
     }
 
     render() {
+        console.log('profile component state', this.state.postChildren)
         return (
             <div>
                 {this.context.accessToken ? (
@@ -64,6 +65,7 @@ export default class Profile extends React.Component {
                                     <ProfileComments
                                         childData={child}
                                         id={child.id}
+                                        accessToken={this.context.accessToken}
                                     />
                                 )
                             })}

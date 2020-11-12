@@ -70,7 +70,9 @@ export default class Navbar extends React.Component {
                                                     : null
                                             }`}
                                     >
-                                        {link.name}
+                                        <div className="link-text">
+                                            {link.name}
+                                        </div>
                                     </div>
                                 </li>
                             </NavLink>
