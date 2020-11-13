@@ -45,6 +45,16 @@ class Comments extends React.Component {
         })
     }
 
+    getCommentEdit = (newCommentData, oldChildArr) => {
+        newCommentData.childIds = [...oldChildArr]
+        this.setState({
+            comments: {
+                ...this.state.comments,
+                [newCommentData.id]: newCommentData,
+            },
+        })
+    }
+
     getComments = () => {
         console.log('in get comments', this.props.subreddit)
         // console.log('in get comments', this.props.postCom)
@@ -86,9 +96,12 @@ class Comments extends React.Component {
             'this.props.data from the postModal in Comments now',
             this.props.data
         )
-        console.log('author in comments', this.props.data.author)
-        console.log('subreddit', this.props.subreddit)
-        console.log('postCommentsId', this.props.postCommentsId)
+        // console.log('author in comments', this.props.data.author)
+        // console.log('subreddit', this.props.subreddit)
+        // console.log('postCommentsId', this.props.postCommentsId)
+        // console.log('this.state.comments', this.state.comments)
+        // console.log('getcommentReply', this.getCommentReply)
+        // console.log('getcommetnEdit', this.getCommentEdit)
 
         if (this.state.isLoading) {
             return <Loader />
@@ -104,6 +117,7 @@ class Comments extends React.Component {
                             commentId={parentId}
                             // parent_Id={this.state.comments[parentId].parent_id}
                             getCommentReply={this.getCommentReply}
+                            getCommentEdit={this.getCommentEdit}
                         />
                     )
                 })}

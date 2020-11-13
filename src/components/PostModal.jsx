@@ -102,9 +102,6 @@ class PostModal extends React.Component {
                             {this.state.data.author}
                         </div>
                     </div>
-                    {/* <button onClick={this.props.clearHistory}>
-                        Clear History
-                    </button> */}
 
                     <div className="modal-post-date">
                         {this.getDate(this.state.data.created_utc)}

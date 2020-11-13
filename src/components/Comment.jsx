@@ -30,31 +30,40 @@ class Comment extends React.Component {
 
     componentDidMount() {
         const getAuthorAvatar = () => {
-            const data = {
-                id: this.props.commentData[this.props.commentId]?.author,
-            }
-            return Axios({
-                method: 'GET',
-                url: `https://oauth.reddit.com/user/${
-                    this.props.commentData[this.props.commentId]?.author
-                }/about`,
-                headers: {
-                    Authorization: 'bearer ' + this.context.accessToken,
-                },
-                data: qs.stringify(data),
-            })
-                .then((response) => {
-                    console.log('this is the author response', response)
-                    const dataImg = response.data.data.icon_img
-                    const modifiedImg = dataImg.split('?width')[0]
-                    this.setState({
-                        authorImg: modifiedImg,
-                        isLoading: false,
+            if (
+                this.props.commentData[this.props.commentId]?.author ===
+                '[deleted]'
+            ) {
+                this.setState({
+                    isLoading: false,
+                })
+            } else {
+                const data = {
+                    id: this.props.commentData[this.props.commentId]?.author,
+                }
+                return Axios({
+                    method: 'GET',
+                    url: `https://oauth.reddit.com/user/${
+                        this.props.commentData[this.props.commentId]?.author
+                    }/about`,
+                    headers: {
+                        Authorization: 'bearer ' + this.context.accessToken,
+                    },
+                    data: qs.stringify(data),
+                })
+                    .then((response) => {
+                        console.log('this is the author response', response)
+                        const dataImg = response.data.data.icon_img
+                        const modifiedImg = dataImg.split('?width')[0]
+                        this.setState({
+                            authorImg: modifiedImg,
+                            isLoading: false,
+                        })
                     })
-                })
-                .catch((err) => {
-                    console.log('Avatar fetch error ', err)
-                })
+                    .catch((err) => {
+                        console.log('Avatar fetch error ', err)
+                    })
+            }
         }
         getAuthorAvatar()
     }
@@ -133,6 +142,7 @@ class Comment extends React.Component {
                         commentData={this.props.commentData}
                         commentId={commentId}
                         getCommentReply={this.props.getCommentReply}
+                        getCommentEdit={this.props.getCommentEdit}
                         // parent_Id={props.commentData[commentId].parent_id}
                     />
                 )
@@ -148,8 +158,9 @@ class Comment extends React.Component {
 
     //in render display null if you shouldn't display it
     render() {
+        // console.log('get comment edit', this.props.getCommentEdit)
         if (this.state.isLoading) {
-            return 'loading...'
+            return 'loading... from comment.js'
         }
 
         return (
@@ -182,7 +193,7 @@ class Comment extends React.Component {
                 <div className="comment-text-body">
                     <div className="collapse-master-container">
                         {this.props.commentData[this.props.commentId]?.childIds
-                            .length > 0 ? (
+                            ?.length > 0 ? (
                             <div
                                 className="collapse-container"
                                 onClick={this.collapseComments}
@@ -235,6 +246,7 @@ class Comment extends React.Component {
                         commentId={this.props.commentId}
                         // parent_Id={props.parent_Id}
                         commentData={this.props.commentData}
+                        getCommentEdit={this.props.getCommentEdit}
                     />
                 )}
                 {!this.state.isCollapsed && this.getComments()}

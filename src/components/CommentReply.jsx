@@ -10,6 +10,7 @@ class CommentReply extends React.Component {
         super(props)
         this.state = {
             showTextBox: false,
+            showEditBox: false,
         }
     }
 
@@ -19,9 +20,15 @@ class CommentReply extends React.Component {
         })
     }
 
-    closeCommentPost = () => {
+    handleEditPost = () => {
+        console.log(
+            'commentData for this id',
+            this.props.commentData[this.props.commentId]
+        )
+        // console.log('getCommentEdit', this.props.getCommentEdit)
+        // console.log('getCommentReply', this.props.getCommentReply)
         this.setState({
-            showTextBox: false,
+            showEditBox: !this.state.showEditBox,
         })
     }
 
@@ -31,45 +38,60 @@ class CommentReply extends React.Component {
         })
     }
 
-    toggleEdit = () => {
-        this.setState({
-            showEditBox: !this.state.showEditBox,
-        })
-    }
-
     render() {
-        // console.log('commentData in commentReply', this.props.commentData)
-        // console.log('commentId in commentReply', this.props.commentId)
-        // console.log('What is the currnet userData', this.context.userData)
-        // console.log(
-        //     'parent commentId in commentReply',
-        //     this.props.commentData[this.props.commentId].parent_id
-        // )
-        // console.log(
-        //     'body in commentReply',
-        //     this.props.commentData[this.props.commentId].body
-        // )
         return (
-            <div>
-                <div className="comment-reply" onClick={this.handleCommentPost}>
-                    Reply
-                    {/* <InputField showTextBox={this.state.showTextBox} /> */}
+            <div className="commentReplyEdit-container">
+                <div className="replyEdit-btn-container">
+                    {this.state.showEditBox ? null : (
+                        <div
+                            className="comment-reply"
+                            onClick={this.handleCommentPost}
+                        >
+                            Reply
+                        </div>
+                    )}
+                    {this.props.commentData[this.props.commentId].author ===
+                        this.context.userData.name &&
+                        !this.state.showTextBox && (
+                            <button
+                                className="comment-submit"
+                                onClick={this.handleEditPost}
+                            >
+                                Edit
+                            </button>
+                        )}
                 </div>
-                <CommentReplyInput
-                    getCommentReply={this.props.getCommentReply}
-                    showTextBox={this.state.showTextBox}
-                    commentId={this.props.commentId}
-                    parent_Id={this.props.parent_Id}
-                    closeReply={this.handleCommentPost}
-                    commentData={this.props.commentData}
-                />
-                <CommentEditInput
-                    commentData={this.props.commentData}
-                    commentId={this.props.commentId}
-                    accessToken={this.context.accessToken}
-                    user={this.context.userData.name}
-                    author={this.props.commentData[this.props.commentId].author}
-                />
+                {this.state.showEditBox ? null : (
+                    <CommentReplyInput
+                        getCommentReply={this.props.getCommentReply}
+                        showTextBox={this.state.showTextBox}
+                        commentId={this.props.commentId}
+                        parent_Id={this.props.parent_Id}
+                        commentData={this.props.commentData}
+                        handleCommentPost={this.handleCommentPost}
+                        showTextBox={this.state.showTextBox}
+                    />
+                )}
+                {this.state.showTextBox ? null : (
+                    <CommentEditInput
+                        getCommentReply={this.props.getCommentReply}
+                        commentData={this.props.commentData}
+                        commentId={this.props.commentId}
+                        accessToken={this.context.accessToken}
+                        user={this.context.userData.name}
+                        handleEditPost={this.handleEditPost}
+                        showEditBox={this.state.showEditBox}
+                        closeEditPost={this.closeEditPost}
+                        getCommentEdit={this.props.getCommentEdit}
+                        oldChildArr={
+                            this.props.commentData[this.props.commentId]
+                                .childIds
+                        }
+                        author={
+                            this.props.commentData[this.props.commentId].author
+                        }
+                    />
+                )}
             </div>
         )
     }

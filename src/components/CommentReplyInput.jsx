@@ -10,6 +10,7 @@ class CommentReplyInput extends React.Component {
         this.state = {
             value: '',
             responseObject: null,
+            // showTextBox: false,
         }
     }
 
@@ -48,7 +49,7 @@ class CommentReplyInput extends React.Component {
                         this.state.value
                     )
                 }
-                this.props.closeReply()
+                this.props.handleCommentPost()
             })
             .catch((err) => {
                 console.log(err)
@@ -61,11 +62,23 @@ class CommentReplyInput extends React.Component {
             })
     }
 
+    // handleCommentPost = () => {
+    //     this.setState({
+    //         showTextBox: !this.state.showTextBox,
+    //     })
+    // }
+
     handleChange = (e) => {
         this.setState({
             value: e.target.value,
         })
     }
+
+    // closeCommentPost = () => {
+    //     this.setState({
+    //         showTextBox: false,
+    //     })
+    // }
 
     handleSubmit = (e) => {
         e.preventDefault()
@@ -98,14 +111,14 @@ class CommentReplyInput extends React.Component {
         //   console.log("this.context.accessToken - CommentReplyInput", this.context.accessToken);
 
         return (
-            <div>
+            <div className="reply-input-container">
+                {/* <div className="comment-reply" onClick={this.handleCommentPost}>
+                    Reply
+                </div> */}
                 {this.props.showTextBox ? (
                     <form className="comment-form" onSubmit={this.handleSubmit}>
-                        <div>{this.props.commentId}</div>
-                        <div>
-                            {this.props.commentData[this.props.commentId].body}
-                        </div>
                         <textarea
+                            className="reply-text-area"
                             placeholder="What's on your mind?"
                             type="textarea"
                             wrap="physical"
@@ -115,7 +128,7 @@ class CommentReplyInput extends React.Component {
                         <div className="comment-buttons">
                             <button
                                 className="cancel-comment"
-                                onClick={this.props.closeReply}
+                                onClick={this.props.handleCommentPost}
                                 type="button"
                             >
                                 Cancel
@@ -124,7 +137,6 @@ class CommentReplyInput extends React.Component {
                                 Submit
                             </button>
                         </div>
-                        <p>{this.state.value}</p>
                     </form>
                 ) : null}
                 {/* <PostComment

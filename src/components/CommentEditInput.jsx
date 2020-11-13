@@ -19,7 +19,7 @@ class CommentEditInput extends React.Component {
         }
         Axios({
             method: 'post',
-            url: 'https://oauth.reddit.com/api/comment',
+            url: 'https://oauth.reddit.com/api/editusertext',
             headers: {
                 Authorization: 'bearer ' + this.props.accessToken,
                 'content-type': 'application/x-www-form-urlencoded',
@@ -32,6 +32,12 @@ class CommentEditInput extends React.Component {
                     '=========Your commentEdit has gone through=========, ' +
                         response
                 )
+                console.log('your edited comment', response)
+                console.log(
+                    'modified object passed in getCommentReply',
+                    response.data.json.data.things[0].data
+                )
+                console.log('object id', this.props.commentId)
                 // console.log('this.state.value', this.state.value)
                 // console.log('this is the response', response)
                 // console.log('response data', response.data)
@@ -40,18 +46,19 @@ class CommentEditInput extends React.Component {
                         return alert(err)
                     })
                 } else {
-                    this.props.getCommentReply(
+                    this.props.getCommentEdit(
                         response.data.json.data.things[0].data,
-                        this.props.commentId
+                        this.props.oldChildArr
+                        // this.props.commentId
                     )
                 }
-                this.props.closeEditPost()
+                // this.props.closeEditPost()
             })
             .catch((err) => {
                 console.log(err)
                 console.log('what is the error', err.data)
                 alert('There was an error' + err)
-                this.props.closeEditPost()
+                // this.props.closeEditPost()
                 // console.log("accessToken" + this.context.accessToken);
                 // console.log("textvalue", this.state.value);
                 // console.log("thing_id", this.props.commentId);
@@ -67,7 +74,7 @@ class CommentEditInput extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault()
 
-        if (this.state.value.length > 0) {
+        if (this.state.value) {
             console.log(
                 'submitting',
                 this.props,
@@ -80,29 +87,32 @@ class CommentEditInput extends React.Component {
         } else {
             alert('Please type something')
         }
-        this.toggleEdit()
+        this.props.closeEditPost()
     }
 
-    toggleEdit = () => {
-        this.setState({
-            editBox: !this.state.editBox,
-        })
-    }
+    // toggleEdit = () => {
+    //     this.setState({
+    //         editBox: !this.state.editBox,
+    //     })
+    // }
 
     render() {
+        console
+            .log
+            // 'this.props.commentData',
+            ()
         return (
-            <div>
-                {this.props.author === this.props.user && (
+            <div className="edit-input-container">
+                {/* {this.props.author === this.props.user && (
                     <button
                         className="comment-submit"
                         onClick={this.toggleEdit}
                     >
                         Edit
                     </button>
-                )}
-                {this.state.editBox ? (
+                )} */}
+                {this.props.showEditBox ? (
                     <form className="comment-form" onSubmit={this.handleSubmit}>
-                        {this.props.commentData[this.props.commentId].body}
                         <textarea
                             placeholder={
                                 this.props.commentData[this.props.commentId]
@@ -114,9 +124,10 @@ class CommentEditInput extends React.Component {
                             onChange={this.handleChange}
                         ></textarea>
                         <div className="comment-buttons">
+                            {this.state.value}
                             <button
                                 className="cancel-comment"
-                                onClick={this.props.closeReply}
+                                onClick={this.props.handleEditPost}
                                 type="button"
                             >
                                 Cancel
@@ -125,7 +136,6 @@ class CommentEditInput extends React.Component {
                                 Submit
                             </button>
                         </div>
-                        <p>{this.state.value}</p>
                     </form>
                 ) : null}
             </div>
