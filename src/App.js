@@ -10,6 +10,8 @@ import Navbar from './components/navbar.component'
 import Profile from './components/profile.component'
 import Posts from './components/post.component'
 import PostContainer from './components/PostContainer'
+import SideBar from './components/Sidebar'
+import Subreddit from './components/Subreddit'
 
 import test from './components/test'
 
@@ -42,11 +44,29 @@ class App extends React.Component {
                             <Route path="/about" component={About} />
                             <Route path="/authorize" component={Authorize} />
                             <Route path="/profile" component={Profile} />
-                            <Route path="/" component={ErrorPage} />
+                            {/* <Route path="/r/:id" exact component={Subreddit} /> */}
+                            <Route
+                                path="/r/:id"
+                                exact
+                                // This will alternative componentDidUpdate to ensure that each time
+                                // a new key is passed to the Subreddit component
+                                // then it will update the component with the new data
+                                render={({ match }) => {
+                                    const subreddit = match.params.id
+                                    if (!subreddit) {
+                                        return null
+                                    }
+                                    // return null
+                                    return <Subreddit key={subreddit} />
+                                }}
+                            />
+                            <Route path="/" exact component={ErrorPage} />
                         </Switch>
                         <Route path="/" component={PostContainer} />
                     </div>
-                    <div className="right-side-app"></div>
+                    <div className="right-side-app">
+                        <SideBar />
+                    </div>
                 </div>
                 {/* add a route here with path /, the component used in the route will check
           for a query param, eg: post_id=some_id

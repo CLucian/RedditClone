@@ -155,13 +155,14 @@ class Post extends React.Component {
 
     render() {
         console.log('this.state.authorImg', this.state.authorImg)
-        {
-            if (!this.props.postData) {
-                return <Login />
-            } else if (!this.state.authorImg) {
-                return '...Loading'
-            }
-        }
+        console.log('this.props.postData', this.props.postData)
+        // {
+        //     if (!this.props.postData) {
+        //         return <Login />
+        //     } else if (!this.state.authorImg) {
+        //         return '...Loading'
+        //     }
+        // }
 
         return (
             <div className="master-container">
@@ -238,10 +239,12 @@ class Post extends React.Component {
                     <div className="post-sub-info">
                         <div className="post-author">
                             <div className="author-img-container">
-                                <img
-                                    className="author-img"
-                                    src={this.state.authorImg}
-                                />
+                                {this.state.authorImg && (
+                                    <img
+                                        className="author-img"
+                                        src={this.state.authorImg}
+                                    />
+                                )}
                             </div>
                             Posted by:
                             <div className="author-text">

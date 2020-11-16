@@ -81,43 +81,11 @@ class Navbar extends React.Component {
                             </NavLink>
                         ))}
 
-                        {/* <NavLink onClick={() => this.handleClick('home')} to="/" exact>
-                            <li className="list-item">
-                                <div className={this.state.activeRoute === "home" ? activeMargin : null}>&nbsp;</div>
-                                <div className={this.state.activeRoute === "home" ? activeText : null}>Home</div>
-                            </li>
-                        </NavLink> */}
                         {this.context.accessToken ? null : (
                             <li className="list-item">
-                                {/* <a href={getAuthorizationURL()}>Log In</a> */}
                                 <Login />
                             </li>
                         )}
-                        {/* <li className="list-item">
-                            <NavLink to="/about">About</NavLink>
-                        </li>
-                        <li className="list-item">
-                            <NavLink to="/Explore">Explore Topics</NavLink>
-                        </li>
-                        <li className="list-item">
-                            <NavLink to="/Comments">My Comments</NavLink>
-                        </li>
-                        <li className="list-item">
-                            <NavLink to="/Topics">My Topics</NavLink>
-                        </li>
-                        <li className="list-item">
-                            <NavLink to="/profile">Profile</NavLink>
-                        </li> */}
-                        {/* {this.context.accessToken ? (
-              <li className="list-item">
-                <button onClick={this.context.setLoginStatusOut}>
-                  Log out
-                </button>
-              </li>
-            ) : null} */}
-                        {/* {this.context.username ? (
-              <li>User: {this.context.username}</li>
-            ) : null} */}
                         <div className="userInfo">
                             {this.context.userData ? (
                                 <li className="user">

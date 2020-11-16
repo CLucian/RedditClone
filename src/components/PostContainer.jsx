@@ -18,11 +18,17 @@ class PostContainer extends React.Component {
     // rid of post id in the url (history.push)
 
     closeModal = () => {
-        this.props.history.push('/')
+        // /r/movies?post_id=123&type=top ->
+        // /r/movies?type=top
+        // convert to a string
+        const postIdParam = this.props.location.search
+        const postPathName = this.props.location.pathname
+        this.props.history.push(`${postPathName}`)
+        // this.props.history.push(history.location.pathname)
     }
 
     render() {
-        const { location, history } = this.props
+        const { location, history, match } = this.props
 
         if (!location.search) {
             return null
@@ -31,7 +37,12 @@ class PostContainer extends React.Component {
         const urlParams = new URLSearchParams(location.search)
         const postId = urlParams.get('post_id')
 
-        console.log('what is location.search', location.search)
+        const postIdParam = this.props.history.location.search
+
+        console.log('what is the postIdParam', typeof postIdParam)
+        console.log('what is location.search', location)
+        console.log('what is the match', match)
+        console.log('what is the history', history)
         console.log('what is urlParams', urlParams)
         console.log('what is the currentId in the postContainer', postId)
 

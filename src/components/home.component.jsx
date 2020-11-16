@@ -119,7 +119,7 @@ export default class Home extends React.Component {
 
         return (
             <div>
-                {!this.context.accessToken ? (
+                {/* {!this.context.accessToken ? (
                     <div className="error-modal-container">
                         <div className="error-modal">
                             <p className="error-modal-header">
@@ -129,7 +129,7 @@ export default class Home extends React.Component {
                             <Login />
                         </div>
                     </div>
-                ) : null}
+                ) : null} */}
                 <div className="sort-container">
                     <div className="sortByMenuContainer">
                         <div className="sort-by-text">Sort By:</div>
