@@ -9,7 +9,7 @@ class SubredditLinks extends React.Component {
 
     render() {
         const { icon_img, display_name } = this.props.data
-        // console.log('what is this.props.data',)
+        console.log('icon_img', icon_img)
 
         return (
             <div className="subreddit-container">

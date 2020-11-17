@@ -32,7 +32,9 @@ class App extends React.Component {
         if (!this.context.hasFetched && !this.context.authenticated) {
             return <Login />
         }
-
+        // } else if (!this.context.hasFetched) {
+        //     return <Login />
+        // } else if (this.context.hasFetched && this.context.authenticated)
         return (
             <div className="app">
                 <TopNavbar />

@@ -26,18 +26,13 @@ class GlobalState extends React.Component {
     setGlobalState = (accessToken) => {
         this.getUserData(accessToken)
             .then((userData) => {
-                this.setState(
-                    {
-                        userData,
-                        hasFetched: true,
-                        accessToken,
-                    },
-                    () => {
-                        this.setState({
-                            authenticated: true,
-                        })
-                    }
-                )
+                console.log('getUserData this gets hit')
+                this.setState({
+                    userData,
+                    hasFetched: true,
+                    accessToken,
+                    authenticated: true,
+                })
             })
             //error out -- learn debugging
             .catch((err) => {
