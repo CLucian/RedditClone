@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import RedditDefault from './svg-components/RedditDefault'
 
 class SubredditLinks extends React.Component {
     constructor(props) {
@@ -16,7 +17,11 @@ class SubredditLinks extends React.Component {
                     <div className="subreddit-display-name">{display_name}</div>
                     {icon_img && (
                         <div className="subreddit-img-container">
-                            <img className="subreddit-img" src={icon_img} />
+                            {icon_img ? (
+                                <img className="subreddit-img" src={icon_img} />
+                            ) : (
+                                <RedditDefault />
+                            )}
                         </div>
                     )}
                 </Link>

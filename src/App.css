@@ -91,19 +91,35 @@ li, ul {
 
 .sidebar-nav {
   font-size: 1rem;
-  background: #fff;
+  /* background: #fff; */
   width: 90%;
   /* height: 20vh; */
   /* display: fixed; */
   font-style: Arial;
   text-decoration: none;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  text-decoration: none;
+  text-decoration: none; */
 }
+
+.subbed-reddit-links {
+  padding: 1rem;
+  /* display: flex;
+  justify-content: flex-start;
+  align-items: center; */
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.more-subreddits {
+  width: 100%;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
 
 .subreddit-links {
    width: 100%;
@@ -898,9 +914,18 @@ textarea {
 .Rising-container {}
 
 
+.RedditDefaultSVG {
+  width: 50rem;
+}
 
+.RedditDefault-container {
+  width: 10rem;
+}
 
-
+.RedditDefault {
+  fill: #0079d3;
+  /* height: 0.3rem; */
+}
 
 .HotSVG {
   width: 30%;

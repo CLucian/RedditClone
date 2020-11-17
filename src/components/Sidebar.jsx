@@ -1,8 +1,13 @@
 import React from 'react'
 import axios from 'axios'
 
+import SubscribedSubreddits from './SubscribedSubreddits'
 import { GlobalContext } from './GlobalState'
 import SubredditLinks from './SubredditLinks'
+import { Link } from 'react-router-dom'
+import RedditDefault from './svg-components/RedditDefault'
+
+import Login from './Login'
 
 class SideBar extends React.Component {
     constructor(props) {
@@ -13,37 +18,50 @@ class SideBar extends React.Component {
         }
     }
 
-    componentDidMount() {
-        const getSubreddits = () => {
-            return axios({
-                method: 'GET',
-                url: `https://oauth.reddit.com/subreddits/mine/subscriber`,
-                headers: {
-                    Authorization: 'bearer ' + this.context.accessToken,
-                },
+    getSubreddits = () => {
+        return axios({
+            method: 'GET',
+            url: `https://oauth.reddit.com/subreddits/mine/subscriber?limit=10`,
+            headers: {
+                Authorization: 'bearer ' + this.context.accessToken,
+            },
+        })
+            .then((response) => {
+                console.log('subreddit response - sidebar', response)
+                this.setState({
+                    subredditDataArr: response.data.data.children,
+                    isLoading: false,
+                })
             })
-                .then((response) => {
-                    console.log('subreddit response - sidebar', response)
-                    this.setState({
-                        subredditDataArr: response.data.data.children,
-                        isLoading: false,
-                    })
-                })
-                .catch((err) => {
-                    console.log('Home Component Error: ', err)
-                })
+            .catch((err) => {
+                console.log('Home Component Error: ', err)
+            })
+    }
+
+    componentDidMount() {
+        if (this.context.accessToken) {
+            console.log('accessToken in sidebar', this.context.accessToken)
+            this.getSubreddits()
         }
-        getSubreddits()
     }
 
     render() {
+        // if (this.context.accessToken) {
+        //     // this.getSubreddits()
+        //     for (let i = 0; i < 1; i++) {
+        //         this.getSubreddits()
+        //     }
+        // }
+
+        console.log('access token in sidebar', this.context.accessToken)
         if (this.state.isLoading) {
             return 'Loading...'
         }
 
         return (
-            <div className="sidebar-nav">
-                <div className="menu">Subreddits</div>
+            // <div className="sidebar-nav">
+            <div className="subbed-reddit-links">
+                <div className="menu">Subscribed subreddits</div>
                 <ul className="subreddit-links">
                     {this.state.subredditDataArr.map((subreddit) => {
                         return (
@@ -53,7 +71,12 @@ class SideBar extends React.Component {
                         )
                     })}
                 </ul>
+                <div className="more-subreddits">
+                    <Link to="/me/subreddits">See all subreddits</Link>
+                </div>
+                <RedditDefault />
             </div>
+            /* </div> */
         )
     }
 }

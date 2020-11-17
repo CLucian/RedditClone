@@ -10,7 +10,8 @@ class GlobalState extends React.Component {
         this.state = {
             accessToken: null,
             isLoggedIn: false,
-            isLoading: true,
+            authenticated: false,
+            hasFetched: true,
             userData: null,
         }
     }
@@ -25,21 +26,28 @@ class GlobalState extends React.Component {
     setGlobalState = (accessToken) => {
         this.getUserData(accessToken)
             .then((userData) => {
-                this.setState({
-                    userData,
-                    accessToken,
-                    isLoading: false,
-                })
+                this.setState(
+                    {
+                        userData,
+                        hasFetched: true,
+                        accessToken,
+                    },
+                    () => {
+                        this.setState({
+                            authenticated: true,
+                        })
+                    }
+                )
             })
             //error out -- learn debugging
             .catch((err) => {
                 console.log('setGlobalState Error: ', err)
                 localStorage.clear()
                 this.setState({
-                    isLoading: false,
                     accessToken: null,
                 })
                 this.props.history.push('/home')
+                // this.props.history.push('/login')
             })
     }
 
@@ -86,10 +94,15 @@ class GlobalState extends React.Component {
             // })
         } else {
             this.setState({
-                isLoading: false,
+                authenticated: false,
+                hasFetched: false,
             })
+            // this.getAccessToken();
+            // this.setAuthState()
         }
     }
+
+    fncInitiator = (tokenRetriever) => {}
 
     // Retrieves the access token from the authorize component
 
@@ -127,6 +140,7 @@ class GlobalState extends React.Component {
                 value={{
                     ...this.state,
                     setAuthState: this.setAuthState,
+                    fncInitiator: this.fncInitiator,
                     setLoginStatusOut: this.setLoginStatusOut,
                     setProfileState: this.setProfileState,
                     getAndDisplayComment: this.getAndDisplayComment,

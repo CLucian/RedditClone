@@ -12,6 +12,8 @@ import Posts from './components/post.component'
 import PostContainer from './components/PostContainer'
 import SideBar from './components/Sidebar'
 import Subreddit from './components/Subreddit'
+import SubscribedSubreddits from './components/SubscribedSubreddits'
+import Login from './components/Login'
 
 import test from './components/test'
 
@@ -19,16 +21,16 @@ import { GlobalContext } from './components/GlobalState'
 import TopNavbar from './components/TopNavbar'
 
 class App extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {}
-    }
+    // constructor(props) {
+    //     super(props)
+    //     this.state = {}
+    // }
 
     // Do this in /authorize, set state for islogged in and the auth token and then conditionally redirect IF islogged in back to home page
 
     render() {
-        if (this.context.isLoading) {
-            return 'loading...'
+        if (!this.context.hasFetched && !this.context.authenticated) {
+            return <Login />
         }
 
         return (
@@ -62,10 +64,17 @@ class App extends React.Component {
                             />
                             <Route path="/" exact component={ErrorPage} />
                         </Switch>
+                        <Route
+                            path="/me/subreddits"
+                            component={SubscribedSubreddits}
+                        />
                         <Route path="/" component={PostContainer} />
                     </div>
                     <div className="right-side-app">
-                        <SideBar />
+                        <div className="sidebar-nav">
+                            <SideBar />
+                            <div></div>
+                        </div>
                     </div>
                 </div>
                 {/* add a route here with path /, the component used in the route will check

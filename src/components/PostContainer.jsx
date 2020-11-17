@@ -30,12 +30,14 @@ class PostContainer extends React.Component {
     render() {
         const { location, history, match } = this.props
 
-        if (!location.search) {
+        const urlParams = new URLSearchParams(location.search || '')
+        const postId = urlParams.get('post_id')
+        // if (!location.search) {
+        //     return null
+        // }
+        if (!postId) {
             return null
         }
-
-        const urlParams = new URLSearchParams(location.search)
-        const postId = urlParams.get('post_id')
 
         const postIdParam = this.props.history.location.search
 
