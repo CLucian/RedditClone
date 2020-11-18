@@ -2,7 +2,7 @@ import React from 'react'
 import Axios from 'axios'
 import qs from 'qs'
 
-import { GlobalContext } from './GlobalState'
+import { GlobalContext } from '../GlobalState'
 
 class CommentReplyInput extends React.Component {
     constructor(props) {

@@ -2,11 +2,10 @@ import React from 'react'
 
 import Axios from 'axios'
 import qs from 'qs'
-import { Redirect } from 'react-router-dom'
 
-import Login from './Login'
+import Login from '../Login'
 import ProfileComments from './ProfileComments'
-import { GlobalContext } from './GlobalState'
+import { GlobalContext } from '../GlobalState'
 
 export default class Profile extends React.Component {
     constructor(props) {

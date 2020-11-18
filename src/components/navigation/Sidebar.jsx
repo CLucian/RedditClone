@@ -1,13 +1,11 @@
 import React from 'react'
 import axios from 'axios'
 
-import SubscribedSubreddits from './SubscribedSubreddits'
-import { GlobalContext } from './GlobalState'
-import SubredditLinks from './SubredditLinks'
+// import SubscribedSubreddits from '../profile/SubscribedSubreddits'
+import { GlobalContext } from '../GlobalState'
+import SubredditLinks from '../profile/SubredditLinks'
 import { Link } from 'react-router-dom'
-import RedditDefault from './svg-components/RedditDefault'
-
-import Login from './Login'
+import RedditDefault from '../svg-components/RedditDefault'
 
 class SideBar extends React.Component {
     constructor(props) {

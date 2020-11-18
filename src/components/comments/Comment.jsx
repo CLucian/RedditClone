@@ -5,14 +5,13 @@ import Axios from 'axios'
 import qs from 'qs'
 
 import CommentReply from './CommentReply'
-import MoreReplies from './MoreReplies'
-import { GlobalContext } from './GlobalState'
+import { GlobalContext } from '../GlobalState'
 import moment from 'moment'
 
-import DownArrow from '../components/svg-components/DownArrow'
-import UpArrow from '../components/svg-components/UpArrow'
-import Collapse from './svg-components/Collapse'
-import UnCollapse from './svg-components/UnCollapse'
+import DownArrow from '../svg-components/DownArrow'
+import UpArrow from '../svg-components/UpArrow'
+import Collapse from '../svg-components/Collapse'
+import UnCollapse from '../svg-components/UnCollapse'
 
 // const replyContext = React.useContext(GlobalContext)
 

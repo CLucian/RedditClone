@@ -1,10 +1,10 @@
 import React from 'react'
 import axios from 'axios'
 
-import Loader from './svg-components/Loader'
-import { GlobalContext } from './GlobalState'
+import Loader from '../svg-components/Loader'
+import { GlobalContext } from '../GlobalState'
 import Comment from './Comment'
-import { flattenCommentTree } from '../utils/comments'
+import { flattenCommentTree } from '../../utils/comments'
 
 export const CommentContext = React.createContext()
 

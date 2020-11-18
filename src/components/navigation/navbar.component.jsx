@@ -1,9 +1,8 @@
 import React from 'react'
 import { Link, NavLink, withRouter } from 'react-router-dom'
-import { GlobalContext } from './GlobalState'
+import { GlobalContext } from '../GlobalState'
 
-import Login from './Login'
-import Home from './home.component'
+import Login from '../Login'
 
 const CLIENT_ID = 'MMej7E1hI1x82A'
 const REDIRECT_URI = 'http://localhost:3000/authorize'
@@ -94,9 +93,7 @@ class Navbar extends React.Component {
                             ) : null}
                             {this.context.accessToken ? (
                                 <li className="list-item login-btn">
-                                    <button
-                                        onClick={this.context.setLoginStatusOut}
-                                    >
+                                    <button onClick={this.context.invalidate}>
                                         Log out
                                     </button>
                                 </li>

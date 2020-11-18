@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import RedditDefault from './svg-components/RedditDefault'
+import RedditDefault from '../svg-components/RedditDefault'
 
 class SubredditLinks extends React.Component {
     constructor(props) {

@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import Modal from './Modal'
-import PostModal from './PostModal'
+// import Modal from './modal/Modal'
+// import PostModal from './modal/PostModal'
 import Login from './Login'
 import { GlobalContext } from './GlobalState'
 
@@ -170,14 +170,6 @@ class Post extends React.Component {
                     className="profile-post-container"
                     onClick={this.openModal}
                 >
-                    {/* <div className="post-thumbnail-container">
-                        <img
-                            className="post-thumbnail"
-                            src={this.defaultThumbnail()}
-                            alt="thumbnail"
-                        />
-                    </div> */}
-
                     <div className="post-main-info">
                         <div className="post-score">
                             <div

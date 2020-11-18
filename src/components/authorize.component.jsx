@@ -3,24 +3,22 @@ import axios from 'axios'
 import { Redirect } from 'react-router-dom'
 
 import { GlobalContext } from './GlobalState'
-
-const paramString = window.location.search
-const paramSearch = new URLSearchParams(paramString)
-
-// will get the code for the bearer token
-let code = paramSearch.get('code')
+import { generateToken } from '../queries/auth'
 
 export default class Authorize extends React.Component {
+    state = {
+        isComplete: false,
+    }
+
     getAccessToken = () => {
-        axios
-            .post('/login', {
-                code,
-            })
-            .then((response) => {
-                // pass access token to GlobalState method
-                this.context.setAuthState({
-                    accessToken: response.data.access_token,
-                })
+        const paramString = window.location.search
+        const paramSearch = new URLSearchParams(paramString)
+        const code = paramSearch.get('code')
+
+        generateToken(code)
+            .then((token) => {
+                this.setState({ isComplete: true })
+                this.context.setup(token)
             })
             .catch((err) => {
                 console.log(err)
@@ -32,20 +30,11 @@ export default class Authorize extends React.Component {
     }
 
     render() {
-        if (this.context.accessToken) {
+        if (this.state.isComplete) {
             return <Redirect to="/" />
         }
-        return (
-            <div>
-                <h1>This is the authorization component</h1>
-                {this.context.accessToken ? (
-                    <h1 className="authorized">Reddit has authorized you!!</h1>
-                ) : null}
-            </div>
-        )
+        return <div>authorizing...</div>
     }
 }
 
 Authorize.contextType = GlobalContext
-
-//gives access to methods or whatever as this.context

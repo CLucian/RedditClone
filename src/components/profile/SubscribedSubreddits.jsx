@@ -1,7 +1,7 @@
 import React from 'react'
 
 import axios from 'axios'
-import { GlobalContext } from './GlobalState'
+import { GlobalContext } from '../GlobalState'
 
 class SubscribedSubreddits extends React.Component {
     constructor(props) {

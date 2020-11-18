@@ -1,7 +1,7 @@
 import React from 'react'
 import CommentReplyInput from './CommentReplyInput'
 import CommentEditInput from './CommentEditInput'
-import { GlobalContext } from './GlobalState'
+import { GlobalContext } from '../GlobalState'
 
 // import InputField from './InputField';
 

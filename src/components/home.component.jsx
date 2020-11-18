@@ -5,7 +5,7 @@ import { BrowserRouter as Link } from 'react-router-dom'
 
 import Post from './post.component'
 import Login from './Login'
-import Modal from './Modal'
+import Modal from './modal/Modal'
 
 import BestSVG from './svg-components/BestSVG'
 import HotSVG from './svg-components/HotSVG'
@@ -14,7 +14,6 @@ import RisingSVG from './svg-components/RisingSVG'
 import TopSVG from './svg-components/TopSVG'
 
 import { GlobalContext } from './GlobalState'
-import SortByMenu from './SortByMenu'
 
 const sortOptions = [
     { name: 'Best', value: 'best', icon: <BestSVG /> },

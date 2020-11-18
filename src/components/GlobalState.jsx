@@ -1,20 +1,80 @@
 import React from 'react'
 import axios from 'axios'
 import { withRouter } from 'react-router-dom'
+import {
+    getAccessToken,
+    setAccessToken,
+    clearAccessToken,
+} from '../utils/login'
+import { fetchProfile } from '../queries/auth'
 
 export const GlobalContext = React.createContext()
+
+export const STATUS = {
+    INAUTHENTICATED: 'INAUTHENTICATED',
+    // is fetching the profile - they have a token, just validating that it works
+    // this is to prevent showing login OR app while we're validating the token
+    AUTHENTICATING: 'AUTHENTICATING',
+    // profile has been fetched, user is good to go
+    AUTHENTICATED: 'AUTHENTICATED',
+}
 
 class GlobalState extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             accessToken: null,
-            isLoggedIn: false,
-            authenticated: false,
-            hasFetched: true,
             userData: null,
+            status: null,
+            // status: STATUS.NOT_AUTH,
+            // isLoggedIn: false,
+            // authenticated: false,
+            // hasFetched: true,
         }
     }
+
+    componentDidMount() {
+        const token = getAccessToken()
+        if (token) {
+            this.setup(token)
+        } else {
+            this.setState({ status: STATUS.INAUTHENTICATED })
+        }
+    }
+
+    setup = (token) => {
+        this.setState({ status: STATUS.AUTHENTICATING })
+
+        fetchProfile(token)
+            .then((profile) => {
+                // store in local storage
+                setAccessToken(token)
+
+                // update state
+                this.setState({
+                    accessToken: token,
+                    userData: profile,
+                    status: STATUS.AUTHENTICATED,
+                })
+            })
+            .catch((err) => {
+                // token has expired, invalidate
+                this.invalidate()
+            })
+    }
+
+    invalidate = () => {
+        clearAccessToken()
+        this.setState({
+            accessToken: null,
+            userData: null,
+            status: STATUS.INAUTHENTICATED,
+        })
+    }
+
+    // getProfile = (token) => {
+
+    // }
 
     // MAKE USER DATA ACCESSIBLE TO BOTH FLOWS --> MAKE IT A REUSABLE FUNCTION
     // Take in auth token as param
@@ -54,91 +114,72 @@ class GlobalState extends React.Component {
         return yourReply
     }
 
-    getUserData = (accessToken) => {
-        return axios
-            .request({
-                url: 'https://oauth.reddit.com/api/v1/me',
-                headers: {
-                    // authorization: "bearer " + localStorage.getItem("access_token"),
-                    authorization: 'bearer ' + accessToken,
-                },
-            })
+    // getUserData = (accessToken) => {
+    //     return axios
+    //         .request({
+    //             url: 'https://oauth.reddit.com/api/v1/me',
+    //             headers: {
+    //                 // authorization: "bearer " + localStorage.getItem("access_token"),
+    //                 authorization: 'bearer ' + accessToken,
+    //             },
+    //         })
 
-            .then((response) => {
-                console.log(
-                    '=====PROFILE DATA=====',
-                    response,
-                    response.data.name
-                )
-                return response.data
-            })
-    }
+    //         .then((response) => {
+    //             console.log(
+    //                 '=====PROFILE DATA=====',
+    //                 response,
+    //                 response.data.name
+    //             )
+    //             return response.data
+    //         })
+    // }
 
-    componentDidMount() {
-        // If there is an access token aka already logged in --> call getUserData.
-        if (localStorage.getItem('access_token')) {
-            console.log(
-                'has token, setting as',
-                localStorage.getItem('access_token')
-            )
-            this.setGlobalState(localStorage.getItem('access_token'))
-
-            // We will handle setState in getUserData above, so we can combine all setState in 1 function
-            // this.setState({
-            // 	accessToken: localStorage.getItem('access_token'),
-            // })
-        } else {
-            this.setState({
-                authenticated: false,
-                hasFetched: false,
-            })
-            // this.getAccessToken();
-            // this.setAuthState()
-        }
-    }
-
-    fncInitiator = (tokenRetriever) => {}
+    // fncInitiator = (tokenRetriever) => {}
 
     // Retrieves the access token from the authorize component
 
-    setAuthState = (authState) => {
-        if (authState.accessToken) {
-            console.log('token is', authState.accessToken)
-            localStorage.setItem('access_token', authState.accessToken)
-            // this.setState({
-            // 	accessToken: authState.accessToken,
-            // 	isLoggedIn: true,
-            // });
-            this.setGlobalState(authState.accessToken)
-        }
-    }
+    // setAuthState = (authState) => {
+    //     if (authState.accessToken) {
+    //         console.log('token is', authState.accessToken)
+    //         localStorage.setItem('access_token', authState.accessToken)
+    //         // this.setState({
+    //         // 	accessToken: authState.accessToken,
+    //         // 	isLoggedIn: true,
+    //         // });
+    //         this.setGlobalState(authState.accessToken)
+    //     }
+    // }
 
-    setLoginStatusOut = () => {
-        if (localStorage.getItem('access_token')) {
-            localStorage.clear()
-            this.setState({
-                accessToken: null,
-                isLoggedIn: false,
-                username: null,
-            })
-        }
-    }
+    // setLoginStatusOut = () => {
+    //     if (localStorage.getItem('access_token')) {
+    //         localStorage.clear()
+    //         this.setState({
+    //             accessToken: null,
+    //             isLoggedIn: false,
+    //             username: null,
+    //         })
+    //     }
+    // }
 
     render() {
-        console.log(
-            'this is the new global state',
-            localStorage.getItem('access_token')
-        )
-        console.log('this is the new global state', this.state.accessToken)
+        // console.log(
+        //     'this is the new global state',
+        //     localStorage.getItem('access_token')
+        // )
+        // console.log('this is the new global state', this.state.accessToken)
+
         return (
             <GlobalContext.Provider
                 value={{
                     ...this.state,
-                    setAuthState: this.setAuthState,
-                    fncInitiator: this.fncInitiator,
-                    setLoginStatusOut: this.setLoginStatusOut,
-                    setProfileState: this.setProfileState,
+                    // setAuthState: this.setAuthState,
+                    // fncInitiator: this.fncInitiator,
+                    // setLoginStatusOut: this.setLoginStatusOut,
+                    // setProfileState: this.setProfileState,
                     getAndDisplayComment: this.getAndDisplayComment,
+                    // new items
+                    setup: this.setup,
+                    invalidate: this.invalidate,
                 }}
             >
                 {this.props.children}

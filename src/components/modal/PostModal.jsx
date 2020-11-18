@@ -1,9 +1,9 @@
 import React from 'react'
 // import { useLocation } from 'react-router-dom'
 
-import Close from './svg-components/Close'
-import Comments from './Comments'
-import { GlobalContext } from './GlobalState'
+import Close from '../svg-components/Close'
+import Comments from '../comments/Comments'
+import { GlobalContext } from '../GlobalState'
 
 import marked from 'marked'
 import DOMPurify from 'dompurify'

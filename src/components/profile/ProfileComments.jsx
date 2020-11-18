@@ -7,11 +7,11 @@ import moment from 'moment'
 import Axios from 'axios'
 import qs from 'qs'
 
-import HeartSVG from './svg-components/Heart'
-import BubbleSVG from './svg-components/Bubble'
-import UpArrowSVG from './svg-components/UpArrow'
-import DownArrowSVG from './svg-components/DownArrow'
-import AuthorSVG from './svg-components/Author'
+import HeartSVG from '../svg-components/Heart'
+import BubbleSVG from '../svg-components/Bubble'
+import UpArrowSVG from '../svg-components/UpArrow'
+import DownArrowSVG from '../svg-components/DownArrow'
+import AuthorSVG from '../svg-components/Author'
 
 class ProfileComments extends React.Component {
     constructor(props) {

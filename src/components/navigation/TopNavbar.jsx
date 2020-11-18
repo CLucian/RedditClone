@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import Login from './Login'
-import { GlobalContext } from './GlobalState'
+import Login from '../Login'
+import { GlobalContext } from '../GlobalState'
 
 const TopNavbar = () => {
     const context = React.useContext(GlobalContext)

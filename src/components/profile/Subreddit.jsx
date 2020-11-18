@@ -2,15 +2,15 @@ import React from 'react'
 import axios from 'axios'
 import { withRouter } from 'react-router-dom'
 
-import Post from './post.component'
+import Post from '../post.component'
 
-import BestSVG from './svg-components/BestSVG'
-import HotSVG from './svg-components/HotSVG'
-import NewSVG from './svg-components/NewSVG'
-import TopSVG from './svg-components/TopSVG'
-import RisingSVG from './svg-components/RisingSVG'
+import BestSVG from '../svg-components/BestSVG'
+import HotSVG from '../svg-components/HotSVG'
+import NewSVG from '../svg-components/NewSVG'
+import TopSVG from '../svg-components/TopSVG'
+import RisingSVG from '../svg-components/RisingSVG'
 
-import { GlobalContext } from './GlobalState'
+import { GlobalContext } from '../GlobalState'
 
 const sortOptions = [
     { name: 'Best', value: 'best', icon: <BestSVG /> },
