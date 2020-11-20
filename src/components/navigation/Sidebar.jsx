@@ -5,7 +5,6 @@ import axios from 'axios'
 import { GlobalContext } from '../GlobalState'
 import SubredditLinks from '../profile/SubredditLinks'
 import { Link } from 'react-router-dom'
-import RedditDefault from '../svg-components/RedditDefault'
 
 class SideBar extends React.Component {
     constructor(props) {
@@ -70,9 +69,8 @@ class SideBar extends React.Component {
                     })}
                 </ul>
                 <div className="more-subreddits">
-                    <Link to="/me/subreddits">See all subreddits</Link>
+                    <Link to="/me/subreddits">See all your subreddits</Link>
                 </div>
-                <RedditDefault />
             </div>
             /* </div> */
         )

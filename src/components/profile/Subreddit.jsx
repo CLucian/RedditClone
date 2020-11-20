@@ -2,6 +2,9 @@ import React from 'react'
 import axios from 'axios'
 import { withRouter } from 'react-router-dom'
 
+import marked from 'marked'
+import DOMPurify from 'dompurify'
+
 import Post from '../post.component'
 
 import BestSVG from '../svg-components/BestSVG'
@@ -27,7 +30,27 @@ class Subreddit extends React.Component {
             subredditData: null,
             isLoading: true,
             category: 'best',
+            currentSubreddit: null,
         }
+    }
+
+    getSubreddit = () => {
+        return axios({
+            method: 'GET',
+            url: `https://oauth.reddit.com/r/${this.props.match.params.id}/about/`,
+            headers: {
+                Authorization: 'bearer ' + this.context.accessToken,
+            },
+        })
+            .then((response) => {
+                console.log('subreddit subreddit response', response)
+                this.setState({
+                    currentSubreddit: response.data.data,
+                })
+            })
+            .catch((err) => {
+                console.log('Home Component Error: ', err)
+            })
     }
 
     getSubredditPosts = () => {
@@ -55,6 +78,7 @@ class Subreddit extends React.Component {
 
     componentDidMount() {
         this.getSubredditPosts()
+        this.getSubreddit()
     }
 
     handleClick = (val) => {
@@ -67,12 +91,67 @@ class Subreddit extends React.Component {
         // this.getSubredditPosts(val)
     }
 
+    getMarkDown = (markDown) => {
+        if (markDown) {
+            const rawMarkup = marked(markDown)
+            const clean = DOMPurify.sanitize(rawMarkup)
+            return { __html: clean }
+        } else {
+            return {
+                __html: '',
+            }
+        }
+    }
+
     render() {
         if (this.state.isLoading) {
             return '...loading'
         }
+
+        const {
+            banner_background_image,
+            title,
+            community_icon,
+            banner_background_color,
+            banner_img,
+            header_img,
+            icon_img,
+            display_name_prefixed,
+            public_description,
+        } = this.state.currentSubreddit
+
         return (
             <div>
+                <div className="subreddit-header-banner">
+                    <img
+                        className="subreddit-header-img"
+                        src={
+                            banner_background_image.split('?width')[0] ||
+                            banner_img
+                        }
+                    />
+                </div>
+                <div className="subreddit-banner-header">
+                    <div className="subreddit-display-container">
+                        <img
+                            className="display-image"
+                            src={
+                                community_icon.split('?width')[0] ||
+                                icon_img ||
+                                `https://styles.redditmedia.com/t5_vm1db/styles/communityIcon_5nthugyr0ef21.png?width=256&s=3a163f7135b93df0dab0921dba35f760baea5945`
+                            }
+                        />
+                    </div>
+                    <div className="subreddit-title-homepage">
+                        {display_name_prefixed}
+                    </div>
+                    <div
+                        className="subreddit-page-description"
+                        dangerouslySetInnerHTML={this.getMarkDown(
+                            public_description
+                        )}
+                    ></div>
+                </div>
                 <div className="sort-container">
                     <div className="sortByMenuContainer">
                         <div className="sort-by-text">Sort By:</div>
@@ -80,13 +159,11 @@ class Subreddit extends React.Component {
                             <div
                                 // onClick={() => this.getHomePage('best')}
                                 onClick={() => this.handleClick(option.value)}
-                                // className={`menu-svg-container ${
-                                //     this.state.sortBy === option.value
-                                //         ? 'active'
-                                //         : ''
-                                // }`}
-                                className="menu-svg-container"
-                                // id={this.state.sortBy === 'best' && 'best'}
+                                className={`menu-svg-container ${
+                                    this.state.category === option.value
+                                        ? 'active'
+                                        : ''
+                                }`}
                             >
                                 {option.icon}
                                 <div className="sort-by-text">
