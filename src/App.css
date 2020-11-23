@@ -97,7 +97,7 @@ li, ul {
   /* display: fixed; */
   font-style: Arial;
   text-decoration: none;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); */
   /* display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -118,6 +118,7 @@ li, ul {
   width: 100%;
   text-align: center;
   font-size: 1.5rem;
+  padding-bottom: 1rem;
 }
 
 
@@ -170,7 +171,7 @@ li, ul {
 
 
 .subreddit-header-banner {
-  max-width: 90%;
+  max-width: 95%;
   max-height: 15vh;
   margin: auto;
   margin-bottom: 2rem;
@@ -186,6 +187,29 @@ li, ul {
 
 
 }
+
+
+
+
+
+/* SubscribedSubreddits */
+
+.subreddit-page-title {
+  font-size: 3rem;
+  text-align: center;
+  padding: 2rem;
+  margin-bottom: 1rem;
+}
+
+
+
+
+
+
+
+
+
+
 
 .subreddit-header-img {
   width: 100%;
@@ -215,10 +239,13 @@ li, ul {
 .subreddit-img-header-container {
   width: 15rem;
   height: 15rem;
+  display: flex;
+  align-items: center;
 }
 
 .subreddit-img-header {
   width: 100%;
+  /* height: 100%; */
   height: auto;
 }
 
@@ -257,7 +284,7 @@ li, ul {
   font-size: 1rem;
   background: #fff;
   width: 90%;
-  /* height: 20vh; */
+  height: fit-content;
   /* display: fixed; */
   font-style: Arial;
   text-decoration: none;
@@ -274,6 +301,7 @@ li, ul {
   font-size: 2rem;
   margin: 0;
   padding: 1rem;
+  /* height: 20vh; */
   /* display: flex; */
   /* flex-direction: column;
   justify-content: flex-start;
@@ -415,8 +443,8 @@ a {
 }
 
 .post-thumbnail-container {
-  width: auto;
-  height: 15rem;
+  width: 20rem;
+  height: auto;
   border: 0.1rem solid #999;
   border-radius: 0.2rem;
   display: flex;
@@ -427,7 +455,8 @@ a {
 
 .post-thumbnail {
   max-height: 20rem;
-  max-width: 14rem;
+  max-width: 20rem;
+  
 }
 
 
@@ -992,7 +1021,7 @@ textarea {
 .subreddit-banner-header {
   width: 90%;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   margin: auto;
   padding: 2rem 0 2rem 0;
@@ -1013,15 +1042,31 @@ textarea {
 }
 
 .subreddit-title-homepage {
-  width: 100%;
+  width: content-fit;
   /* text-align: center; */
   font-size: 2.5rem;
   padding: 2rem;
+  margin-right: 1rem;
 }
 
 .subreddit-page-description {
   color: #b1b1b1;
   font-size: 1.5rem; 
+}
+
+
+.active-users-container {
+  padding-left: 2rem;
+  text-align: center;
+}
+
+.UsersSVG {
+  fill: #b1b1b1;
+}
+
+.active-users {
+  padding-top: 0.5rem;
+  color: #b1b1b1
 }
 
 .sort-container {

@@ -7,6 +7,7 @@ import DOMPurify from 'dompurify'
 
 import Post from '../post.component'
 
+import Users from '../svg-components/Users'
 import BestSVG from '../svg-components/BestSVG'
 import HotSVG from '../svg-components/HotSVG'
 import NewSVG from '../svg-components/NewSVG'
@@ -118,6 +119,7 @@ class Subreddit extends React.Component {
             icon_img,
             display_name_prefixed,
             public_description,
+            active_user_count,
         } = this.state.currentSubreddit
 
         return (
@@ -151,6 +153,13 @@ class Subreddit extends React.Component {
                             public_description
                         )}
                     ></div>
+                    <div
+                        className="active-users-container"
+                        title="Active Users"
+                    >
+                        <Users />
+                        <div className="active-users">{active_user_count}</div>
+                    </div>
                 </div>
                 <div className="sort-container">
                     <div className="sortByMenuContainer">

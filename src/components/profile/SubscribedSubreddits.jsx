@@ -37,7 +37,10 @@ class SubscribedSubreddits extends React.Component {
     render() {
         console.log('subscribedsubreddits', this.state.subredditDataArr)
         return (
-            <div>
+            <div className="subreddit-page-container">
+                <div className="subreddit-page-title">
+                    Subscribed Subreddits
+                </div>
                 {this.state.subredditDataArr &&
                     this.state.subredditDataArr.map((subredditData) => {
                         return <SubredditList data={subredditData} />

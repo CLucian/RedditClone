@@ -12,41 +12,81 @@ export default class Profile extends React.Component {
         super(props)
         this.state = {
             postChildren: '',
+            page: 1,
+            before: null,
+            after: null,
         }
     }
 
-    componentDidMount() {
-        if (this.context.accessToken) {
-            const data = {
-                t: 'all',
-                type: 'comments',
-                sort: 'new',
-                limit: '100',
-            }
-            Axios({
-                method: 'get',
-                url: `https://oauth.reddit.com/user/${this.context.userData.name}/comments`,
-                headers: {
-                    Authorization: 'bearer ' + this.context.accessToken,
-                    'content-type': 'application/x-www-form-urlencoded',
-                    // "Content-Type": "application/x-www-form-urlencoded"
-                },
-                data: qs.stringify(data),
-            })
-                .then((response) => {
-                    console.log('user comments response', response)
-                    this.setState({
-                        postChildren: response.data.data.children,
-                    })
-                })
-                .catch((err) => {
-                    console.log(err)
-                    console.log('what is the error', err.data)
-                    alert('There was an error' + err)
-                })
-        } else {
-            return <div>{this.context.loginFnc}}</div>
+    getProfile = (pageDir) => {
+        let url = `https://oauth.reddit.com/user/${this.context.userData.name}/comments?count=555`
+        if (pageDir === 'next') {
+            url = `https://oauth.reddit.com/user/${this.context.userData.name}/comments?count=555&after=${this.state.after}`
+        } else if (pageDir === 'prev') {
+            url = `https://oauth.reddit.com/user/${this.context.userData.name}/comments?count=555&before=${this.state.before}`
         }
+        // const url = `https://oauth.reddit.com/user/${this.context.userData.name}/comments`
+        // const urlAfter = `https://oauth.reddit.com/user/${this.context.userData.name}/comments/after=${this.state.after}`
+        // const urlBefore = `https://oauth.reddit.com/user/${this.context.userData.name}/comments/before=${this.state.before}`
+        const data = {
+            t: 'all',
+            type: 'comments',
+            sort: 'new',
+            limit: '100',
+        }
+        Axios({
+            method: 'get',
+            // url: `https://oauth.reddit.com/user/${this.context.userData.name}/comments`,
+            url: url,
+            headers: {
+                Authorization: 'bearer ' + this.context.accessToken,
+                'content-type': 'application/x-www-form-urlencoded',
+                // "Content-Type": "application/x-www-form-urlencoded"
+            },
+            data: qs.stringify(data),
+        })
+            .then((response) => {
+                console.log('user comments response', response)
+                this.setState({
+                    postChildren: response.data.data.children,
+                    // pageId: response.data.data.after,
+                    // firstAfter:
+                    before: response.data.data.before,
+                    after: response.data.data.after,
+                })
+            })
+            .catch((err) => {
+                console.log(err)
+                console.log('what is the error', err.data)
+                alert('There was an error' + err)
+            })
+    }
+
+    componentDidMount() {
+        this.getProfile()
+    }
+
+    getPage = (pageDir) => {
+        // this.getProfile(this.state.after, null)
+        if (pageDir === 'next') {
+            this.setState(
+                {
+                    page: this.state.page + 1,
+                },
+                this.getProfile(pageDir)
+            )
+        } else if (pageDir === 'prev') {
+            this.setState(
+                {
+                    page: this.state.page - 1,
+                },
+                this.getProfile(pageDir)
+            )
+        }
+    }
+
+    prevPage = () => {
+        this.getProfile(null, this.state.before)
     }
 
     render() {
@@ -72,6 +112,26 @@ export default class Profile extends React.Component {
                 ) : (
                     <div>
                         <Login />
+                    </div>
+                )}
+                {this.state.before && this.state.page > 1 && (
+                    <div
+                        onClick={() => {
+                            this.getPage('prev')
+                        }}
+                        className="pagination"
+                    >
+                        Previous Page
+                    </div>
+                )}
+                {this.state.after && (
+                    <div
+                        onClick={() => {
+                            this.getPage('next')
+                        }}
+                        className="pagination"
+                    >
+                        Next Page
                     </div>
                 )}
             </div>
