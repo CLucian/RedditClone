@@ -69,7 +69,9 @@ class SideBar extends React.Component {
                     })}
                 </ul>
                 <div className="more-subreddits">
-                    <Link to="/me/subreddits">See all your subreddits</Link>
+                    <Link id="more-subreddits-link" to="/me/subreddits">
+                        See all your subreddits
+                    </Link>
                 </div>
             </div>
             /* </div> */

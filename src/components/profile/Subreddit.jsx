@@ -32,10 +32,13 @@ class Subreddit extends React.Component {
             isLoading: true,
             category: 'best',
             currentSubreddit: null,
+            before: null,
+            after: null,
+            page: 1,
         }
     }
 
-    getSubreddit = () => {
+    getSubredditDetails = () => {
         return axios({
             method: 'GET',
             url: `https://oauth.reddit.com/r/${this.props.match.params.id}/about/`,
@@ -54,10 +57,17 @@ class Subreddit extends React.Component {
             })
     }
 
-    getSubredditPosts = () => {
+    getSubredditPosts = (pageDir) => {
+        let url = `https://oauth.reddit.com/r/${this.props.match.params.id}/${this.state.category}?limit=10`
+        if (pageDir === 'next') {
+            url = `https://oauth.reddit.com/r/${this.props.match.params.id}/${this.state.category}?count=555&after=${this.state.after}&limit=10`
+            // url = `https://oauth.reddit.com/count=555?after=${this.state.after}`
+        } else if (pageDir === 'prev') {
+            url = `https://oauth.reddit.com/r/${this.props.match.params.id}/${this.state.category}?count=555&before=${this.state.before}&limit=10`
+        }
         return axios({
             method: 'GET',
-            url: `https://oauth.reddit.com/r/${this.props.match.params.id}/${this.state.category}`,
+            url: url,
             headers: {
                 Authorization: 'bearer ' + this.context.accessToken,
             },
@@ -70,6 +80,8 @@ class Subreddit extends React.Component {
                 this.setState({
                     subredditData: response.data.data.children,
                     isLoading: false,
+                    before: response.data.data.before,
+                    after: response.data.data.after,
                 })
             })
             .catch((err) => {
@@ -79,7 +91,7 @@ class Subreddit extends React.Component {
 
     componentDidMount() {
         this.getSubredditPosts()
-        this.getSubreddit()
+        this.getSubredditDetails()
     }
 
     handleClick = (val) => {
@@ -104,6 +116,24 @@ class Subreddit extends React.Component {
         }
     }
 
+    getPage = (pageDir) => {
+        if (pageDir === 'next') {
+            this.setState(
+                {
+                    page: this.state.page + 1,
+                },
+                () => this.getSubredditPosts(pageDir)
+            )
+        } else if (pageDir === 'prev') {
+            this.setState(
+                {
+                    page: this.state.page - 1,
+                },
+                () => this.getSubredditPosts(pageDir)
+            )
+        }
+    }
+
     render() {
         if (this.state.isLoading) {
             return '...loading'
@@ -120,7 +150,7 @@ class Subreddit extends React.Component {
             display_name_prefixed,
             public_description,
             active_user_count,
-        } = this.state.currentSubreddit
+        } = this.state.currentSubreddit || {}
 
         return (
             <div>
@@ -128,8 +158,9 @@ class Subreddit extends React.Component {
                     <img
                         className="subreddit-header-img"
                         src={
-                            banner_background_image.split('?width')[0] ||
-                            banner_img
+                            banner_background_image
+                                ? banner_background_image.split('?width')[0]
+                                : banner_img
                         }
                     />
                 </div>
@@ -138,9 +169,10 @@ class Subreddit extends React.Component {
                         <img
                             className="display-image"
                             src={
-                                community_icon.split('?width')[0] ||
-                                icon_img ||
-                                `https://styles.redditmedia.com/t5_vm1db/styles/communityIcon_5nthugyr0ef21.png?width=256&s=3a163f7135b93df0dab0921dba35f760baea5945`
+                                community_icon
+                                    ? community_icon.split('?width')[0]
+                                    : icon_img ||
+                                      `https://styles.redditmedia.com/t5_vm1db/styles/communityIcon_5nthugyr0ef21.png?width=256&s=3a163f7135b93df0dab0921dba35f760baea5945`
                             }
                         />
                     </div>
@@ -166,7 +198,6 @@ class Subreddit extends React.Component {
                         <div className="sort-by-text">Sort By:</div>
                         {sortOptions.map((option) => (
                             <div
-                                // onClick={() => this.getHomePage('best')}
                                 onClick={() => this.handleClick(option.value)}
                                 className={`menu-svg-container ${
                                     this.state.category === option.value
@@ -192,6 +223,28 @@ class Subreddit extends React.Component {
                         />
                     )
                 })}
+                <div className="pagination-container">
+                    {this.state.before && this.state.page > 1 && (
+                        <div
+                            onClick={() => {
+                                this.getPage('prev')
+                            }}
+                            className="pagination"
+                        >
+                            Prev Page
+                        </div>
+                    )}
+                    {this.state.after && (
+                        <div
+                            onClick={() => {
+                                this.getPage('next')
+                            }}
+                            className="pagination"
+                        >
+                            Next Page
+                        </div>
+                    )}
+                </div>
             </div>
         )
     }

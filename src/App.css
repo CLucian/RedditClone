@@ -118,7 +118,13 @@ li, ul {
   width: 100%;
   text-align: center;
   font-size: 1.5rem;
+  padding-top: 1rem;
   padding-bottom: 1rem;
+}
+
+.more-subreddits a:hover {
+  color: #3d5af1;
+  transition: 0.5s;
 }
 
 
@@ -1061,12 +1067,12 @@ textarea {
 }
 
 .UsersSVG {
-  fill: #b1b1b1;
+  fill: #4a4a4a;
 }
 
 .active-users {
   padding-top: 0.5rem;
-  color: #b1b1b1
+  color: #4a4a4a
 }
 
 .sort-container {
@@ -1373,6 +1379,20 @@ textarea {
 
 .postLinks {
   text-decoration: none;
+}
+
+
+
+.pagination {
+  padding: 3rem;
+  font-size: 3rem;
+  margin-bottom: 5rem;
+  text-align: center;
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
 }
 
 /* background color: #fcfcfc */

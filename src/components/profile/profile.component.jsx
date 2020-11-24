@@ -7,6 +7,18 @@ import Login from '../Login'
 import ProfileComments from './ProfileComments'
 import { GlobalContext } from '../GlobalState'
 
+/* 
+    wrap withrouter for whichever component is responsible for fetching posts or whatever
+        - whatever needs to subscribe to route state
+    - link just sets any url/route state like "after"
+    - whatever component is responsible for fetching posts (See above), add a componentdidupdate
+    method and compare previous to current props - if `after` changed, then do whatever
+
+    create a util that passes an object into the Link to --> with pathname and search
+    search gets changed depending on what data you need
+
+*/
+
 export default class Profile extends React.Component {
     constructor(props) {
         super(props)
@@ -19,11 +31,11 @@ export default class Profile extends React.Component {
     }
 
     getProfile = (pageDir) => {
-        let url = `https://oauth.reddit.com/user/${this.context.userData.name}/comments?count=555`
+        let url = `https://oauth.reddit.com/user/${this.context.userData.name}/comments?count=555&limit=10`
         if (pageDir === 'next') {
-            url = `https://oauth.reddit.com/user/${this.context.userData.name}/comments?count=555&after=${this.state.after}`
+            url = `https://oauth.reddit.com/user/${this.context.userData.name}/comments?count=555&after=${this.state.after}&limit=10`
         } else if (pageDir === 'prev') {
-            url = `https://oauth.reddit.com/user/${this.context.userData.name}/comments?count=555&before=${this.state.before}`
+            url = `https://oauth.reddit.com/user/${this.context.userData.name}/comments?count=555&before=${this.state.before}&limit=10`
         }
         // const url = `https://oauth.reddit.com/user/${this.context.userData.name}/comments`
         // const urlAfter = `https://oauth.reddit.com/user/${this.context.userData.name}/comments/after=${this.state.after}`
@@ -73,14 +85,14 @@ export default class Profile extends React.Component {
                 {
                     page: this.state.page + 1,
                 },
-                this.getProfile(pageDir)
+                () => this.getProfile(pageDir)
             )
         } else if (pageDir === 'prev') {
             this.setState(
                 {
                     page: this.state.page - 1,
                 },
-                this.getProfile(pageDir)
+                () => this.getProfile(pageDir)
             )
         }
     }
@@ -93,47 +105,45 @@ export default class Profile extends React.Component {
         console.log('profile component state', this.state.postChildren)
         return (
             <div>
-                {this.context.accessToken ? (
-                    <div>
-                        {this.context.accessToken}
-                        <h1>This is the profile Page</h1>
-                        <h1>Hello there {this.context.userData.name}</h1>
-                        {this.state.postChildren &&
-                            this.state.postChildren.map((child) => {
-                                return (
-                                    <ProfileComments
-                                        childData={child}
-                                        id={child.id}
-                                        accessToken={this.context.accessToken}
-                                    />
-                                )
-                            })}
-                    </div>
-                ) : (
-                    <div>
-                        <Login />
-                    </div>
-                )}
-                {this.state.before && this.state.page > 1 && (
-                    <div
-                        onClick={() => {
-                            this.getPage('prev')
-                        }}
-                        className="pagination"
-                    >
-                        Previous Page
-                    </div>
-                )}
-                {this.state.after && (
-                    <div
-                        onClick={() => {
-                            this.getPage('next')
-                        }}
-                        className="pagination"
-                    >
-                        Next Page
-                    </div>
-                )}
+                <div>
+                    {this.context.accessToken}
+                    <h1>This is the profile Page</h1>
+                    <h1>Hello there {this.context.userData.name}</h1>
+                    {this.state.postChildren &&
+                        this.state.postChildren.map((child) => {
+                            return (
+                                <ProfileComments
+                                    childData={child}
+                                    id={child.id}
+                                    accessToken={this.context.accessToken}
+                                />
+                            )
+                        })}
+                </div>
+                <div className="pagination-container">
+                    {this.state.before && this.state.page > 1 && (
+                        <div
+                            onClick={() => {
+                                this.getPage('prev')
+                            }}
+                            className="pagination"
+                        >
+                            Prev Page
+                        </div>
+                    )}
+                    {this.state.after && (
+                        // <Link to={`/after=${}`}>
+                        <div
+                            onClick={() => {
+                                this.getPage('next')
+                            }}
+                            className="pagination"
+                        >
+                            Next Page
+                        </div>
+                        // </Link>
+                    )}
+                </div>
             </div>
         )
     }

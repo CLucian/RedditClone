@@ -225,9 +225,6 @@ class Post extends React.Component {
                             </div>
                         </div>
                     </div>
-                    {/* <div className="hr-container">
-                        <hr className="post-hr" />
-                    </div> */}
                     <div className="post-sub-info">
                         <div className="post-author">
                             <div className="author-img-container">

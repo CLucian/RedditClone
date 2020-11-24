@@ -41,13 +41,23 @@ export default class Home extends React.Component {
             listOpen: false,
             sortBy: 'best',
             clicked: '',
+            after: null,
+            before: null,
+            page: 1,
         }
     }
 
-    getHomePage = (sortBy = 'best') => {
+    getHomePage = (sortBy = 'best', pageDir) => {
+        let url = `https://oauth.reddit.com/${sortBy}?limit=10`
+        if (pageDir === 'next') {
+            url = `https://oauth.reddit.com/${sortBy}?count=555&after=${this.state.after}&limit=10`
+            // url = `https://oauth.reddit.com/count=555?after=${this.state.after}`
+        } else if (pageDir === 'prev') {
+            url = `https://oauth.reddit.com/${sortBy}?count=555&before=${this.state.before}&limit=10`
+        }
         return axios({
             method: 'GET',
-            url: `https://oauth.reddit.com/${sortBy}`,
+            url: url,
             headers: {
                 Authorization: 'bearer ' + this.context.accessToken,
             },
@@ -58,13 +68,15 @@ export default class Home extends React.Component {
                     'this is the response for the feed',
                     response.data.data.children
                 )
-                console.log(
-                    'this is the response for the feed',
-                    typeof response.data.data.children
-                )
+                // console.log(
+                //     'this is the response for the feed',
+                //     typeof response.data.data.children
+                // )
                 this.setState({
                     feedData: response.data.data.children,
                     isLoading: false,
+                    after: response.data.data.after,
+                    before: response.data.data.before,
                 })
             })
             .catch((err) => {
@@ -84,51 +96,47 @@ export default class Home extends React.Component {
         }
     }
 
-    toggleSortBy = () => {
-        this.setState({
-            listOpen: !this.state.listOpen,
-        })
-    }
+    // toggleSortBy = () => {
+    //     this.setState({
+    //         listOpen: !this.state.listOpen,
+    //     })
+    // }
 
     handleClick = (category) => {
         this.setState(
             {
                 sortBy: category,
             },
-            () => this.getHomePage(category)
+            () => this.getHomePage(category, undefined)
         )
     }
 
-    setActiveSort = (e) => {}
+    getPage = (pageDir) => {
+        if (pageDir === 'next') {
+            this.setState(
+                {
+                    page: this.state.page + 1,
+                },
+                () => this.getHomePage(this.state.sortBy, pageDir)
+            )
+        } else if (pageDir === 'prev') {
+            this.setState(
+                {
+                    page: this.state.page - 1,
+                },
+                () => this.getHomePage(this.state.sortBy, pageDir)
+            )
+        }
+    }
 
     render() {
         console.log('this.state.clicked', this.state.sortBy)
-        // console.log('home context', this.context.accessToken)
-        // console.log('type of', typeof 'hello')
-        // console.log('this is the feedData state', this.state.feedData)
-        // console.log('this is the feedData state', typeof this.state.feedData)
-        // console.log("feedData state", typeof(this.state.feedData.children));
-        // console.log('feedData children', this.state.feedData);
-        // if (!this.context.accessToken) {
-        //     return <Login />
-        // }
         if (this.state.isLoading) {
             return 'Loading...'
         }
 
         return (
             <div>
-                {/* {!this.context.accessToken ? (
-                    <div className="error-modal-container">
-                        <div className="error-modal">
-                            <p className="error-modal-header">
-                                There seems to be an error with your
-                                credentials, please login again
-                            </p>
-                            <Login />
-                        </div>
-                    </div>
-                ) : null} */}
                 <div className="sort-container">
                     <div className="sortByMenuContainer">
                         <div className="sort-by-text">Sort By:</div>
@@ -141,7 +149,6 @@ export default class Home extends React.Component {
                                         ? 'active'
                                         : ''
                                 }`}
-                                // id={this.state.sortBy === 'best' && 'best'}
                             >
                                 {option.icon}
                                 <div className="sort-by-text">
@@ -161,6 +168,28 @@ export default class Home extends React.Component {
                         />
                     )
                 })}
+                <div className="pagination-container">
+                    {this.state.before && this.state.page > 1 && (
+                        <div
+                            onClick={() => {
+                                this.getPage('prev')
+                            }}
+                            className="pagination"
+                        >
+                            Prev Page
+                        </div>
+                    )}
+                    {this.state.after && (
+                        <div
+                            onClick={() => {
+                                this.getPage('next')
+                            }}
+                            className="pagination"
+                        >
+                            Next Page
+                        </div>
+                    )}
+                </div>
             </div>
         )
     }
