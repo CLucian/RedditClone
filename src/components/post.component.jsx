@@ -104,7 +104,7 @@ class Post extends React.Component {
     }
 
     getLengthTitle = (description) => {
-        const maxLength = 150
+        const maxLength = 200
         if (description.length > maxLength) {
             return description.substring(0, maxLength) + '...'
         } else {
@@ -205,12 +205,38 @@ class Post extends React.Component {
                                         )}
                                     </div>
                                 </Link>
-                                <div className="post-subreddit">
-                                    {this.props.postData.data.subreddit}
+                                <div className="subreddit-image-container">
+                                    <div className="post-subreddit">
+                                        {this.props.postData.data.subreddit}
+                                    </div>
+                                    {this.props.postData.data.thumbnail !==
+                                        'self' &&
+                                    this.props.postData.data.thumbnail !==
+                                        'thumbnail' &&
+                                    this.props.postData.data.thumbnail !==
+                                        'image' &&
+                                    this.props.postData.data.thumbnail !==
+                                        'nsfw' &&
+                                    this.props.postData.data.thumbnail !==
+                                        'default' ? (
+                                        <a href={this.props.postData.data.url}>
+                                            <div className="post-listing-thumbnail-container">
+                                                <img
+                                                    className="post-thumbnail"
+                                                    src={
+                                                        this.props.postData.data
+                                                            .thumbnail
+                                                    }
+                                                    // src={this.state.data.thumbnail}
+                                                    alt="thumbnail"
+                                                />
+                                            </div>
+                                        </a>
+                                    ) : null}
                                 </div>
                             </div>
 
-                            <div className="post-description">
+                            {/* <div className="post-description">
                                 <div
                                     className="post-description-text"
                                     dangerouslySetInnerHTML={this.getMarkDown(
@@ -219,7 +245,7 @@ class Post extends React.Component {
                                         )
                                     )}
                                 ></div>
-                            </div>
+                            </div> */}
                             <div className="hr-container">
                                 <hr className="post-hr" />
                             </div>

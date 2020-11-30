@@ -54,6 +54,16 @@ class App extends React.Component {
                                 <Route path="/profile" component={Profile} />
                                 {/* <Route path="/r/:id" exact component={Subreddit} /> */}
                                 <Route
+                                    path="/after/:id"
+                                    exact
+                                    component={Home}
+                                />
+                                <Route
+                                    path="/before/:id"
+                                    exact
+                                    component={Home}
+                                />
+                                <Route
                                     path="/r/:id"
                                     exact
                                     // This will alternative componentDidUpdate to ensure that each time

@@ -7,6 +7,7 @@ import {
     clearAccessToken,
 } from '../utils/login'
 import { fetchProfile } from '../queries/auth'
+import { setupAxios } from '../queries/axios'
 
 export const GlobalContext = React.createContext()
 
@@ -49,6 +50,9 @@ class GlobalState extends React.Component {
             .then((profile) => {
                 // store in local storage
                 setAccessToken(token)
+
+                // create axios instance with token
+                setupAxios(token)
 
                 // update state
                 this.setState({

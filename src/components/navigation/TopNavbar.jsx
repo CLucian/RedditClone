@@ -12,7 +12,6 @@ const TopNavbar = () => {
     } else {
         return (
             <div className="top-navbar">
-                <div></div>
                 <Link to="/profile">
                     <div className="profile-picture-container">
                         <div className="profile-avatar">

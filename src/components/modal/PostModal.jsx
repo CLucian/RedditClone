@@ -4,6 +4,7 @@ import React from 'react'
 import Close from '../svg-components/Close'
 import Comments from '../comments/Comments'
 import { GlobalContext } from '../GlobalState'
+import Video from '../Video/Video'
 
 import marked from 'marked'
 import DOMPurify from 'dompurify'
@@ -109,24 +110,67 @@ class PostModal extends React.Component {
                 </div>
                 <div className="modal-post-header">
                     <div className="modal-post-title">
-                        {this.state.data.title}
+                        <div>{this.state.data.title}</div>
+                        <div className="post-url">
+                            <a href={this.state.data.url}>
+                                {this.state.data.url}
+                            </a>
+                        </div>
                     </div>
+
                     {/* <div className="modal-post-date">
                         {this.getDate(this.state.data.created)}
                     </div> */}
-                    {this.state.data.thumbnail !== 'self' &&
+                    {!this.state.data.preview?.enabled &&
+                    !this.state.data?.media?.oembed?.author_url &&
+                    this.state.data.thumbnail !== 'self' &&
+                    this.state.data.thumbnail !== 'image' &&
                     this.state.data.thumbnail !== 'thumbnail' &&
+                    this.state.data.thumbnail !== 'nsfw' &&
                     this.state.data.thumbnail !== 'default' ? (
-                        <div className="modal-thumbnail-container">
-                            <img
-                                className="post-thumbnail"
-                                src={this.state.data.thumbnail}
-                                // src={this.state.data.thumbnail}
-                                alt="thumbnail"
-                            />
+                        <div className="post-thumbnail-container">
+                            <a href={this.state.data.url}>
+                                <img
+                                    className="post-thumbnail"
+                                    src={this.state.data.thumbnail}
+                                    // src={this.state.data.thumbnail}
+                                    alt="thumbnail"
+                                />
+                            </a>
                         </div>
                     ) : null}
                 </div>
+                {this.state.data.preview?.enabled ? (
+                    <div className="full-post-image">
+                        <a href={this.state.data.url}>
+                            <img
+                                src={this.state.data.url}
+                                style={{
+                                    width: `${this.state.data.preview.images[0].resolutions[3].width}px`,
+                                    height: `${this.state.data.preview.images[0].resolutions[3].height}px`,
+                                }}
+                            />
+                        </a>
+                    </div>
+                ) : null}
+                {this.state.data?.media?.oembed?.author_url && (
+                    <Video video={this.state.data?.media?.oembed?.author_url} />
+                )}
+                {/* {this.state.data?.media?.reddit_video && (
+                    <Video
+                        video={
+                            this.state.data?.media?.reddit_video?.fallback_url
+                        }
+                        height={
+                            this.state.data?.preview?.images[0].resolutions[1]
+                                ?.height
+                        }
+                        width={
+                            this.state.data?.preview?.images[0].resolutions[1]
+                                ?.width
+                        }
+                    />
+                )} */}
                 <div
                     className="modal-description"
                     dangerouslySetInnerHTML={this.getMarkDown()}
