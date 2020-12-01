@@ -14,6 +14,7 @@ import Subreddit from './components/profile/Subreddit'
 import SubscribedSubreddits from './components/profile/SubscribedSubreddits'
 import TopNavbar from './components/navigation/TopNavbar'
 import Login from './components/Login'
+import CreatePostPage from './components/posting/CreatePostPage'
 
 import test from './components/test'
 
@@ -54,14 +55,8 @@ class App extends React.Component {
                                 <Route path="/profile" component={Profile} />
                                 {/* <Route path="/r/:id" exact component={Subreddit} /> */}
                                 <Route
-                                    path="/after/:id"
-                                    exact
-                                    component={Home}
-                                />
-                                <Route
-                                    path="/before/:id"
-                                    exact
-                                    component={Home}
+                                    path="/create_post"
+                                    component={CreatePostPage}
                                 />
                                 <Route
                                     path="/r/:id"

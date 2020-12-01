@@ -17,6 +17,7 @@
     "express": "^4.17.1",
     "marked": "^1.2.0",
     "moment": "^2.29.1",
+    "player.js": "^0.1.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-player": "^2.7.0",

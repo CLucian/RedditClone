@@ -191,6 +191,9 @@ class Post extends React.Component {
                             </div>
                         </div>
                         <div className="main-text-container">
+                            <div className="post-listing-subreddit">
+                                {this.props.postData.data.subreddit}
+                            </div>
                             <div className="post-title">
                                 <Link
                                     id="modal-open"
@@ -206,9 +209,9 @@ class Post extends React.Component {
                                     </div>
                                 </Link>
                                 <div className="subreddit-image-container">
-                                    <div className="post-subreddit">
+                                    {/* <div className="post-subreddit">
                                         {this.props.postData.data.subreddit}
-                                    </div>
+                                    </div> */}
                                     {this.props.postData.data.thumbnail !==
                                         'self' &&
                                     this.props.postData.data.thumbnail !==
@@ -236,7 +239,7 @@ class Post extends React.Component {
                                 </div>
                             </div>
 
-                            {/* <div className="post-description">
+                            <div className="post-description">
                                 <div
                                     className="post-description-text"
                                     dangerouslySetInnerHTML={this.getMarkDown(
@@ -245,7 +248,7 @@ class Post extends React.Component {
                                         )
                                     )}
                                 ></div>
-                            </div> */}
+                            </div>
                             <div className="hr-container">
                                 <hr className="post-hr" />
                             </div>

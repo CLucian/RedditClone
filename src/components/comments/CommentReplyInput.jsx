@@ -10,7 +10,6 @@ class CommentReplyInput extends React.Component {
         this.state = {
             value: '',
             responseObject: null,
-            // showTextBox: false,
         }
     }
 
@@ -56,17 +55,8 @@ class CommentReplyInput extends React.Component {
                 console.log('what is the error', err.data)
                 alert('There was an error' + err)
                 this.props.closeReply()
-                // console.log("accessToken" + this.context.accessToken);
-                // console.log("textvalue", this.state.value);
-                // console.log("thing_id", this.props.commentId);
             })
     }
-
-    // handleCommentPost = () => {
-    //     this.setState({
-    //         showTextBox: !this.state.showTextBox,
-    //     })
-    // }
 
     handleChange = (e) => {
         this.setState({
@@ -74,17 +64,10 @@ class CommentReplyInput extends React.Component {
         })
     }
 
-    // closeCommentPost = () => {
-    //     this.setState({
-    //         showTextBox: false,
-    //     })
-    // }
-
     handleSubmit = (e) => {
         e.preventDefault()
 
         if (this.state.value.length > 0) {
-            // console.log(this.props.commentData, this.state.value, this.props.commentId)
             console.log(
                 'submitting',
                 this.props,
@@ -100,21 +83,8 @@ class CommentReplyInput extends React.Component {
     }
 
     render() {
-        // console.log('input', this.props.getCommentReply)
-        // console.log(
-        //     'this.props.commentData[commentId]',
-        //     this.props.commentData[this.props.commentId]
-        // )
-        // console.log('this.props.commentData', this.props.commentData)
-        // console.log('this.props.commentId', this.props.commentId)
-        //   console.log('this.props.getCommentReply', this.props.getCommentReply);
-        //   console.log("this.context.accessToken - CommentReplyInput", this.context.accessToken);
-
         return (
             <div className="reply-input-container">
-                {/* <div className="comment-reply" onClick={this.handleCommentPost}>
-                    Reply
-                </div> */}
                 {this.props.showTextBox ? (
                     <form className="comment-form" onSubmit={this.handleSubmit}>
                         <textarea
@@ -139,10 +109,6 @@ class CommentReplyInput extends React.Component {
                         </div>
                     </form>
                 ) : null}
-                {/* <PostComment
-          textValue={this.state.value}
-          commentId={this.props.commentId}
-        /> */}
             </div>
         )
     }

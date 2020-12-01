@@ -140,22 +140,28 @@ class PostModal extends React.Component {
                         </div>
                     ) : null}
                 </div>
-                {this.state.data.preview?.enabled ? (
+                {this.state.data.preview?.enabled &&
+                this.state.data?.preview?.images ? (
                     <div className="full-post-image">
                         <a href={this.state.data.url}>
                             <img
                                 src={this.state.data.url}
-                                style={{
-                                    width: `${this.state.data.preview.images[0].resolutions[3].width}px`,
-                                    height: `${this.state.data.preview.images[0].resolutions[3].height}px`,
-                                }}
+                                style={
+                                    {
+                                        // width: `${this.state.data.preview.images[0].resolutions[2].width}px`,
+                                        // height: `${this.state.data.preview.images[0].resolutions[2].height}px`,
+                                    }
+                                }
                             />
                         </a>
                     </div>
                 ) : null}
-                {this.state.data?.media?.oembed?.author_url && (
-                    <Video video={this.state.data?.media?.oembed?.author_url} />
-                )}
+                {this.state.data?.media?.type !== 'twitter.com' &&
+                    this.state.data?.media?.oembed?.author_url && (
+                        <Video
+                            video={this.state.data?.media?.oembed?.author_url}
+                        />
+                    )}
                 {/* {this.state.data?.media?.reddit_video && (
                     <Video
                         video={
