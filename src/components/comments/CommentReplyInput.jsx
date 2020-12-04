@@ -88,7 +88,7 @@ class CommentReplyInput extends React.Component {
                 {this.props.showTextBox ? (
                     <form className="comment-form" onSubmit={this.handleSubmit}>
                         <textarea
-                            className="reply-text-area"
+                            className="post-text-area"
                             placeholder="What's on your mind?"
                             type="textarea"
                             wrap="physical"

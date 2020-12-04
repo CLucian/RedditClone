@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { GlobalContext } from '../GlobalState'
+import SubredditSearch from '../search/SubredditSearch'
 
 import Axios from 'axios'
 import qs from 'qs'
@@ -63,6 +64,8 @@ export default class CreatePostPage extends React.Component {
         }
     }
 
+    getSubreddit = () => {}
+
     render() {
         return (
             <div className="create-post-page-container">
@@ -71,30 +74,22 @@ export default class CreatePostPage extends React.Component {
                     type="submit"
                     onSubmit={this.handleSubmit}
                 >
-                    <div className="create-post-page-title-container">
-                        <div className="create-post-page-title">
-                            <label>Title</label>
-                            <input
-                                type="text"
-                                name="title"
-                                placeholder="Your post title"
-                                value={this.state.title}
-                                onChange={this.handleChange}
-                            />
-                        </div>
+                    <div className="additional-post-info">
                         <div className="create-post-page-subreddit">
-                            <label>Subreddit</label>
                             <input
                                 type="text"
                                 name="subreddit"
-                                placeholder="What subreddit would you like to post to?"
+                                placeholder="Choose a Subreddit"
                                 value={this.state.subreddit}
                                 onChange={this.handleChange}
                             />
+                            <SubredditSearch
+                                query={this.state.subreddit}
+                                token={this.context.accessToken}
+                                getSubreddit={this.getSubreddit}
+                            />
                         </div>
-
                         <div className="post-type">
-                            <label>Post Type</label>
                             <select
                                 className="post-select"
                                 name="type"
@@ -113,22 +108,44 @@ export default class CreatePostPage extends React.Component {
                             </select>
                         </div>
                     </div>
+
+                    <div className="create-post-page-title-container">
+                        <div className="create-post-page-title">
+                            <input
+                                className="title-input"
+                                type="text"
+                                name="title"
+                                placeholder="Title"
+                                value={this.state.title}
+                                onChange={this.handleChange}
+                                maxLength="300"
+                            />
+                            {/* <label className="post-input-title">Title</label> */}
+                            <span className="post-input-char-limit">{`${
+                                this.state.title ? this.state.title.length : 0
+                            }/300`}</span>
+                        </div>
+                    </div>
+
                     <div className="create-post-page-body">
-                        <label>Post body:</label>
-                        <input
-                            type="text"
-                            name="text"
-                            placeholder="Your post body"
-                            value={this.state.text}
-                            onChange={this.handleChange}
-                        />
+                        <div className="text-container">
+                            <textarea
+                                className="reply-text-area"
+                                placeholder="Text (optional)"
+                                name="text"
+                                type="textarea"
+                                wrap="physical"
+                                value={this.state.text}
+                                onChange={this.handleChange}
+                            ></textarea>
+                        </div>
                     </div>
                     <div>Title state{this.state.title}</div>
                     <div>subreddit state {this.state.subreddit}</div>
                     <div>type state {this.state.type}</div>
                     <div>body state{this.state.text}</div>
                     <button className="comment-submit" type="submit">
-                        Submit
+                        Post
                     </button>
                 </form>
             </div>
