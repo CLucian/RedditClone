@@ -1,9 +1,8 @@
 import React from 'react'
 
 import SubredditInfo from './SubredditInfo'
+import { getSubreddits } from '../../queries/querySubreddits'
 
-import qs from 'qs'
-import Axios from 'axios'
 import { debounce } from 'lodash'
 
 export default class SubredditSearch extends React.Component {
@@ -11,40 +10,29 @@ export default class SubredditSearch extends React.Component {
         super(props)
         this.state = {
             query: null,
-            names: null,
+            subreddits: null,
+            subInfoArr: null,
         }
+        this.wrapperRef = React.createRef()
     }
 
-    searchSubreddits = debounce(() => {
-        const data = {
-            query: this.props.query,
-        }
-        Axios({
-            method: 'post',
-            url: 'https://oauth.reddit.com/api/search_reddit_names',
-            headers: {
-                Authorization: 'bearer ' + this.props.token,
-                'content-type': 'application/x-www-form-urlencoded',
-                // "Content-Type": "application/x-www-form-urlencoded"
-            },
-            data: qs.stringify(data),
-        })
-            .then((response) => {
-                this.setState({
-                    names: response.data.names,
-                })
-                console.log(' subreddit query search', response)
-            })
-            .catch((err) => {
-                console.log(err)
-                console.log('what is the error', err.data)
-                alert('There was an error' + err)
-            })
-    }, 1000)
+    componentDidMount() {
+        document.addEventListener('mousedown', this.handleClickOutside)
+    }
 
-    // beingRun = debounce(() => {
-    //     console.log('being run')
-    // }, 1000)
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleClickOutside)
+    }
+
+    handleClickOutside = (e) => {
+        console.log('wrapperRef', this.wrapperRef)
+        if (
+            this.wrapperRef.current &&
+            !this.wrapperRef.current.contains(e.target)
+        ) {
+            this.props.clickedOutside()
+        }
+    }
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.query !== this.props.query) {
@@ -52,36 +40,45 @@ export default class SubredditSearch extends React.Component {
         }
     }
 
+    searchSubreddits = debounce(() => {
+        getSubreddits(this.props.query, this.props.token).then(
+            (subredditInfoArray) => {
+                console.log('subredditInfoArray', subredditInfoArray)
+                this.setState({ subInfoArr: subredditInfoArray })
+            }
+        )
+    }, 500)
+
+    handleClick = (subName) => {
+        this.props.setSubreddit(subName)
+    }
+
     render() {
-        if (this.props.query && this.props.query.length > 0) {
+        if (this.state.subInfoArr) {
             return (
-                <div className="subreddit-search-suggestions-container">
+                <div
+                    className="subreddit-search-suggestions-container"
+                    ref={this.wrapperRef}
+                >
                     <ul className="suggestion-list">
-                        {this.state.names &&
-                            this.state.names.map((subName) => {
+                        {this.props.showSuggestions &&
+                            this.state.subInfoArr &&
+                            this.state.subInfoArr.map((subObj) => {
                                 return (
-                                    <li className="suggestion-listing">
-                                        {subName}
-                                        <SubredditInfo
-                                            subreddit={subName}
-                                            token={this.props.token}
-                                        />
+                                    <li
+                                        className="suggestion-listing"
+                                        onClick={() => {
+                                            this.handleClick(
+                                                subObj.display_name
+                                            )
+                                        }}
+                                    >
+                                        <SubredditInfo subreddit={subObj} />
                                     </li>
                                 )
                             })}
                     </ul>
                 </div>
-
-                // <select
-                //     className="post-select"
-                //     name="type"
-                //     onChange={this.handleChange}
-                // >
-                //     {this.state.names &&
-                //         this.state.names.map((subName) => {
-                //             return <option>{subName}</option>
-                //         })}
-                // </select>
             )
         } else {
             return null

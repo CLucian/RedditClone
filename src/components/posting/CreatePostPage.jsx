@@ -14,6 +14,7 @@ export default class CreatePostPage extends React.Component {
             subreddit: null,
             type: 'self',
             text: null,
+            showSuggestions: false,
         }
     }
 
@@ -54,6 +55,7 @@ export default class CreatePostPage extends React.Component {
     handleChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value,
+            showSuggestions: true,
         })
     }
 
@@ -64,7 +66,18 @@ export default class CreatePostPage extends React.Component {
         }
     }
 
-    getSubreddit = () => {}
+    setSubreddit = (subreddit) => {
+        this.setState({
+            subreddit,
+            showSuggestions: false,
+        })
+    }
+
+    clickedOutside = () => {
+        this.setState({
+            showSuggestions: false,
+        })
+    }
 
     render() {
         return (
@@ -82,11 +95,16 @@ export default class CreatePostPage extends React.Component {
                                 placeholder="Choose a Subreddit"
                                 value={this.state.subreddit}
                                 onChange={this.handleChange}
+                                autoComplete="off"
+                                required="required"
                             />
                             <SubredditSearch
                                 query={this.state.subreddit}
                                 token={this.context.accessToken}
                                 getSubreddit={this.getSubreddit}
+                                setSubreddit={this.setSubreddit}
+                                showSuggestions={this.state.showSuggestions}
+                                clickedOutside={this.clickedOutside}
                             />
                         </div>
                         <div className="post-type">
@@ -119,6 +137,8 @@ export default class CreatePostPage extends React.Component {
                                 value={this.state.title}
                                 onChange={this.handleChange}
                                 maxLength="300"
+                                required="required"
+                                autoComplete="off"
                             />
                             {/* <label className="post-input-title">Title</label> */}
                             <span className="post-input-char-limit">{`${

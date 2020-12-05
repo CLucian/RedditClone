@@ -1,44 +1,49 @@
 import React from 'react'
 
+import { debounce } from 'lodash'
 import axios from 'axios'
 
 class SubredditInfo extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            subs: null,
+            subInfo: null,
         }
     }
 
-    getSubredditInfo = () => {
-        return axios({
-            method: 'GET',
-            url: `https://oauth.reddit.com/r/${this.props.subreddit}/about/`,
-            headers: {
-                Authorization: 'bearer ' + this.props.token,
-            },
-        })
-            .then((response) => {
-                console.log('subreddit subreddit response', response)
-                this.setState({
-                    subs: response.data.data.subscribers,
-                })
-            })
-            .catch((err) => {
-                console.log('Home Component Error: ', err)
-            })
-    }
-
-    componentDidMount() {
-        this.getSubredditInfo()
-    }
-
     render() {
+        console.log(
+            'this.props.subreddit in SubredditInfo',
+            this.props.subreddit
+        )
+
+        // if (this.props.subreddit && this.props.subreddit !== undefined) {
         return (
             <div className="subreddit-subscribers-container">
-                {this.state.subs} members
+                <div className="subreddit-img-container">
+                    {this.props.subreddit.icon_img ? (
+                        <img
+                            className="subreddit-img"
+                            src={this.props.subreddit.icon_img}
+                        />
+                    ) : (
+                        <img
+                            className="subreddit-img"
+                            src={
+                                'https://styles.redditmedia.com/t5_vm1db/styles/communityIcon_5nthugyr0ef21.png?width=256&s=3a163f7135b93df0dab0921dba35f760baea5945'
+                            }
+                        />
+                    )}
+                </div>
+                <div className="subreddit-suggestion-info-container">
+                    <div>{this.props.subreddit.display_name}</div>
+                    <div>{this.props.subreddit.subscribers} members</div>
+                </div>
             </div>
         )
+        // }
+
+        // return null
     }
 }
 
