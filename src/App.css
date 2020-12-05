@@ -451,7 +451,7 @@ a {
 .post-thumbnail-container {
   width: 20rem;
   height: auto;
-  border: 0.1rem solid #999;
+  /* border: 0.1rem solid #999; */
   border-radius: 0.2rem;
   display: flex;
   align-items: center;
@@ -925,9 +925,12 @@ a {
 
 textarea {
   width: 100%;
-  height: 80%;
+  height: 100%;
   border: 1px solid black;
+  padding: 0rem;
+  margin: 0rem;
   border-radius: 0.5rem;
+  box-sizing: border-box;
 }
 
 /* input[type="submit"] {
@@ -1253,6 +1256,7 @@ textarea {
   border-radius: 0.5rem;
   box-shadow: 0 5px 15px rgba(0,0,0,0.3);
   transition: opacity 0.3s ease-in-out;
+
 }
 
 .profile-post-container:hover {
@@ -1407,11 +1411,20 @@ textarea {
 .post-listing-thumbnail-container {
   height: auto;
   width: 10rem;
+  /* transition: opacity 2s ease-in-out; */
+}
+
+.post-listing-thumbnail-container:hover {
+  
+  /* transform: scale(1.5, 1.5); */
 }
 
 .post-listing-thumbnail-container img {
-  height: 100%;
-  width: 100%;
+  display: block;
+  height: auto;
+  width: auto;
+  /* height: 100%;
+  width: 100%; */
 }
 
 .heart-svg {
@@ -1526,8 +1539,9 @@ textarea {
 
 
 .create-post {
-  width: 60%;
   height: auto;
+  font-size: 1.5rem;
+  font-weight: bold;
   /* border: 0.1rem solid black; */
   /* border-radius: 0.3rem; */
   padding: 2rem;
@@ -1612,11 +1626,11 @@ textarea {
   padding-top: 1rem;
   justify-content: left;
   align-items: center;
-  height: 5rem;
+  height: 4rem;
 }
 
 .create-post-page-subreddit {
-  /* display: flex; */
+  display: inline-block;
   justify-content: center;
   align-items: center;
   /* border: 0.1rem solid red; */
@@ -1624,34 +1638,39 @@ textarea {
   padding: 0rem;
   margin: 0rem;
   height: 100%;
+  
 }
 
 .create-post-page-subreddit input[type="text"] {
-  height: 4rem;
+  /* position: absolute; */
+  box-sizing: border-box;
+  height: inherit;
+  width: 100%;
   padding: 0rem;
   margin: 0rem;
-  width: 100%;
   font-size: 1.5rem;
   padding-left: 1rem;
 }
 
 
 .post-type {
-  display: flex;
+  /* display: flex; */
   justify-content: center;
   /* border: 0.1rem solid blue; */
-  height: 4.4rem;
+  /* height: 4.4rem; */
+  height: 100%;
   padding: 0rem;
   margin: 0rem;
   width: 8rem;
-  padding-left: 1rem;
+  /* padding-left: 0.5rem; */
 }
 
 .post-type select {
   width: 100%;
   height: 100%;
   padding: 0 0 0 1rem;
-  margin: 0rem;
+  
+  margin-left: 1rem;
 
 
 }
@@ -1701,6 +1720,7 @@ select.post-select {
 }
 
 .suggestion-list {
+  margin-top: 0.5rem;
   padding: 0;
   margin: 0;
   width: 100%;
@@ -1713,6 +1733,7 @@ select.post-select {
 }
 
 .suggestion-listing {
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1722,15 +1743,26 @@ select.post-select {
   padding-right: 4rem;
   font-size: 1.5rem;
   list-style: none;
-  background-color: rgba(177, 177, 177, 1);
+  /* background-color: rgba(177, 177, 177, 1); */
+  background-color: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  
   /* width: 100%; */
   height: 3rem;
   cursor: pointer;
-  border: 2px solid transparent;
+  border: 0.1rem solid #b1b1b1;
+  transition: opacity 0.3s ease-in-out;
+  /* border: 2px solid transparent; */
 }
 
+  
+    
+
+
 .suggestion-listing:hover {
-  border: 2px solid white;
+  /* border: 2px solid white; */
+  transform: scale(1.05, 1.05);
+
 }
 
 .subreddit-subscribers-container {
@@ -1745,6 +1777,21 @@ select.post-select {
   padding-left: 1rem;
 
   /* width: 100%; */
+}
+
+.post-submit {
+  background-color: white;
+  font-size: 1.5rem;
+  border: 0.1rem solid black;;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-left: 1rem;
+  cursor: pointer;
+}
+
+.post-submit:hover {
+  background-color: #b1b1b1;
+  color: #fff;
 }
 
 

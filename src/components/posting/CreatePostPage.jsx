@@ -53,10 +53,16 @@ export default class CreatePostPage extends React.Component {
     }
 
     handleChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value,
-            showSuggestions: true,
-        })
+        if (e.target.name === 'subreddit') {
+            this.setState({
+                [e.target.name]: e.target.value,
+                showSuggestions: true,
+            })
+        } else {
+            this.setState({
+                [e.target.name]: e.target.value,
+            })
+        }
     }
 
     handleSubmit = (e) => {
@@ -160,12 +166,8 @@ export default class CreatePostPage extends React.Component {
                             ></textarea>
                         </div>
                     </div>
-                    <div>Title state{this.state.title}</div>
-                    <div>subreddit state {this.state.subreddit}</div>
-                    <div>type state {this.state.type}</div>
-                    <div>body state{this.state.text}</div>
-                    <button className="comment-submit" type="submit">
-                        Post
+                    <button className="post-submit" type="submit">
+                        Submit
                     </button>
                 </form>
             </div>

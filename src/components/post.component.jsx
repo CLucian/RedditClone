@@ -208,35 +208,44 @@ class Post extends React.Component {
                                         )}
                                     </div>
                                 </Link>
-                                <div className="subreddit-image-container">
-                                    {/* <div className="post-subreddit">
+                                {this.props.postData.data?.thumbnail && (
+                                    <div className="subreddit-image-container">
+                                        {/* <div className="post-subreddit">
                                         {this.props.postData.data.subreddit}
                                     </div> */}
-                                    {this.props.postData.data.thumbnail !==
-                                        'self' &&
-                                    this.props.postData.data.thumbnail !==
-                                        'thumbnail' &&
-                                    this.props.postData.data.thumbnail !==
-                                        'image' &&
-                                    this.props.postData.data.thumbnail !==
-                                        'nsfw' &&
-                                    this.props.postData.data.thumbnail !==
-                                        'default' ? (
-                                        <a href={this.props.postData.data.url}>
-                                            <div className="post-listing-thumbnail-container">
-                                                <img
-                                                    className="post-thumbnail"
-                                                    src={
-                                                        this.props.postData.data
-                                                            .thumbnail
-                                                    }
-                                                    // src={this.state.data.thumbnail}
-                                                    alt="thumbnail"
-                                                />
-                                            </div>
-                                        </a>
-                                    ) : null}
-                                </div>
+                                        {this.props.postData.data.thumbnail !==
+                                            'self' &&
+                                        this.props.postData.data.thumbnail !==
+                                            'thumbnail' &&
+                                        this.props.postData.data.thumbnail !==
+                                            'image' &&
+                                        this.props.postData.data.thumbnail !==
+                                            'nsfw' &&
+                                        this.props.postData.data.thumbnail !==
+                                            'default' ? (
+                                            <a
+                                                href={
+                                                    this.props.postData.data.url
+                                                }
+                                            >
+                                                <div className="post-listing-thumbnail-container">
+                                                    <img
+                                                        className="post-thumbnail"
+                                                        src={
+                                                            this.props.postData
+                                                                .data.thumbnail
+                                                        }
+                                                        // src={this.state.data.thumbnail}
+                                                        alt={
+                                                            this.props.postData
+                                                                .data.thumbnail
+                                                        }
+                                                    />
+                                                </div>
+                                            </a>
+                                        ) : null}
+                                    </div>
+                                )}
                             </div>
 
                             <div className="post-description">

@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 import marked from 'marked'
 import DOMPurify from 'dompurify'
 
+import CreatePost from '../posting/CreatePost'
 import Post from '../post.component'
 
 import Users from '../svg-components/Users'
@@ -213,6 +214,7 @@ class Subreddit extends React.Component {
                         ))}
                     </div>
                 </div>
+                <CreatePost />
                 {this.state.subredditData.map((postData) => {
                     return (
                         <Post
