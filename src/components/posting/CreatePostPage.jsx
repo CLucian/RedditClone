@@ -37,13 +37,15 @@ export default class CreatePostPage extends React.Component {
         })
             .then((response) => {
                 alert('your post has gone through, ' + response)
+                this.setState({
+                    title: '',
+                    subreddit: '',
+                    text: '',
+                    showSuggestions: false,
+                })
                 if (response.data.success === false) {
                     alert(response.data.jquery[14][3])
                 }
-                console.log(
-                    ' this is the response from the create post page',
-                    response
-                )
             })
             .catch((err) => {
                 console.log(err)
@@ -67,7 +69,12 @@ export default class CreatePostPage extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-        if (this.state.title.length > 0 && this.state.subreddit.length > 0) {
+        if (
+            this.state.subreddit !== null &&
+            this.state.title !== null &&
+            this.state.title.length > 0 &&
+            this.state.subreddit.length > 0
+        ) {
             this.submitPost()
         }
     }

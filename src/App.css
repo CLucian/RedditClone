@@ -1487,6 +1487,7 @@ textarea {
   font-size: 3rem;
   margin-bottom: 5rem;
   text-align: center;
+  cursor: pointer;
 }
 
 .pagination-container {
@@ -1523,17 +1524,27 @@ textarea {
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
-  border: 0.1rem solid transparent;
+  justify-content: space-around;
+  /* border: 0.1rem solid transparent; */
   font-size: 1.2rem;
   color: #4a4a4a;
 }
 
-.media-post-container:hover {
-  border: 0.1rem solid #4a4a4a;
+.media-post-container-home {
+  /* width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border: 0.1rem solid transparent;
+  font-size: 1.2rem;
+  color: #4a4a4a; */
+}
+
+.media-post-container-home:hover {
+  /* border: 0.1rem solid #4a4a4a;
   border-radius: 0.3rem;
   transition: 0.2s;
-  cursor: pointer;
+  cursor: pointer; */
 
 }
 
@@ -1793,6 +1804,94 @@ select.post-select {
   background-color: #b1b1b1;
   color: #fff;
 }
+
+.subreddit-search-container {
+  background-color: #ffffff;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 92%;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+
+.search-subreddit-div {
+  padding: 0 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  /* border: 0.1rem solid transparent; */
+}
+
+/* .search-subreddit-div:hover {
+   border: 0.1rem solid #4a4a4a;
+  border-radius: 0.3rem;
+  transition: 0.2s;
+  cursor: pointer;
+
+} */
+
+.subreddit-search-input {
+  height: 100%;
+}
+
+.query-search-div input[type="text"] {
+  height: 3rem;
+  font-size: 2rem;
+  width: 100%;
+  border: none;
+  border-bottom: 0.1rem solid #b1b1b1;
+  outline: none;
+}
+
+.SearchSVG {
+  padding: 1rem;
+}
+
+
+
+.create-post-div {
+  padding: 0 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0.1rem solid transparent;
+  width: 100%;
+}
+
+
+.create-post-div:hover {
+   border: 0.1rem solid #4a4a4a;
+  border-radius: 0.3rem;
+  transition: 0.2s;
+  cursor: pointer;
+
+}
+
+
+.create-post-master {
+  
+}
+
+.create-post-container {
+  
+
+}
+
+.create-post-link {
+  /* width: 50%; */
+}
+
+
+
+
+
+
+
+
 
 
 

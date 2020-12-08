@@ -17,20 +17,16 @@ class CreatePost extends React.Component {
 
     render() {
         return (
-            <Link to="/create_post">
-                <div className="create-post-master">
+            <Link to="/create_post" className="create-post-link">
+                <div className="create-post-div">
+                    {/* <div className="create-post-master">
                     <div className="create-post-container">
-                        <div className="media-post-container">
-                            <div className="create-post">Create Post</div>
-                            <PostSVG />
-                            {/* <div className="create-media-post">
-                                Create Media Post
-                            </div>
-                            <div className="create-link-post">
-                                Create Link Post
-                            </div> */}
-                        </div>
+                        <div className="media-post-container"> */}
+                    <div className="create-post">Create Post</div>
+                    <PostSVG />
+                    {/* </div>
                     </div>
+                </div> */}
                 </div>
             </Link>
         )

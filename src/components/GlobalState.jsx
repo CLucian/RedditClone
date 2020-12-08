@@ -27,10 +27,6 @@ class GlobalState extends React.Component {
             accessToken: null,
             userData: null,
             status: null,
-            // status: STATUS.NOT_AUTH,
-            // isLoggedIn: false,
-            // authenticated: false,
-            // hasFetched: true,
         }
     }
 
@@ -76,17 +72,6 @@ class GlobalState extends React.Component {
         })
     }
 
-    // getProfile = (token) => {
-
-    // }
-
-    // MAKE USER DATA ACCESSIBLE TO BOTH FLOWS --> MAKE IT A REUSABLE FUNCTION
-    // Take in auth token as param
-    // dont set state in getUserData
-    // return a promise at the end of getUserData and set ALL state after it resolves
-
-    // this.getUserDate()//.then//.then().catch()
-
     setGlobalState = (accessToken) => {
         this.getUserData(accessToken)
             .then((userData) => {
@@ -98,7 +83,6 @@ class GlobalState extends React.Component {
                     authenticated: true,
                 })
             })
-            //error out -- learn debugging
             .catch((err) => {
                 console.log('setGlobalState Error: ', err)
                 localStorage.clear()
@@ -106,7 +90,6 @@ class GlobalState extends React.Component {
                     accessToken: null,
                 })
                 this.props.history.push('/home')
-                // this.props.history.push('/login')
             })
     }
 
@@ -118,68 +101,11 @@ class GlobalState extends React.Component {
         return yourReply
     }
 
-    // getUserData = (accessToken) => {
-    //     return axios
-    //         .request({
-    //             url: 'https://oauth.reddit.com/api/v1/me',
-    //             headers: {
-    //                 // authorization: "bearer " + localStorage.getItem("access_token"),
-    //                 authorization: 'bearer ' + accessToken,
-    //             },
-    //         })
-
-    //         .then((response) => {
-    //             console.log(
-    //                 '=====PROFILE DATA=====',
-    //                 response,
-    //                 response.data.name
-    //             )
-    //             return response.data
-    //         })
-    // }
-
-    // fncInitiator = (tokenRetriever) => {}
-
-    // Retrieves the access token from the authorize component
-
-    // setAuthState = (authState) => {
-    //     if (authState.accessToken) {
-    //         console.log('token is', authState.accessToken)
-    //         localStorage.setItem('access_token', authState.accessToken)
-    //         // this.setState({
-    //         // 	accessToken: authState.accessToken,
-    //         // 	isLoggedIn: true,
-    //         // });
-    //         this.setGlobalState(authState.accessToken)
-    //     }
-    // }
-
-    // setLoginStatusOut = () => {
-    //     if (localStorage.getItem('access_token')) {
-    //         localStorage.clear()
-    //         this.setState({
-    //             accessToken: null,
-    //             isLoggedIn: false,
-    //             username: null,
-    //         })
-    //     }
-    // }
-
     render() {
-        // console.log(
-        //     'this is the new global state',
-        //     localStorage.getItem('access_token')
-        // )
-        // console.log('this is the new global state', this.state.accessToken)
-
         return (
             <GlobalContext.Provider
                 value={{
                     ...this.state,
-                    // setAuthState: this.setAuthState,
-                    // fncInitiator: this.fncInitiator,
-                    // setLoginStatusOut: this.setLoginStatusOut,
-                    // setProfileState: this.setProfileState,
                     getAndDisplayComment: this.getAndDisplayComment,
                     // new items
                     setup: this.setup,

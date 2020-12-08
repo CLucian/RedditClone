@@ -7,6 +7,7 @@ import DOMPurify from 'dompurify'
 
 import CreatePost from '../posting/CreatePost'
 import Post from '../post.component'
+import SearchSubreddit from '../search/SearchSubreddit'
 
 import Users from '../svg-components/Users'
 import BestSVG from '../svg-components/BestSVG'
@@ -16,6 +17,12 @@ import TopSVG from '../svg-components/TopSVG'
 import RisingSVG from '../svg-components/RisingSVG'
 
 import { GlobalContext } from '../GlobalState'
+import {
+    searchSubreddit,
+    getSubredditDetails,
+    getSubredditPosts,
+    currentSubreddit,
+} from '../../queries/subredditSearch'
 
 const sortOptions = [
     { name: 'Best', value: 'best', icon: <BestSVG /> },
@@ -36,63 +43,71 @@ class Subreddit extends React.Component {
             before: null,
             after: null,
             page: 1,
+            subreddit: this.props.match.params.id,
+            query: null,
         }
     }
 
-    getSubredditDetails = () => {
-        return axios({
-            method: 'GET',
-            url: `https://oauth.reddit.com/r/${this.props.match.params.id}/about/`,
-            headers: {
-                Authorization: 'bearer ' + this.context.accessToken,
-            },
-        })
-            .then((response) => {
-                console.log('subreddit subreddit response', response)
-                this.setState({
-                    currentSubreddit: response.data.data,
-                })
-            })
-            .catch((err) => {
-                console.log('Home Component Error: ', err)
-            })
-    }
+    // getSubredditDetails = () => {
+    //     return axios({
+    //         method: 'GET',
+    //         url: `https://oauth.reddit.com/r/${this.props.match.params.id}/about/`,
+    //         headers: {
+    //             Authorization: 'bearer ' + this.context.accessToken,
+    //         },
+    //     })
+    //         .then((response) => {
+    //             console.log('subreddit subreddit response', response)
+    //             this.setState({
+    //                 currentSubreddit: response.data.data,
+    //             })
+    //         })
+    //         .catch((err) => {
+    //             console.log('Home Component Error: ', err)
+    //         })
+    // }
 
-    getSubredditPosts = (pageDir) => {
-        let url = `https://oauth.reddit.com/r/${this.props.match.params.id}/${this.state.category}?limit=10`
-        if (pageDir === 'next') {
-            url = `https://oauth.reddit.com/r/${this.props.match.params.id}/${this.state.category}?count=555&after=${this.state.after}&limit=10`
-            // url = `https://oauth.reddit.com/count=555?after=${this.state.after}`
-        } else if (pageDir === 'prev') {
-            url = `https://oauth.reddit.com/r/${this.props.match.params.id}/${this.state.category}?count=555&before=${this.state.before}&limit=10`
-        }
-        return axios({
-            method: 'GET',
-            url: url,
-            headers: {
-                Authorization: 'bearer ' + this.context.accessToken,
-            },
-        })
-            .then((response) => {
-                console.log(
-                    'subreddit response - subreddit component!',
-                    response
-                )
-                this.setState({
-                    subredditData: response.data.data.children,
-                    isLoading: false,
-                    before: response.data.data.before,
-                    after: response.data.data.after,
-                })
-            })
-            .catch((err) => {
-                console.log('Home Component Error: ', err)
-            })
-    }
+    // getSubredditPosts = (pageDir) => {
+    //     let url = `https://oauth.reddit.com/r/${this.props.match.params.id}/${this.state.category}?limit=10`
+    //     if (pageDir === 'next') {
+    //         url = `https://oauth.reddit.com/r/${this.props.match.params.id}/${this.state.category}?count=555&after=${this.state.after}&limit=10`
+    //         // url = `https://oauth.reddit.com/count=555?after=${this.state.after}`
+    //     } else if (pageDir === 'prev') {
+    //         url = `https://oauth.reddit.com/r/${this.props.match.params.id}/${this.state.category}?count=555&before=${this.state.before}&limit=10`
+    //     }
+    //     return axios({
+    //         method: 'GET',
+    //         url: url,
+    //         headers: {
+    //             Authorization: 'bearer ' + this.context.accessToken,
+    //         },
+    //     })
+    //         .then((response) => {
+    //             console.log(
+    //                 'subreddit response - subreddit component!',
+    //                 response
+    //             )
+    //             this.setState({
+    //                 subredditData: response.data.data.children,
+    //                 isLoading: false,
+    //                 before: response.data.data.before,
+    //                 after: response.data.data.after,
+    //             })
+    //         })
+    //         .catch((err) => {
+    //             console.log('Home Component Error: ', err)
+    //         })
+    // }
 
     componentDidMount() {
-        this.getSubredditPosts()
-        this.getSubredditDetails()
+        getSubredditPosts(null, this.state.subreddit, null, 'best', null).then(
+            (response) => {
+                this.handlePostsResponse(response)
+            }
+        )
+        getSubredditDetails(this.state.subreddit).then((response) => {
+            this.handleSubredditData(response)
+        })
     }
 
     handleClick = (val) => {
@@ -100,7 +115,16 @@ class Subreddit extends React.Component {
             {
                 category: val,
             },
-            () => this.getSubredditPosts()
+            () =>
+                getSubredditPosts(
+                    null,
+                    this.state.subreddit,
+                    null,
+                    this.state.category,
+                    null
+                ).then((response) => {
+                    this.handlePostsResponse(response)
+                })
         )
         // this.getSubredditPosts(val)
     }
@@ -118,27 +142,91 @@ class Subreddit extends React.Component {
     }
 
     getPage = (pageDir) => {
-        if (pageDir === 'next') {
+        const newPage =
+            pageDir === 'next' ? this.state.page + 1 : this.state.page - 1
+        const pageId = pageDir === 'next' ? this.state.after : this.state.before
+
+        console.log('getpage pressed', pageDir)
+        this.setState(
+            {
+                page: newPage,
+            },
+            () =>
+                getSubredditPosts(
+                    pageDir,
+                    this.state.subreddit,
+                    pageId,
+                    this.state.category,
+                    this.state.query
+                ).then((response) => {
+                    this.handlePostsResponse(response)
+                })
+        )
+
+        // if (pageDir === 'next') {
+        //     this.setState(
+        //         {
+        //             page: this.state.page + 1,
+        //         },
+        //         () => this.getSubredditPosts(pageDir)
+        //     )
+        // } else if (pageDir === 'prev') {
+        //     this.setState(
+        //         {
+        //             page: this.state.page - 1,
+        //         },
+        //         () => this.getSubredditPosts(pageDir)
+        //     )
+        // }
+    }
+
+    handleSearchQuery = (queryString) => {
+        if (queryString && queryString.length > 0) {
             this.setState(
                 {
-                    page: this.state.page + 1,
+                    query: queryString,
+                    page: 1,
                 },
-                () => this.getSubredditPosts(pageDir)
-            )
-        } else if (pageDir === 'prev') {
-            this.setState(
-                {
-                    page: this.state.page - 1,
-                },
-                () => this.getSubredditPosts(pageDir)
+                () => {
+                    getSubredditPosts(
+                        null,
+                        this.state.subreddit,
+                        null,
+                        this.state.category,
+                        this.state.query
+                    ).then((response) => {
+                        this.handlePostsResponse(response)
+                    })
+                }
             )
         }
     }
 
+    handleSubredditData = (response) => {
+        this.setState({
+            currentSubreddit: response.data.data,
+        })
+    }
+
+    handlePostsResponse = (response) => {
+        this.setState({
+            subredditData: response.data.data.children,
+            isLoading: false,
+            before: response.data.data.before,
+            after: response.data.data.after,
+        })
+    }
+
     render() {
-        if (this.state.isLoading) {
-            return '...loading'
-        }
+        console.log('before', this.state.before)
+        console.log('after', this.state.after)
+        console.log(' subreddit in subreddit =======', this.state.subreddit)
+        console.log('this.state.subredditData: ', this.state.subredditData)
+        // if (this.state.subredditData) {
+        //     return '...loading'
+        // }
+
+        // console.log(' subreddit', this.state.subreddit)
 
         const {
             banner_background_image,
@@ -214,17 +302,29 @@ class Subreddit extends React.Component {
                         ))}
                     </div>
                 </div>
-                <CreatePost />
-                {this.state.subredditData.map((postData) => {
-                    return (
-                        <Post
-                            onClick={this.openModal}
-                            postData={postData}
-                            accessToken={this.context.accessToken}
-                            key={postData.data.id}
-                        />
-                    )
-                })}
+                <div className="create-post-master">
+                    <div className="create-post-container">
+                        <div className="media-post-container">
+                            <SearchSubreddit
+                                subreddit={this.props.subreddit}
+                                handleSearchQuery={this.handleSearchQuery}
+                            />
+                            <CreatePost />
+                        </div>
+                    </div>
+                </div>
+
+                {this.state.subredditData &&
+                    this.state.subredditData.map((postData) => {
+                        return (
+                            <Post
+                                onClick={this.openModal}
+                                postData={postData}
+                                accessToken={this.context.accessToken}
+                                key={postData.data.id}
+                            />
+                        )
+                    })}
                 <div className="pagination-container">
                     {this.state.before && this.state.page > 1 && (
                         <div
