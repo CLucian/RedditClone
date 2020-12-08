@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { withRouter } from 'react-router-dom'
+import { debounce } from 'lodash'
 
 import marked from 'marked'
 import DOMPurify from 'dompurify'
@@ -46,6 +47,8 @@ class Subreddit extends React.Component {
             subreddit: this.props.match.params.id,
             query: null,
         }
+
+        this.handleSearchQuery = debounce(this.handleSearchQuery, 500)
     }
 
     // getSubredditDetails = () => {
@@ -181,7 +184,25 @@ class Subreddit extends React.Component {
     }
 
     handleSearchQuery = (queryString) => {
-        if (queryString && queryString.length > 0) {
+        if (queryString.length === 0) {
+            this.setState(
+                {
+                    query: null,
+                    page: 1,
+                },
+                () => {
+                    getSubredditPosts(
+                        null,
+                        this.state.subreddit,
+                        null,
+                        this.state.category,
+                        this.state.query
+                    ).then((response) => {
+                        this.handlePostsResponse(response)
+                    })
+                }
+            )
+        } else {
             this.setState(
                 {
                     query: queryString,
@@ -218,6 +239,7 @@ class Subreddit extends React.Component {
     }
 
     render() {
+        console.log('search in subreddit', this.state.query)
         console.log('before', this.state.before)
         console.log('after', this.state.after)
         console.log(' subreddit in subreddit =======', this.state.subreddit)
