@@ -2,6 +2,7 @@ import React from 'react'
 import './App.css'
 import { Route, Switch } from 'react-router-dom'
 
+import MasterSearchProvider from './components/search/MasterSearchProvider'
 import Home from './components/home.component'
 import About from './components/about.component'
 import Authorize from './components/authorize.component'
@@ -19,6 +20,7 @@ import CreatePostPage from './components/posting/CreatePostPage'
 import test from './components/test'
 
 import { GlobalContext, STATUS } from './components/GlobalState'
+import MasterSearch from './components/search/MasterSearch'
 
 class App extends React.Component {
     // constructor(props) {
@@ -42,52 +44,61 @@ class App extends React.Component {
         if (status === STATUS.AUTHENTICATED) {
             return (
                 <div className="app">
-                    <TopNavbar />
-                    <div className="master-app-container">
-                        <div className="left-side-app">
-                            <Navbar />
-                        </div>
-                        <div className="main-routes">
-                            <Switch>
-                                <Route path="/" exact component={Home} />
-                                <Route path="/about" component={About} />
-                                {/* <Route path="/authorize" component={Authorize} /> */}
-                                <Route path="/profile" component={Profile} />
-                                {/* <Route path="/r/:id" exact component={Subreddit} /> */}
+                    <MasterSearchProvider>
+                        <TopNavbar />
+                        <div className="master-app-container">
+                            <div className="left-side-app">
+                                <Navbar />
+                            </div>
+                            <div className="main-routes">
+                                <Switch>
+                                    <Route path="/" exact component={Home} />
+                                    <Route path="/about" component={About} />
+                                    {/* <Route path="/authorize" component={Authorize} /> */}
+                                    <Route
+                                        path="/profile"
+                                        component={Profile}
+                                    />
+                                    {/* <Route path="/r/:id" exact component={Subreddit} /> */}
+                                    <Route
+                                        path="/create_post"
+                                        component={CreatePostPage}
+                                    />
+                                    <Route
+                                        path="/r/:id"
+                                        exact
+                                        // This will alternative componentDidUpdate to ensure that each time
+                                        // a new key is passed to the Subreddit component
+                                        // then it will update the component with the new data
+                                        render={({ match }) => {
+                                            const subreddit = match.params.id
+                                            if (!subreddit) {
+                                                return null
+                                            }
+                                            // return null
+                                            return <Subreddit key={subreddit} />
+                                        }}
+                                    />
+                                    <Route
+                                        path="/"
+                                        exact
+                                        component={ErrorPage}
+                                    />
+                                </Switch>
                                 <Route
-                                    path="/create_post"
-                                    component={CreatePostPage}
+                                    path="/me/subreddits"
+                                    component={SubscribedSubreddits}
                                 />
-                                <Route
-                                    path="/r/:id"
-                                    exact
-                                    // This will alternative componentDidUpdate to ensure that each time
-                                    // a new key is passed to the Subreddit component
-                                    // then it will update the component with the new data
-                                    render={({ match }) => {
-                                        const subreddit = match.params.id
-                                        if (!subreddit) {
-                                            return null
-                                        }
-                                        // return null
-                                        return <Subreddit key={subreddit} />
-                                    }}
-                                />
-                                <Route path="/" exact component={ErrorPage} />
-                            </Switch>
-                            <Route
-                                path="/me/subreddits"
-                                component={SubscribedSubreddits}
-                            />
-                            <Route path="/" component={PostContainer} />
-                        </div>
-                        <div className="right-side-app">
-                            <div className="sidebar-nav">
-                                <SideBar />
-                                <div></div>
+                                <Route path="/" component={PostContainer} />
+                            </div>
+                            <div className="right-side-app">
+                                <div className="sidebar-nav">
+                                    <SideBar />
+                                    <div></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </MasterSearchProvider>
                 </div>
             )
         }

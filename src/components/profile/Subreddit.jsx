@@ -51,57 +51,6 @@ class Subreddit extends React.Component {
         this.handleSearchQuery = debounce(this.handleSearchQuery, 500)
     }
 
-    // getSubredditDetails = () => {
-    //     return axios({
-    //         method: 'GET',
-    //         url: `https://oauth.reddit.com/r/${this.props.match.params.id}/about/`,
-    //         headers: {
-    //             Authorization: 'bearer ' + this.context.accessToken,
-    //         },
-    //     })
-    //         .then((response) => {
-    //             console.log('subreddit subreddit response', response)
-    //             this.setState({
-    //                 currentSubreddit: response.data.data,
-    //             })
-    //         })
-    //         .catch((err) => {
-    //             console.log('Home Component Error: ', err)
-    //         })
-    // }
-
-    // getSubredditPosts = (pageDir) => {
-    //     let url = `https://oauth.reddit.com/r/${this.props.match.params.id}/${this.state.category}?limit=10`
-    //     if (pageDir === 'next') {
-    //         url = `https://oauth.reddit.com/r/${this.props.match.params.id}/${this.state.category}?count=555&after=${this.state.after}&limit=10`
-    //         // url = `https://oauth.reddit.com/count=555?after=${this.state.after}`
-    //     } else if (pageDir === 'prev') {
-    //         url = `https://oauth.reddit.com/r/${this.props.match.params.id}/${this.state.category}?count=555&before=${this.state.before}&limit=10`
-    //     }
-    //     return axios({
-    //         method: 'GET',
-    //         url: url,
-    //         headers: {
-    //             Authorization: 'bearer ' + this.context.accessToken,
-    //         },
-    //     })
-    //         .then((response) => {
-    //             console.log(
-    //                 'subreddit response - subreddit component!',
-    //                 response
-    //             )
-    //             this.setState({
-    //                 subredditData: response.data.data.children,
-    //                 isLoading: false,
-    //                 before: response.data.data.before,
-    //                 after: response.data.data.after,
-    //             })
-    //         })
-    //         .catch((err) => {
-    //             console.log('Home Component Error: ', err)
-    //         })
-    // }
-
     componentDidMount() {
         getSubredditPosts(null, this.state.subreddit, null, 'best', null).then(
             (response) => {
@@ -129,7 +78,6 @@ class Subreddit extends React.Component {
                     this.handlePostsResponse(response)
                 })
         )
-        // this.getSubredditPosts(val)
     }
 
     getMarkDown = (markDown) => {
@@ -165,22 +113,6 @@ class Subreddit extends React.Component {
                     this.handlePostsResponse(response)
                 })
         )
-
-        // if (pageDir === 'next') {
-        //     this.setState(
-        //         {
-        //             page: this.state.page + 1,
-        //         },
-        //         () => this.getSubredditPosts(pageDir)
-        //     )
-        // } else if (pageDir === 'prev') {
-        //     this.setState(
-        //         {
-        //             page: this.state.page - 1,
-        //         },
-        //         () => this.getSubredditPosts(pageDir)
-        //     )
-        // }
     }
 
     handleSearchQuery = (queryString) => {
@@ -239,17 +171,9 @@ class Subreddit extends React.Component {
     }
 
     render() {
-        console.log('search in subreddit', this.state.query)
-        console.log('before', this.state.before)
-        console.log('after', this.state.after)
-        console.log(' subreddit in subreddit =======', this.state.subreddit)
-        console.log('this.state.subredditData: ', this.state.subredditData)
-        // if (this.state.subredditData) {
-        //     return '...loading'
-        // }
-
-        // console.log(' subreddit', this.state.subreddit)
-
+        if (!this.context.accessToken) {
+            return null
+        }
         const {
             banner_background_image,
             title,

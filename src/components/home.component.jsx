@@ -9,6 +9,7 @@ import getHomePage from '../queries/postQuery'
 import Login from './Login'
 import Modal from './modal/Modal'
 import CreatePost from './posting/CreatePost'
+import { MasterSearchContext } from '../components/search/MasterSearchProvider'
 
 import { handlePages } from '../utils/pagination'
 
@@ -55,11 +56,11 @@ class Home extends React.Component {
     }
 
     componentDidMount() {
-        if (this.context.accessToken) {
-            getHomePage().then((response) => {
-                this.handleDataResponse(response)
-            })
-        }
+        // if (this.context.accessToken) {
+        getHomePage().then((response) => {
+            this.handleDataResponse(response)
+        })
+        // }
     }
 
     handleSort = (category) => {
@@ -102,6 +103,7 @@ class Home extends React.Component {
     }
 
     render() {
+        console.log('masterSearchQuery in Home', this.context.query)
         const { location, history, match } = this.props
         console.log('location and stuff props', location)
         const urlParams = new URLSearchParams(location.search || '')
@@ -156,7 +158,7 @@ class Home extends React.Component {
                         <Post
                             onClick={this.openModal}
                             postData={postData}
-                            accessToken={this.context.accessToken}
+                            // accessToken={this.context.accessToken}
                             key={postData.data.id}
                         />
                     )
@@ -205,4 +207,4 @@ class Home extends React.Component {
 
 export default withRouter(Home)
 
-Home.contextType = GlobalContext
+Home.contextType = MasterSearchContext
