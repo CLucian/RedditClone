@@ -14,9 +14,9 @@ const TopNavbar = () => {
         return (
             <div className="top-navbar">
                 <div className="profile-picture-container">
-                    <div className="search-reddit">
+                    {/* <div className="search-reddit">
                         <MasterSearch />
-                    </div>
+                    </div> */}
                     <Link to="/profile">
                         <div className="profile-avatar">
                             <img

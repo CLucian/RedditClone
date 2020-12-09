@@ -21,3 +21,28 @@ export default function getHomePage(sortBy = 'best', pageDir, pageId) {
             console.log('Home Component Error: ', err)
         })
 }
+
+export function getSearchQuery(sortBy, pageDir, pageId, query) {
+    const axios = axiosInstance()
+
+    let url = `https://oauth.reddit.com/search?q=${query}&${sortBy}&limit=10`
+    if (query === '') {
+        url = `https://oauth.reddit.com/${sortBy}?limit=10`
+    } else if (pageDir === 'next') {
+        url = `https://oauth.reddit.com/search?q=${query}&${sortBy}&limit=10&after=${pageId}`
+    } else if (pageDir === 'prev') {
+        url = `https://oauth.reddit.com/search?q=${query}&${sortBy}&limit=10&before=${pageId}`
+    }
+
+    return axios({
+        method: 'GET',
+        url: url,
+    })
+        .then((response) => {
+            console.log('query response in home', response)
+            return response
+        })
+        .catch((err) => {
+            console.log('Home Component Error: ', err)
+        })
+}

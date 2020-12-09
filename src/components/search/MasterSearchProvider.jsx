@@ -16,6 +16,8 @@ export default class MasterSearchProvider extends React.Component {
         })
     }
 
+    handleStateChange = () => {}
+
     render() {
         return (
             <MasterSearchContext.Provider

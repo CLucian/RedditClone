@@ -3,9 +3,10 @@ import React from 'react'
 import axios from 'axios'
 import getAxios from '../queries/axios'
 import { withRouter, Link } from 'react-router-dom'
+import { debounce } from 'lodash'
 
 import Post from './post.component'
-import getHomePage from '../queries/postQuery'
+import getHomePage, { getSearchQuery } from '../queries/postQuery'
 import Login from './Login'
 import Modal from './modal/Modal'
 import CreatePost from './posting/CreatePost'
@@ -21,6 +22,7 @@ import TopSVG from './svg-components/TopSVG'
 
 import { GlobalContext } from './GlobalState'
 import { getFeed } from '../queries/feed'
+import MasterSearch from './search/MasterSearch'
 
 const sortOptions = [
     { name: 'Best', value: 'best', icon: <BestSVG /> },
@@ -52,6 +54,7 @@ class Home extends React.Component {
             before: null,
             page: 1,
             pageDir: null,
+            isQuery: false,
         }
     }
 
@@ -62,6 +65,28 @@ class Home extends React.Component {
         })
         // }
     }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.query !== this.props.query) {
+            this.handleQuerySearch()
+        }
+    }
+
+    handleQuerySearch = debounce(() => {
+        getSearchQuery(
+            this.state.sortBy,
+            undefined,
+            undefined,
+            this.props.query
+        ).then((response) => {
+            this.setState({
+                feedData: response.data.data.children,
+                after: response.data.data.after,
+                before: response.data.data.before,
+                isQuery: true,
+            })
+        })
+    }, 300)
 
     handleSort = (category) => {
         this.setState(
@@ -75,12 +100,13 @@ class Home extends React.Component {
         )
     }
 
-    handleDataResponse = (response) => {
+    handleDataResponse = (response, queryState) => {
         this.setState({
             feedData: response.data.data.children,
             isLoading: false,
             after: response.data.data.after,
             before: response.data.data.before,
+            isQuery: queryState,
         })
     }
 
@@ -89,21 +115,34 @@ class Home extends React.Component {
             pageDir === 'next' ? this.state.page + 1 : this.state.page - 1
         const ids = pageDir === 'next' ? this.state.after : this.state.before
 
-        this.setState(
-            {
-                page: newPage,
-            },
-            () =>
-                getHomePage(this.state.sortBy, pageDir, ids).then(
-                    (response) => {
-                        this.handleDataResponse(response)
-                    }
-                )
-        )
+        if (this.state.isQuery) {
+            this.setState({ page: newPage }, () => {
+                getSearchQuery(
+                    this.state.sortBy,
+                    pageDir,
+                    ids,
+                    this.props.query
+                ).then((response) => {
+                    this.handleDataResponse(response, true)
+                })
+            })
+        } else {
+            this.setState(
+                {
+                    page: newPage,
+                },
+                () =>
+                    getHomePage(this.state.sortBy, pageDir, ids).then(
+                        (response) => {
+                            this.handleDataResponse(response, false)
+                        }
+                    )
+            )
+        }
     }
 
     render() {
-        console.log('masterSearchQuery in Home', this.context.query)
+        console.log('masterSearchQuery in Home', this.props.query)
         const { location, history, match } = this.props
         console.log('location and stuff props', location)
         const urlParams = new URLSearchParams(location.search || '')
@@ -146,9 +185,20 @@ class Home extends React.Component {
                         ))}
                     </div>
                 </div>
+                {/* <div className="create-post-master">
+                    <div className="create-post-container">
+                        <div className="media-post-container">
+                            <CreatePost />
+                        </div>
+                    </div>
+                </div> */}
                 <div className="create-post-master">
                     <div className="create-post-container">
                         <div className="media-post-container">
+                            <MasterSearch
+                            // subreddit={this.props.subreddit}
+                            // handleSearchQuery={this.handleSearchQuery}
+                            />
                             <CreatePost />
                         </div>
                     </div>
@@ -164,6 +214,28 @@ class Home extends React.Component {
                     )
                 })}
                 <div className="pagination-container">
+                    {this.state.before && this.state.page > 1 && (
+                        <div
+                            onClick={() => {
+                                this.getPage('prev')
+                            }}
+                            className="pagination"
+                        >
+                            Prev Page
+                        </div>
+                    )}
+                    {this.state.after && (
+                        <div
+                            onClick={() => {
+                                this.getPage('next')
+                            }}
+                            className="pagination"
+                        >
+                            Next Page
+                        </div>
+                    )}
+                </div>
+                {/* <div className="pagination-container">
                     <Link
                         to={{
                             pathname: '/',
@@ -181,7 +253,6 @@ class Home extends React.Component {
                             </div>
                         )}
                     </Link>
-                    {/* <Link to={`/after/${this.state.after}`}> */}
                     <Link
                         to={{
                             pathname: '/',
@@ -199,7 +270,7 @@ class Home extends React.Component {
                             </div>
                         )}
                     </Link>
-                </div>
+                </div> */}
             </div>
         )
     }

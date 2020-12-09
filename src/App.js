@@ -21,6 +21,7 @@ import test from './components/test'
 
 import { GlobalContext, STATUS } from './components/GlobalState'
 import MasterSearch from './components/search/MasterSearch'
+import HomeWrapper from './components/search/HomeWrapper'
 
 class App extends React.Component {
     // constructor(props) {
@@ -52,7 +53,15 @@ class App extends React.Component {
                             </div>
                             <div className="main-routes">
                                 <Switch>
-                                    <Route path="/" exact component={Home} />
+                                    {/* <HomeWrapper> */}
+                                    {/* <Route path="/" exact component={Home} /> */}
+                                    <Route path="/" exact>
+                                        <HomeWrapper>
+                                            <Home />
+                                        </HomeWrapper>
+                                    </Route>
+
+                                    {/* </HomeWrapper> */}
                                     <Route path="/about" component={About} />
                                     {/* <Route path="/authorize" component={Authorize} /> */}
                                     <Route
