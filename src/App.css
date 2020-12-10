@@ -680,9 +680,11 @@ a {
 .post-comments-container {
   margin-top: 1rem;
   margin-left: 2.5rem;
-  padding: 2rem;
+  /* padding: 2rem; */
+  padding-left: 2rem;
   border-left: 0.1rem solid #b1b1b1;
-  height: 90%;
+  /* display: flex; */
+  /* height: 100%; */
 }
 
 .comment-container {
@@ -819,10 +821,12 @@ svg {
   /* justify-content: center; */
   padding: 0.5rem;
   align-items: center;
+  width: 100%;
 }
 
 .comment {
   padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 .comment p {
@@ -842,11 +846,16 @@ svg {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: inherit;
+  padding: 0.5rem;
+  /* padding-left: 10%; */
 }
 
 .modal-author-info {
   display: flex;
-  justify-content: space-around;
+  /* justify-content: space-around; */
+  /* padding-left: 10rem; */
+
 }
 
 .modal-author-img-container {

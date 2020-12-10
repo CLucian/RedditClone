@@ -13,6 +13,8 @@ import UpArrow from '../svg-components/UpArrow'
 import Collapse from '../svg-components/Collapse'
 import UnCollapse from '../svg-components/UnCollapse'
 
+import './comment.scss'
+
 // const replyContext = React.useContext(GlobalContext)
 
 class Comment extends React.Component {
@@ -159,37 +161,93 @@ class Comment extends React.Component {
     render() {
         // console.log('get comment edit', this.props.getCommentEdit)
         if (this.state.isLoading) {
-            return 'loading... from comment.js'
+            // return 'loading... from comment.js'
         }
 
         return (
+            <div>
+                <div className="foo">username</div>
+            </div>
+        )
+        return (
             <div className="post-comments-container">
-                <div className="comment-author-time-container">
-                    <div className="modal-author-info">
-                        <div className="modal-author-img-container">
-                            <img
-                                className="modal-author-img"
-                                src={this.state.authorImg}
-                            />
+                {this.props.commentData[this.props.commentId]?.body !==
+                    undefined && (
+                    <div className="upvotes">
+                        <div
+                            className="upvote-arrows"
+                            onClick={() => this.handleArrowClick(1)}
+                        >
+                            <UpArrow isActive={this.state.voteVal} />
                         </div>
-                        <div className="comment-author">
-                            {
-                                this.props.commentData[this.props.commentId]
-                                    ?.author
-                            }
+                        <div className="comment-score">
+                            {this.state.updatedScore
+                                ? this.state.updatedScore
+                                : this.props.commentData[this.props.commentId]
+                                      .score}
+                        </div>
+                        <div
+                            className="upvote-arrows"
+                            onClick={() => this.handleArrowClick(-1)}
+                        >
+                            <DownArrow isActive={this.state.voteVal} />
                         </div>
                     </div>
-                    {this.props.commentData[this.props.commentId]?.body !==
-                        undefined && (
-                        <div className="comment-date">
-                            {this.getTime(
-                                this.props.commentData[this.props.commentId]
-                                    ?.created_utc
-                            )}
+                )}
+
+                <div className="title-text-container">
+                    <div className="comment-author-time-container">
+                        <div className="modal-author-info">
+                            <div className="modal-author-img-container">
+                                <img
+                                    className="modal-author-img"
+                                    src={this.state.authorImg}
+                                />
+                            </div>
+                            <div className="comment-author">
+                                {
+                                    this.props.commentData[this.props.commentId]
+                                        ?.author
+                                }
+                            </div>
                         </div>
-                    )}
-                </div>
-                <div className="comment-text-body">
+                        {this.props.commentData[this.props.commentId]?.body !==
+                            undefined && (
+                            <div className="comment-date">
+                                {this.getTime(
+                                    this.props.commentData[this.props.commentId]
+                                        ?.created_utc
+                                )}
+                            </div>
+                        )}
+                    </div>
+                    <div className="comment-text-body">
+                        {/* <div className="collapse-master-container">
+                            {this.props.commentData[this.props.commentId]
+                                ?.childIds?.length > 0 ? (
+                                <div
+                                    className="collapse-container"
+                                    onClick={this.collapseComments}
+                                >
+                                    <Collapse
+                                        isCollapsed={this.state.isCollapsed}
+                                    />
+
+                                    <UnCollapse
+                                        isCollapsed={this.state.isCollapsed}
+                                    />
+                                </div>
+                            ) : null}
+                        </div> */}
+                        <div
+                            className="comment"
+                            dangerouslySetInnerHTML={this.getMarkDown(
+                                this.props.commentData[this.props.commentId]
+                                    ?.body
+                            )}
+                        ></div>
+                    </div>
+
                     <div className="collapse-master-container">
                         {this.props.commentData[this.props.commentId]?.childIds
                             ?.length > 0 ? (
@@ -209,46 +267,17 @@ class Comment extends React.Component {
                     </div>
                     {this.props.commentData[this.props.commentId]?.body !==
                         undefined && (
-                        <div className="upvotes">
-                            <div
-                                className="upvote-arrows"
-                                onClick={() => this.handleArrowClick(1)}
-                            >
-                                <UpArrow isActive={this.state.voteVal} />
-                            </div>
-                            <div className="comment-score">
-                                {this.state.updatedScore
-                                    ? this.state.updatedScore
-                                    : this.props.commentData[
-                                          this.props.commentId
-                                      ].score}
-                            </div>
-                            <div
-                                className="upvote-arrows"
-                                onClick={() => this.handleArrowClick(-1)}
-                            >
-                                <DownArrow isActive={this.state.voteVal} />
-                            </div>
-                        </div>
+                        <CommentReply
+                            getCommentReply={this.props.getCommentReply}
+                            commentId={this.props.commentId}
+                            // parent_Id={props.parent_Id}
+                            commentData={this.props.commentData}
+                            getCommentEdit={this.props.getCommentEdit}
+                        />
                     )}
-                    <div
-                        className="comment"
-                        dangerouslySetInnerHTML={this.getMarkDown(
-                            this.props.commentData[this.props.commentId]?.body
-                        )}
-                    ></div>
+
+                    {!this.state.isCollapsed && this.getComments()}
                 </div>
-                {this.props.commentData[this.props.commentId]?.body !==
-                    undefined && (
-                    <CommentReply
-                        getCommentReply={this.props.getCommentReply}
-                        commentId={this.props.commentId}
-                        // parent_Id={props.parent_Id}
-                        commentData={this.props.commentData}
-                        getCommentEdit={this.props.getCommentEdit}
-                    />
-                )}
-                {!this.state.isCollapsed && this.getComments()}
             </div>
         )
     }
