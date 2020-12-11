@@ -166,7 +166,7 @@ class Home extends React.Component {
             <div>
                 <div className="sort-container">
                     <div className="sortByMenuContainer">
-                        <div className="sort-by-text">Sort By:</div>
+                        <div className="sort-by-text"></div>
                         {sortOptions.map((option) => (
                             <div
                                 // onClick={() => this.getHomePage('best')}
