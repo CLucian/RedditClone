@@ -89,6 +89,11 @@ class App extends React.Component {
                                         }}
                                     />
                                     <Route
+                                        path="/ErrorPage"
+                                        exact
+                                        component={ErrorPage}
+                                    />
+                                    <Route
                                         path="/"
                                         exact
                                         component={ErrorPage}
@@ -103,7 +108,7 @@ class App extends React.Component {
                             <div className="right-side-app">
                                 <div className="sidebar-nav">
                                     <SideBar />
-                                    <div></div>
+                                    {/* <div></div> */}
                                 </div>
                             </div>
                         </div>

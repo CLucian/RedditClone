@@ -1,10 +1,12 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 // import Modal from './modal/Modal'
 // import PostModal from './modal/PostModal'
 import Login from './Login'
+import ErrorPage from './errorPage.component'
 import { GlobalContext } from './GlobalState'
+import { postVote, getAuthorAvatar } from '../queries/postPage'
 
 import Axios from 'axios'
 import qs from 'qs'
@@ -28,57 +30,24 @@ class Post extends React.Component {
             updatedScore: '',
             isLoading: true,
             authorImg: '',
+            err: null,
         }
     }
 
     componentDidMount() {
-        const getAuthorAvatar = () => {
-            const data = {
-                id: this.props.postData.data.author,
-            }
-            return Axios({
-                method: 'GET',
-                url: `https://oauth.reddit.com/user/${this.props.postData.data.author}/about`,
-                headers: {
-                    Authorization: 'bearer ' + this.context.accessToken,
-                },
-                data: qs.stringify(data),
-            })
-                .then((response) => {
-                    console.log('this is the author response', response)
-                    const dataImg = response.data.data.icon_img
-                    const modifiedImg = dataImg.split('?width')[0]
-                    this.setState({
-                        authorImg: modifiedImg,
-                        isLoading: false,
-                    })
-                })
-                .catch((err) => {
-                    console.log('Avatar fetch error ', err)
-                })
-        }
-        getAuthorAvatar()
-    }
-
-    postVote = (voteVal) => {
-        const data = {
-            dir: voteVal.toString(),
-            id: this.props.postData.data.name,
-        }
-        Axios({
-            method: 'post',
-            url: 'https://oauth.reddit.com/api/vote',
-            headers: {
-                Authorization: 'bearer ' + this.context.accessToken,
-                'content-type': 'application/x-www-form-urlencoded',
-            },
-            data: qs.stringify(data),
-        })
+        getAuthorAvatar(this.props.postData.data.author)
             .then((response) => {
-                console.log('response data', response)
+                const dataImg = response.data.data.icon_img
+                const modifiedImg = dataImg.split('?width')[0]
+                this.setState({
+                    authorImg: modifiedImg,
+                    isLoading: false,
+                })
             })
             .catch((err) => {
-                console.log(err)
+                this.setState({
+                    err,
+                })
             })
     }
 
@@ -95,18 +64,18 @@ class Post extends React.Component {
     }
 
     getLength = (description) => {
-        const maxLength = 250
+        const maxLength = 150
         if (description.length > maxLength) {
-            return description.substring(0, maxLength) + '...'
+            return description.substring(0, maxLength)
         } else {
             return description
         }
     }
 
     getLengthTitle = (description) => {
-        const maxLength = 200
+        const maxLength = 100
         if (description.length > maxLength) {
-            return description.substring(0, maxLength) + '...'
+            return description.substring(0, maxLength)
         } else {
             return description
         }
@@ -149,20 +118,15 @@ class Post extends React.Component {
                 voteVal: voteValue,
                 updatedScore: this.props.postData.data.score + voteValue,
             },
-            () => this.postVote(voteValue)
+
+            () => postVote(voteValue)
         )
     }
 
     render() {
-        console.log('this.state.authorImg', this.state.authorImg)
-        console.log('this.props.postData', this.props.postData)
-        // {
-        //     if (!this.props.postData) {
-        //         return <Login />
-        //     } else if (!this.state.authorImg) {
-        //         return '...Loading'
-        //     }
-        // }
+        if (this.state.err) {
+            return <Redirect to="/ErrorPage" />
+        }
 
         return (
             <div className="master-container">
@@ -170,6 +134,9 @@ class Post extends React.Component {
                     className="profile-post-container"
                     onClick={this.openModal}
                 >
+                    <div className="post-listing-subreddit">
+                        {this.props.postData.data.subreddit}
+                    </div>
                     <div className="post-main-info">
                         <div className="post-score">
                             <div
@@ -191,9 +158,9 @@ class Post extends React.Component {
                             </div>
                         </div>
                         <div className="main-text-container">
-                            <div className="post-listing-subreddit">
+                            {/* <div className="post-listing-subreddit">
                                 {this.props.postData.data.subreddit}
-                            </div>
+                            </div> */}
                             <div className="post-title">
                                 <Link
                                     id="modal-open"

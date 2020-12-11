@@ -209,6 +209,7 @@ li, ul {
 
 .subreddit-page-container {
   /* max-width: 95%; */
+  /* display: block; */
   width: 100%;
 }
 
@@ -474,6 +475,8 @@ a {
 .post-thumbnail {
   max-height: 20rem;
   max-width: 20rem;
+  border-radius: 0.2rem;
+  /* border-radius: 50%; */
   
 }
 
@@ -902,6 +905,7 @@ a {
 }
 
 .reply-input-container {
+  width: inherit;
 }
 
 .reply-text-area {
@@ -928,7 +932,8 @@ a {
 }
 
 .comment-form-container {
-  width: 100%;
+  /* width: 100%; */
+  /* width: 50%; */
 }
 
 .comment-reply:hover {
@@ -968,7 +973,8 @@ textarea {
   /* padding-top: 1rem; */
   height: 20rem;
   /* width: 100%; */
-  width: 60rem;
+  /* width: 40rem; */
+  width: inherit;
   display: flex;
   flex-direction: column;
   /* align-items: center; */
@@ -1300,22 +1306,43 @@ textarea {
   padding-bottom: 1rem;
   display: flex;
   justify-content: space-between;
-  /* align-items: center; */
+  align-items: center;
   font-size: 2.25rem;
   padding-right: 4rem;
+  
 }
 
+/* color: #b1b1b1;
+  font-size: 1.5rem;
+  padding-right: 4rem;
+  line-height: 2.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+  line-height: 2rem;
+  max-height: 11rem;
+  word-break: break-word;
+  margin-bottom: 0.5rem; */
 
 
 .post-title-text {
   /* max-height: 7rem; */
+  line-height: 2.5rem;
+  font-size: 2rem;
   overflow: hidden;
   text-overflow: ellipsis;
-  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  /* word-wrap: break-word; */
   -webkit-box-orient: vertical;
   color: #4a4a4a;
   padding-right: 2rem;
 }
+
+
 
 .post-main-info {
   display: flex;
@@ -1364,13 +1391,15 @@ textarea {
   line-height: 2.5rem;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: block;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   word-wrap: break-word;
   line-height: 2rem;
   max-height: 11rem;
   word-break: break-word;
   margin-bottom: 0.5rem;
-  /* -webkit-line-clamp: 4; */
+  
 }
 
 .author-img-container {
@@ -1387,7 +1416,7 @@ textarea {
 .author-img {
   max-width: 100%;
   max-height: 100%;
-  border-radius: 50%;
+  border-radius: 0.2rem;
 }
 
 .author-text {
@@ -1399,8 +1428,8 @@ textarea {
   text-align: right;
   font-size: 1.2rem;
   color: #4a4a4a;
-  padding-bottom: 1rem;
-  padding-right: 4rem;
+  padding-top: 1rem;
+  padding-right: 2rem;
 }
 
 
@@ -1728,7 +1757,7 @@ select.post-select {
 .text-container {
   display: flex;
   justify-content: center;
-  width: 100%;
+  /* width: 100%; */
   margin: 1rem;
   height: 30rem;
   font-size: 2rem;
@@ -1744,6 +1773,7 @@ select.post-select {
 
 .post-text-area {
   font-size: 2rem;
+  padding: 0.5rem 1rem;
   /* height: 50rem; */
   /* width: 100%; */
 

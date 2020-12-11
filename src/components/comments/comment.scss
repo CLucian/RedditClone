@@ -16,7 +16,7 @@
 	&__upvotes-container {
 		display: flex;
 		flex-direction: column;
-		padding-left: 2rem;
+		// padding-left: 2rem;
 		
 		
 	}
@@ -81,7 +81,7 @@
 		padding-right: 1.5rem;
 	}
 	&__reply-container {
-		
+		width: 100%;
 	}
 }
  
