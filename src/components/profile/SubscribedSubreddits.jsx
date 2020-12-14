@@ -4,6 +4,8 @@ import axios from 'axios'
 import { GlobalContext } from '../GlobalState'
 import SubredditList from './SubredditList'
 
+import getSubreddits from '../../queries/subscribedSubreddits'
+
 class SubscribedSubreddits extends React.Component {
     constructor(props) {
         super(props)
@@ -15,36 +17,18 @@ class SubscribedSubreddits extends React.Component {
         }
     }
 
-    getSubreddits = (pageDir) => {
-        let url = `https://oauth.reddit.com/subreddits/mine/subscriber?limit=10`
-        if (pageDir === 'next') {
-            url = `https://oauth.reddit.com/subreddits/mine/subscriber?count=555&after=${this.state.after}&limit=10`
-            // url = `https://oauth.reddit.com/count=555?after=${this.state.after}`
-        } else if (pageDir === 'prev') {
-            url = `https://oauth.reddit.com/subreddits/mine/subscriber?count=555&before=${this.state.before}&limit=10`
-        }
-        return axios({
-            method: 'GET',
-            url: url,
-            headers: {
-                Authorization: 'bearer ' + this.context.accessToken,
-            },
+    componentDidMount() {
+        getSubreddits().then((response) => {
+            this.handleResponse(response)
         })
-            .then((response) => {
-                console.log('subreddit response - sidebar', response)
-                this.setState({
-                    subredditDataArr: response.data.data.children,
-                    before: response.data.data.before,
-                    after: response.data.data.after,
-                })
-            })
-            .catch((err) => {
-                console.log('Home Component Error: ', err)
-            })
     }
 
-    componentDidMount() {
-        this.getSubreddits()
+    handleResponse = (response) => {
+        this.setState({
+            subredditDataArr: response.data.data.children,
+            before: response.data.data.before,
+            after: response.data.data.after,
+        })
     }
 
     getPage = (pageDir) => {
@@ -53,20 +37,29 @@ class SubscribedSubreddits extends React.Component {
                 {
                     page: this.state.page + 1,
                 },
-                () => this.getSubreddits(pageDir)
+                () =>
+                    getSubreddits(pageDir, this.state.after).then(
+                        (response) => {
+                            this.handleResponse(response)
+                        }
+                    )
             )
         } else if (pageDir === 'prev') {
             this.setState(
                 {
                     page: this.state.page - 1,
                 },
-                () => this.getSubreddits(pageDir)
+                () =>
+                    this.getSubreddits(pageDir, this.state.before).then(
+                        (response) => {
+                            this.handleResponse(response)
+                        }
+                    )
             )
         }
     }
 
     render() {
-        console.log('subscribedsubreddits', this.state.subredditDataArr)
         return (
             <div className="subreddit-page-container">
                 <div className="subreddit-page-title">

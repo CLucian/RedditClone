@@ -616,6 +616,11 @@ a {
   text-align: center;
 }
 
+.full-post-img {
+  max-width: 100%;
+
+}
+
 .author-subreddit-container {
   /* display: flex;
   justify */
@@ -1757,7 +1762,7 @@ select.post-select {
 .text-container {
   display: flex;
   justify-content: center;
-  /* width: 100%; */
+  width: 100%;
   margin: 1rem;
   height: 30rem;
   font-size: 2rem;

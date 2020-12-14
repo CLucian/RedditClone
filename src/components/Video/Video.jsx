@@ -9,11 +9,13 @@ import { Player } from 'video-react'
 
 class Video extends React.Component {
     render() {
+        let url = this.props.video.replace('watch?v=', 'v/')
         return (
             <div className="player-container">
                 <ReactPlayer
                     className="video-player"
-                    url={this.props.video}
+                    // url={this.props.video}
+                    url={url}
                     // url="https://clips.twitch.tv/UninterestedAffluentLettuceKreygasm"
                     controls={true}
                     config={{ playerVars: { showinfo: 1 } }}

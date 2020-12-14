@@ -30,25 +30,31 @@ class Post extends React.Component {
             updatedScore: '',
             isLoading: true,
             authorImg: '',
-            err: null,
+            // err: null,
         }
     }
 
     componentDidMount() {
-        getAuthorAvatar(this.props.postData.data.author)
-            .then((response) => {
+        getAuthorAvatar(this.props.postData.data.author).then((response) => {
+            console.log('response in post', response.data.data.icon_img)
+            if (response.data.data.icon_img) {
                 const dataImg = response.data.data.icon_img
                 const modifiedImg = dataImg.split('?width')[0]
                 this.setState({
                     authorImg: modifiedImg,
                     isLoading: false,
                 })
-            })
-            .catch((err) => {
+            } else {
                 this.setState({
-                    err,
+                    authorImg: null,
                 })
-            })
+            }
+        })
+        // .catch((err) => {
+        //     this.setState({
+        //         err,
+        //     })
+        // })
     }
 
     openModal = () => {
@@ -124,9 +130,9 @@ class Post extends React.Component {
     }
 
     render() {
-        if (this.state.err) {
-            return <Redirect to="/ErrorPage" />
-        }
+        // if (this.state.err) {
+        //     return <Redirect to="/ErrorPage" />
+        // }
 
         return (
             <div className="master-container">

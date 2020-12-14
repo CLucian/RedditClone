@@ -5,15 +5,13 @@ import Close from '../svg-components/Close'
 import Comments from '../comments/Comments'
 import { GlobalContext } from '../GlobalState'
 import Video from '../Video/Video'
+import Twitch from '../Video/Twitch'
 
 import marked from 'marked'
 import DOMPurify from 'dompurify'
 import moment from 'moment'
-import Axios from 'axios'
 
-// const { search } = useLocation()
-// const params = new URLSearchParams(this.props.location.search)
-// const post_id = params.get('post_id')
+import getPostById from '../../queries/postModal'
 
 class PostModal extends React.Component {
     constructor(props) {
@@ -25,35 +23,11 @@ class PostModal extends React.Component {
     }
 
     componentDidMount() {
-        const getPostById = () => {
-            // const data = {
-            //     api_type: 'json',
-            //     names: this.props.commentData[this.props.commentId].name,
-            //     text: this.state.value,
-            // }
-            Axios({
-                method: 'get',
-                url: `https://oauth.reddit.com/by_id/${this.props.postId}`,
-                headers: {
-                    Authorization: 'bearer ' + this.context.accessToken,
-                    'content-type': 'application/x-www-form-urlencoded',
-                },
-                data: null,
-                // ,
-                // data: qs.stringify(data),
+        getPostById(this.props.postId).then((response) => {
+            this.setState({
+                data: response.data.data.children[0].data,
             })
-                .then((response) => {
-                    console.log('getPostById modal get req response', response)
-                    this.setState({
-                        data: response.data.data.children[0].data,
-                    })
-                })
-                .catch((err) => {
-                    console.log(err)
-                    console.log('what is the error', err.data)
-                })
-        }
-        getPostById()
+        })
     }
 
     getMarkDown = () => {
@@ -74,12 +48,6 @@ class PostModal extends React.Component {
     /// Incorporate an image thumbnail --> also links if clicked
 
     render() {
-        // this.getPostById(this.props.postId)
-        // console.log('post_id  in the modal Component', post_id)
-        // console.log('search in post modal', search)
-        // console.log('this is the location of query string', this.props.location)
-        console.log('this.state.data', this.state.data)
-        // console.log()
         if (!this.state.data) {
             return null
         }
@@ -145,6 +113,7 @@ class PostModal extends React.Component {
                     <div className="full-post-image">
                         <a href={this.state.data.url}>
                             <img
+                                className="full-post-img"
                                 src={this.state.data.url}
                                 style={
                                     {
@@ -162,6 +131,14 @@ class PostModal extends React.Component {
                             video={this.state.data?.media?.oembed?.author_url}
                         />
                     )}
+                {this.state.data?.secure_media_embed?.media_domain_url && (
+                    <Twitch
+                        url={
+                            this.state.data?.secure_media_embed
+                                ?.media_domain_url
+                        }
+                    />
+                )}
                 {/* {this.state.data?.media?.reddit_video && (
                     <Video
                         video={

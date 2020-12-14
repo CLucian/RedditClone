@@ -35,22 +35,6 @@ class MasterSearch extends React.Component {
 
     render() {
         return (
-            // <div className="master-search-container">
-            //     <form
-            //         className="master-search-form"
-            //         type="submit"
-            //         onSubmit={this.handleSubmit}
-            //     >
-            //         <SearchSVG />
-            //         <input
-            //             type="text"
-            //             placeholder="search"
-            //             name="query"
-            //             value={this.state.query}
-            //             onChange={this.handleChange}
-            //         />
-            //     </form>
-            // </div>
             <div className="search-subreddit-div">
                 <SearchSVG />
                 <div className="query-search-div">

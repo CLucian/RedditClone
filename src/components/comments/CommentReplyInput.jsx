@@ -1,7 +1,6 @@
 import React from 'react'
-import Axios from 'axios'
-import qs from 'qs'
 
+import postComment from '../../queries/commentReplyInput'
 import { GlobalContext } from '../GlobalState'
 
 class CommentReplyInput extends React.Component {
@@ -11,51 +10,6 @@ class CommentReplyInput extends React.Component {
             value: '',
             responseObject: null,
         }
-    }
-
-    postComment = () => {
-        const data = {
-            api_type: 'json',
-            thing_id: this.props.commentData[this.props.commentId].name,
-            text: this.state.value,
-        }
-        Axios({
-            method: 'post',
-            url: 'https://oauth.reddit.com/api/comment',
-            headers: {
-                Authorization: 'bearer ' + this.context.accessToken,
-                'content-type': 'application/x-www-form-urlencoded',
-                // "Content-Type": "application/x-www-form-urlencoded"
-            },
-            data: qs.stringify(data),
-        })
-            .then((response) => {
-                alert('Your comment has gone through, ' + response)
-                // console.log('this.state.value', this.state.value)
-                // console.log('this is the response', response)
-                // console.log('response data', response.data)
-                if (response.data.json.errors[0] !== undefined) {
-                    response.data.json.errors[0].map((err) => {
-                        return alert(err)
-                    })
-                } else {
-                    this.props.getCommentReply(
-                        response.data.json.data.things[0].data,
-                        this.props.commentId
-                    )
-                    this.context.getAndDisplayComment(
-                        this.props.parent_Id,
-                        this.state.value
-                    )
-                }
-                this.props.handleCommentPost()
-            })
-            .catch((err) => {
-                console.log(err)
-                console.log('what is the error', err.data)
-                alert('There was an error' + err)
-                this.props.closeReply()
-            })
     }
 
     handleChange = (e) => {
@@ -75,7 +29,26 @@ class CommentReplyInput extends React.Component {
                 this.props.commentId
             )
             this.setState({ value: this.state.value }, () => {
-                this.postComment()
+                postComment(
+                    this.props.commentData[this.props.commentId].name,
+                    this.state.value
+                ).then((response) => {
+                    if (response.data.json.errors[0] !== undefined) {
+                        response.data.json.errors[0].map((err) => {
+                            return alert(err)
+                        })
+                    } else {
+                        this.props.getCommentReply(
+                            response.data.json.data.things[0].data,
+                            this.props.commentId
+                        )
+                        this.context.getAndDisplayComment(
+                            this.props.parent_Id,
+                            this.state.value
+                        )
+                    }
+                    this.props.handleCommentPost()
+                })
             })
         } else {
             alert('Please type something')

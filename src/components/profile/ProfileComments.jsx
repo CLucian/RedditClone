@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom'
 import marked from 'marked'
 import DOMPurify from 'dompurify'
 import moment from 'moment'
-import Axios from 'axios'
-import qs from 'qs'
 
 import HeartSVG from '../svg-components/Heart'
 import BubbleSVG from '../svg-components/Bubble'
@@ -13,48 +11,32 @@ import UpArrowSVG from '../svg-components/UpArrow'
 import DownArrowSVG from '../svg-components/DownArrow'
 import AuthorSVG from '../svg-components/Author'
 
+import Axios from 'axios'
+import qs from 'qs'
+
+import getAuthorAvatar from '../../queries/profileComments'
+
 class ProfileComments extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             authorImg: '',
-            isLoading: true,
         }
     }
 
     componentDidMount() {
-        const getAuthorAvatar = () => {
-            if (this.props.childData.data.link_author === '[deleted]') {
+        getAuthorAvatar(this.props.childData.data.link_author)
+            .then((response) => {
+                const dataImg = response.data.data.icon_img
+                console.log('dataImg', dataImg)
+                const modifiedImg = dataImg.split('?width')[0]
                 this.setState({
-                    isLoading: false,
+                    authorImg: modifiedImg,
                 })
-            } else {
-                const data = {
-                    id: this.props.childData.data.link_author,
-                }
-                return Axios({
-                    method: 'GET',
-                    url: `https://oauth.reddit.com/user/${this.props.childData.data.link_author}/about`,
-                    headers: {
-                        Authorization: 'bearer ' + this.props.accessToken,
-                    },
-                    data: qs.stringify(data),
-                })
-                    .then((response) => {
-                        console.log('this is the author response', response)
-                        const dataImg = response.data.data.icon_img
-                        const modifiedImg = dataImg.split('?width')[0]
-                        this.setState({
-                            authorImg: modifiedImg,
-                            isLoading: false,
-                        })
-                    })
-                    .catch((err) => {
-                        console.log('Avatar fetch error ', err)
-                    })
-            }
-        }
-        getAuthorAvatar()
+            })
+            .catch((err) => {
+                console.log('error in profilecomments', err)
+            })
     }
 
     getMarkDown = (markDown) => {
@@ -116,32 +98,7 @@ class ProfileComments extends React.Component {
             score,
         } = this.props.childData.data
 
-        console.log('author state', this.state.authorImg)
-        console.log(
-            'this is the props for profile comments',
-            this.props.childData
-        )
-
-        // if (this.state.isLoading) {
-        //     return '...Loading'
-        // }
-
         return (
-            // <div className="master-container">
-            //     <div className="profile-post-container">
-            //         <div className="post-title">{link_title}</div>
-            //         <div className="author">{link_author}</div>
-            //         <div className="subreddit">{subreddit}</div>
-
-            //         <div
-            //             className="modal-description"
-            //             dangerouslySetInnerHTML={this.getMarkDown(body)}
-            //         ></div>
-            //     </div>
-            // </div>
-
-            //
-
             <div className="master-container">
                 <div
                     className="profile-post-container"
@@ -204,10 +161,12 @@ class ProfileComments extends React.Component {
                     <div className="post-sub-info">
                         <div className="post-author">
                             <div className="author-img-container">
-                                <img
-                                    className="author-img"
-                                    src={this.state.authorImg}
-                                />
+                                {this.state.authorImg && (
+                                    <img
+                                        className="author-img"
+                                        src={this.state.authorImg}
+                                    />
+                                )}
                             </div>
                             Posted by:
                             <div className="author-text">

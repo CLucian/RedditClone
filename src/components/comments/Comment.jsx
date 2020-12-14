@@ -7,6 +7,8 @@ import qs from 'qs'
 import CommentReply from './CommentReply'
 import { GlobalContext } from '../GlobalState'
 import moment from 'moment'
+import getAuthorAvatar from '../../queries/profileComments'
+import postVote from '../../queries/comment'
 
 import DownArrow from '../svg-components/DownArrow'
 import UpArrow from '../svg-components/UpArrow'
@@ -25,69 +27,25 @@ class Comment extends React.Component {
             voteVal: 0,
             updatedScore: '',
             authorImg: '',
-            isLoading: true,
+            err: '',
         }
     }
 
     componentDidMount() {
-        const getAuthorAvatar = () => {
-            if (
-                this.props.commentData[this.props.commentId]?.author ===
-                '[deleted]'
-            ) {
-                this.setState({
-                    isLoading: false,
-                })
-            } else {
-                const data = {
-                    id: this.props.commentData[this.props.commentId]?.author,
-                }
-                return Axios({
-                    method: 'GET',
-                    url: `https://oauth.reddit.com/user/${
-                        this.props.commentData[this.props.commentId]?.author
-                    }/about`,
-                    headers: {
-                        Authorization: 'bearer ' + this.context.accessToken,
-                    },
-                    data: qs.stringify(data),
-                })
-                    .then((response) => {
-                        console.log('this is the author response', response)
-                        const dataImg = response.data.data.icon_img
-                        const modifiedImg = dataImg.split('?width')[0]
-                        this.setState({
-                            authorImg: modifiedImg,
-                            isLoading: false,
-                        })
-                    })
-                    .catch((err) => {
-                        console.log('Avatar fetch error ', err)
-                    })
-            }
-        }
-        getAuthorAvatar()
-    }
-
-    postVote = (voteVal) => {
-        const data = {
-            dir: voteVal.toString(),
-            id: this.props.commentData[this.props.commentId].name,
-        }
-        Axios({
-            method: 'post',
-            url: 'https://oauth.reddit.com/api/vote',
-            headers: {
-                Authorization: 'bearer ' + this.context.accessToken,
-                'content-type': 'application/x-www-form-urlencoded',
-            },
-            data: qs.stringify(data),
-        })
+        getAuthorAvatar(this.props.commentData[this.props.commentId]?.author)
             .then((response) => {
-                console.log('response data', response)
+                console.log('response in comment.jsx', response)
+                const dataImg = response.data.data.icon_img
+                const modifiedImg = dataImg.split('?width')[0]
+                this.setState({
+                    authorImg: modifiedImg,
+                })
             })
             .catch((err) => {
-                console.log(err)
+                this.setState({
+                    authorImg: null,
+                    err: err,
+                })
             })
     }
 
@@ -113,7 +71,11 @@ class Comment extends React.Component {
                     this.props.commentData[this.props.commentId].score +
                     voteValue,
             },
-            () => this.postVote(voteValue)
+            () =>
+                postVote(
+                    voteValue,
+                    this.props.commentData[this.props.commentId].name
+                )
         )
     }
 
@@ -160,9 +122,6 @@ class Comment extends React.Component {
     //in render display null if you shouldn't display it
     render() {
         // console.log('get comment edit', this.props.getCommentEdit)
-        if (this.state.isLoading) {
-            // return 'loading... from comment.js'
-        }
 
         return (
             <>
@@ -197,10 +156,12 @@ class Comment extends React.Component {
                             <div className="comments__title-container">
                                 <div className="comments__author-info-container">
                                     <div className="comments__author-img-container">
-                                        <img
-                                            className="comments__author-img"
-                                            src={this.state.authorImg}
-                                        />
+                                        {this.state.authorImg && (
+                                            <img
+                                                className="comments__author-img"
+                                                src={this.state.authorImg}
+                                            />
+                                        )}
                                     </div>
                                     <div className="comments__author">
                                         {

@@ -5,6 +5,7 @@ import Loader from '../svg-components/Loader'
 import { GlobalContext } from '../GlobalState'
 import Comment from './Comment'
 import { flattenCommentTree } from '../../utils/comments'
+import getComments from '../../queries/comments'
 
 export const CommentContext = React.createContext()
 
@@ -21,7 +22,27 @@ class Comments extends React.Component {
 
     componentDidMount() {
         if (this.props.data) {
-            this.getComments()
+            getComments(this.props.subreddit, this.props.postCommentsId).then(
+                (response) => {
+                    const responseData = response.data[1].data.children
+                    const parentCommentIdsArr = []
+                    responseData.forEach((parentComment) => {
+                        parentCommentIdsArr.push(parentComment.data.id)
+                    })
+
+                    // console.clear()
+                    const data = responseData
+                    console.log('direct data', data)
+                    const commentMap = flattenCommentTree(responseData)
+                    console.log('DATA AND COMMENT MAP', data, commentMap)
+
+                    this.setState({
+                        comments: commentMap,
+                        parentCommentsArr: parentCommentIdsArr,
+                        isLoading: false,
+                    })
+                }
+            )
         }
     }
 
@@ -55,54 +76,7 @@ class Comments extends React.Component {
         })
     }
 
-    getComments = () => {
-        console.log('in get comments', this.props.subreddit)
-        // console.log('in get comments', this.props.postCom)
-        if (this.props.accessToken && this.props.data) {
-            return axios({
-                method: 'GET',
-                url: `https://oauth.reddit.com/${this.props.subreddit}/comments/${this.props.postCommentsId}`,
-                headers: {
-                    Authorization: 'bearer ' + this.props.accessToken,
-                },
-            })
-                .then((response) => {
-                    const responseData = response.data[1].data.children
-                    const parentCommentIdsArr = []
-                    responseData.forEach((parentComment) => {
-                        parentCommentIdsArr.push(parentComment.data.id)
-                    })
-
-                    // console.clear()
-                    const data = responseData
-                    console.log('direct data', data)
-                    const commentMap = flattenCommentTree(responseData)
-                    console.log('DATA AND COMMENT MAP', data, commentMap)
-
-                    this.setState({
-                        comments: commentMap,
-                        parentCommentsArr: parentCommentIdsArr,
-                        isLoading: false,
-                    })
-                })
-                .catch((err) => {
-                    console.log('Home Component Error: ', err)
-                })
-        }
-    }
-
     render() {
-        console.log(
-            'this.props.data from the postModal in Comments now',
-            this.props.data
-        )
-        // console.log('author in comments', this.props.data.author)
-        // console.log('subreddit', this.props.subreddit)
-        // console.log('postCommentsId', this.props.postCommentsId)
-        // console.log('this.state.comments', this.state.comments)
-        // console.log('getcommentReply', this.getCommentReply)
-        // console.log('getcommetnEdit', this.getCommentEdit)
-
         if (this.state.isLoading) {
             return <Loader />
         }
@@ -112,10 +86,8 @@ class Comments extends React.Component {
                 {this.state.parentCommentsArr.map((parentId) => {
                     return (
                         <Comment
-                            // currentData={this.state.comments[parentId]}
                             commentData={this.state.comments}
                             commentId={parentId}
-                            // parent_Id={this.state.comments[parentId].parent_id}
                             getCommentReply={this.getCommentReply}
                             getCommentEdit={this.getCommentEdit}
                         />

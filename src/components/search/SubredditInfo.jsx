@@ -1,8 +1,5 @@
 import React from 'react'
 
-import { debounce } from 'lodash'
-import axios from 'axios'
-
 class SubredditInfo extends React.Component {
     constructor(props) {
         super(props)

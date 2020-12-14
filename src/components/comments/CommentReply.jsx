@@ -21,12 +21,6 @@ class CommentReply extends React.Component {
     }
 
     handleEditPost = () => {
-        console.log(
-            'commentData for this id',
-            this.props.commentData[this.props.commentId]
-        )
-        // console.log('getCommentEdit', this.props.getCommentEdit)
-        // console.log('getCommentReply', this.props.getCommentReply)
         this.setState({
             showEditBox: !this.state.showEditBox,
         })

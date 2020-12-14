@@ -4,7 +4,8 @@ import { GlobalContext } from '../GlobalState'
 import SubredditSearch from '../search/SubredditSearch'
 
 import Axios from 'axios'
-import qs from 'qs'
+
+import submitPost from '../../queries/createPostPage'
 
 export default class CreatePostPage extends React.Component {
     constructor() {
@@ -16,42 +17,6 @@ export default class CreatePostPage extends React.Component {
             text: null,
             showSuggestions: false,
         }
-    }
-
-    submitPost = () => {
-        const data = {
-            title: this.state.title,
-            sr: this.state.subreddit,
-            kind: this.state.type,
-            text: this.state.text,
-        }
-        Axios({
-            method: 'post',
-            url: 'https://oauth.reddit.com/api/submit',
-            headers: {
-                Authorization: 'bearer ' + this.context.accessToken,
-                'content-type': 'application/x-www-form-urlencoded',
-                // "Content-Type": "application/x-www-form-urlencoded"
-            },
-            data: qs.stringify(data),
-        })
-            .then((response) => {
-                alert('your post has gone through, ' + response)
-                this.setState({
-                    title: '',
-                    subreddit: '',
-                    text: '',
-                    showSuggestions: false,
-                })
-                if (response.data.success === false) {
-                    alert(response.data.jquery[14][3])
-                }
-            })
-            .catch((err) => {
-                console.log(err)
-                console.log('what is the error', err.data)
-                alert('There was an error' + err)
-            })
     }
 
     handleChange = (e) => {
@@ -75,7 +40,22 @@ export default class CreatePostPage extends React.Component {
             this.state.title.length > 0 &&
             this.state.subreddit.length > 0
         ) {
-            this.submitPost()
+            submitPost(
+                this.state.title,
+                this.state.subreddit,
+                this.state.type,
+                this.state.text
+            ).then((response) => {
+                this.setState({
+                    title: '',
+                    subreddit: '',
+                    text: '',
+                    showSuggestions: false,
+                })
+                if (response.data.success === false) {
+                    alert(response.data.jquery[14][3])
+                }
+            })
         }
     }
 

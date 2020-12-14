@@ -1,7 +1,6 @@
 import React from 'react'
 
 import SearchSVG from '../svg-components/SearchSVG'
-// import subredditSearch from '../../queries/subredditSearch'
 
 class SearchInSubreddit extends React.Component {
     constructor(props) {
@@ -34,7 +33,6 @@ class SearchInSubreddit extends React.Component {
         )
         return (
             <div className="search-subreddit-div">
-                {/* <div className="create-post">Search Subreddit</div> */}
                 <SearchSVG />
                 <div className="query-search-div">
                     <form

@@ -36,11 +36,6 @@ class Navbar extends React.Component {
     }
 
     render() {
-        console.log('current location', this.props.location)
-        console.log('current history', this.props.history)
-        // console.log('current url', window.location.href)
-        console.log('active Route', this.state.activeRoute)
-        console.log('username=====', this.context.userData)
         return (
             <React.Fragment>
                 <div className="navbar">
