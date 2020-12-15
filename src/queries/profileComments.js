@@ -23,3 +23,23 @@ export default function getAuthorAvatar(author) {
             console.log('Avatar fetch error ', err)
         })
 }
+
+export function deleteComment(id) {
+    const axios = axiosInstance()
+
+    const data = {
+        id: id,
+    }
+    return axios({
+        method: 'POST',
+        url: `https://oauth.reddit.com/api/del`,
+        data: qs.stringify(data),
+    })
+        .then((response) => {
+            console.log('delete response', response)
+            return response
+        })
+        .catch((err) => {
+            console.log('delete error', err)
+        })
+}

@@ -20,7 +20,8 @@ export function postVote(voteVal) {
     const axios = axiosInstance()
     const data = {
         dir: voteVal.toString(),
-        id: this.props.postData.data.name,
+        // id: this.props.postData.data.name,
+        id: voteVal,
     }
     axios({
         method: 'post',

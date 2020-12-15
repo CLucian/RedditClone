@@ -7,6 +7,8 @@ import Login from '../Login'
 import ProfileComments from './ProfileComments'
 import { GlobalContext } from '../GlobalState'
 
+import { deleteComment } from '../../queries/profileComments'
+
 import getProfile from '../../queries/profile'
 
 /* 
@@ -96,6 +98,21 @@ export default class Profile extends React.Component {
         })
     }
 
+    confirmDelete = (id) => {
+        deleteComment(id).then((response) => {
+            console.log(response)
+            getProfile(
+                undefined,
+                this.context.userData.name,
+                this.state.after,
+                this.state.before
+            ).then((response) => {
+                console.log('getProfile response after deleting', response)
+                this.handleResponse(response)
+            })
+        })
+    }
+
     getPage = (pageDir) => {
         // this.getProfile(this.state.after, null)
         if (pageDir === 'next') {
@@ -118,7 +135,7 @@ export default class Profile extends React.Component {
                 {
                     page: this.state.page - 1,
                 },
-                () =>
+                () => {
                     getProfile(
                         pageDir,
                         this.context.userData.name,
@@ -127,6 +144,7 @@ export default class Profile extends React.Component {
                     ).then((response) => {
                         this.handleResponse(response)
                     })
+                }
             )
         }
     }
@@ -143,6 +161,7 @@ export default class Profile extends React.Component {
                         this.state.postChildren.map((child) => {
                             return (
                                 <ProfileComments
+                                    confirmDelete={this.confirmDelete}
                                     childData={child}
                                     id={child.id}
                                     accessToken={this.context.accessToken}
