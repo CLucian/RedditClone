@@ -20,12 +20,16 @@ class SideBar extends React.Component {
     componentDidMount() {
         if (this.context.accessToken) {
             // console.log('accessToken in sidebar', this.context.accessToken)
-            getSubreddits().then((response) => {
-                this.setState({
-                    subredditDataArr: response.data.data.children,
-                    isLoading: false,
+            getSubreddits()
+                .then((response) => {
+                    this.setState({
+                        subredditDataArr: response.data.data.children,
+                        isLoading: false,
+                    })
                 })
-            })
+                .catch((err) => {
+                    console.log('caught sidebar')
+                })
         }
     }
 

@@ -13,6 +13,7 @@ export default function getComments(subreddit, postCommentsId) {
             return response
         })
         .catch((err) => {
-            console.log('Home Component Error: ', err)
+            console.log('comments error: ', err)
+            return err
         })
 }

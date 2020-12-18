@@ -60,9 +60,14 @@ class Home extends React.Component {
 
     componentDidMount() {
         // if (this.context.accessToken) {
-        getHomePage().then((response) => {
-            this.handleDataResponse(response)
-        })
+        getHomePage()
+            .then((response) => {
+                this.handleDataResponse(response)
+            })
+            .catch((err) => {
+                return err
+                console.log('err retrieving feed in home component', err)
+            })
         // }
     }
 

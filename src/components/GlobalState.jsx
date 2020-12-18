@@ -48,7 +48,7 @@ class GlobalState extends React.Component {
                 setAccessToken(token)
 
                 // create axios instance with token
-                setupAxios(token)
+                setupAxios(token, this.invalidate)
 
                 // update state
                 this.setState({

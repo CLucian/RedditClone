@@ -23,11 +23,13 @@ class PostModal extends React.Component {
     }
 
     componentDidMount() {
-        getPostById(this.props.postId).then((response) => {
-            this.setState({
-                data: response.data.data.children[0].data,
+        if (this.props.postId) {
+            getPostById(this.props.postId).then((response) => {
+                this.setState({
+                    data: response.data.data.children[0].data,
+                })
             })
-        })
+        }
     }
 
     getMarkDown = () => {

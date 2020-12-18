@@ -11,7 +11,11 @@ export function getFeed(sortBy = 'best', pageDir) {
     return getAxios()({
         method: 'GET',
         url: url,
-    }).then((response) => {
-        return response.data.data
     })
+        .then((response) => {
+            return response.data.data
+        })
+        .catch((err) => {
+            return err
+        })
 }
