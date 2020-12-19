@@ -11,6 +11,7 @@ class CommentReply extends React.Component {
         this.state = {
             showTextBox: false,
             showEditBox: false,
+            confirm: false,
         }
     }
 
@@ -32,29 +33,118 @@ class CommentReply extends React.Component {
         })
     }
 
+    deleteBtn = () => {
+        this.setState({
+            confirm: !this.state.confirm,
+        })
+    }
+
+    deleted = () => {
+        this.props.commentDelete(
+            this.props.commentData[this.props.commentId].name,
+            this.props.commentData[this.props.commentId].id,
+            this.props.commentData[this.props.commentId].parent_id.substring(3)
+        )
+        this.setState({
+            confirm: false,
+        })
+    }
+
     render() {
+        console.log(
+            'this.props.commentData in CommentReply',
+            this.props.commentData
+        )
+        console.log(
+            'this.props.commentId in CommentReply',
+            this.props.commentId
+        )
         return (
             <div className="commentReplyEdit-container">
                 <div className="replyEdit-btn-container">
-                    {this.state.showEditBox ? null : (
-                        <div
-                            className="comment-reply"
-                            onClick={this.handleCommentPost}
-                        >
-                            Reply
-                        </div>
-                    )}
+                    <div className="replyEdit-duo-btn">
+                        {this.state.showEditBox ? null : (
+                            <div
+                                className="comment-reply"
+                                onClick={this.handleCommentPost}
+                            >
+                                Reply
+                            </div>
+                        )}
+                        {this.props.commentData[this.props.commentId].author ===
+                            this.context.userData.name &&
+                            !this.state.showTextBox && (
+                                <button
+                                    className="comment-submit"
+                                    onClick={this.handleEditPost}
+                                >
+                                    Edit
+                                </button>
+                            )}
+                    </div>
                     {this.props.commentData[this.props.commentId].author ===
                         this.context.userData.name &&
-                        !this.state.showTextBox && (
+                        !this.state.confirm && (
                             <button
-                                className="comment-submit"
-                                onClick={this.handleEditPost}
+                                className="delete-btn"
+                                onClick={this.deleteBtn}
                             >
-                                Edit
+                                Delete
                             </button>
                         )}
+                    {/* {this.props.commentData[this.props.commentId].author ===
+                        this.context.userData.name &&
+                        this.state.confirm && (
+                            <div className="confirm-div">
+                                <div className="confirm-text">
+                                    <p>
+                                        Are you sure you want to delete this
+                                        comment?
+                                    </p>
+                                </div>
+                                <div className="confirm-btns">
+                                    <button
+                                        className="yes-btn"
+                                        // onClick={this.deleted}
+                                    >
+                                        Yes
+                                    </button>
+                                    <button
+                                        className="no-btn"
+                                        // onClick={this.deleteBtn}
+                                    >
+                                        No
+                                    </button>
+                                </div>
+                            </div>
+                        )} */}
                 </div>
+                {this.props.commentData[this.props.commentId].author ===
+                    this.context.userData.name &&
+                    this.state.confirm && (
+                        <div className="confirm-div">
+                            <div className="confirm-text">
+                                <p>
+                                    Are you sure you want to delete this
+                                    comment?
+                                </p>
+                            </div>
+                            <div className="confirm-btns">
+                                <button
+                                    className="yes-btn"
+                                    onClick={this.deleted}
+                                >
+                                    Yes
+                                </button>
+                                <button
+                                    className="no-btn"
+                                    onClick={this.deleteBtn}
+                                >
+                                    No
+                                </button>
+                            </div>
+                        </div>
+                    )}
                 {this.state.showEditBox ? null : (
                     <CommentReplyInput
                         getCommentReply={this.props.getCommentReply}
@@ -94,3 +184,27 @@ class CommentReply extends React.Component {
 export default CommentReply
 
 CommentReply.contextType = GlobalContext
+
+// {
+//     !this.state.confirm ? (
+//         <div className="delete-div">
+//             <button className="delete-btn" onClick={this.deleteBtn}>
+//                 Delete Comment
+//             </button>
+//         </div>
+//     ) : (
+//         <div className="confirm-div">
+//             <div className="confirm-text">
+//                 <p>Are you sure you want to delete this comment?</p>
+//             </div>
+//             <div className="confirm-btns">
+//                 <button className="yes-btn" onClick={this.deleted}>
+//                     Yes
+//                 </button>
+//                 <button className="no-btn" onClick={this.deleteBtn}>
+//                     No
+//                 </button>
+//             </div>
+//         </div>
+//     )
+// }

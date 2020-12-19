@@ -6,6 +6,7 @@ import { GlobalContext } from '../GlobalState'
 import Comment from './Comment'
 import { flattenCommentTree } from '../../utils/comments'
 import getComments from '../../queries/comments'
+import { deleteComment } from '../../queries/profileComments'
 
 export const CommentContext = React.createContext()
 
@@ -15,9 +16,11 @@ class Comments extends React.Component {
         this.state = {
             comments: 'loading...',
             isLoading: true,
-            parentCommentsArr: '',
+            parentCommentsArr: [],
             replyComment: false,
         }
+
+        this.commentDelete = this.commentDelete.bind(this)
     }
 
     componentDidMount() {
@@ -46,7 +49,55 @@ class Comments extends React.Component {
         }
     }
 
-    getCommentReply = (newCommentData, commentId) => {
+    // this works except for if it's a parent comment
+    commentDelete = (name, id, parentId) => {
+        // const id = id
+        deleteComment(name)
+            .then((response) => {
+                console.log(
+                    'you hit the deleteComment response',
+                    response,
+                    this
+                )
+
+                // create new array of child ids without the deleted id
+                const newChildIdsArr = this.state.comments[
+                    parentId
+                ].childIds.filter((el) => {
+                    return el !== id
+                })
+                const newParentArr = this.state.parentCommentsArr.filter(
+                    (el) => {
+                        return el !== id
+                    }
+                )
+                // set new child id array to parent (getting rid of deleted id)
+                this.state.comments[parentId].childIds = newChildIdsArr
+                // delete the entire id object
+                delete this.state.comments[id]
+                const newObj = { ...this.state.comments }
+                // const newArr = this.state.comments.id.filter(
+                //     (el) => {
+                //         return el !== id
+                //     }
+                // )
+                console.log('newObj', newObj)
+
+                this.setState(
+                    {
+                        comments: newObj,
+                        parentCommentsArr: newParentArr,
+                    },
+                    console.log(
+                        'you have set the new state',
+                        this.state.comments
+                    )
+                )
+            })
+            .catch((err) => console.log(err))
+    }
+
+    getCommentReply(newCommentData, commentId) {
         //search to see if the id is already logged in the commentMap
         const id = newCommentData.id
         // check to see if this id already exists from a previous comment made
@@ -77,15 +128,23 @@ class Comments extends React.Component {
     }
 
     render() {
+        console.log('this.state.comments', this.state.comments)
+        console.log(
+            'this.state.parentCommentsArr',
+            this.state.parentCommentsArr
+        )
+
         if (this.state.isLoading) {
             return <Loader />
         }
 
+        console.log('parentCommentsArr', this.state.parentCommentsArr)
         return (
             <div>
                 {this.state.parentCommentsArr.map((parentId) => {
                     return (
                         <Comment
+                            commentDelete={this.commentDelete}
                             commentData={this.state.comments}
                             commentId={parentId}
                             getCommentReply={this.getCommentReply}

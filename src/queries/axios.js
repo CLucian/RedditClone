@@ -18,9 +18,9 @@ export default function getAxios() {
 export function setupAxios(token, logout) {
     instance = axios.create({
         headers: {
-            // authorization: 'bearer ' + token,
-            authorization:
-                'bearer ' + '49481234-gexpTbKRGfc7Q3HtPkA778FWz4R2As',
+            authorization: 'bearer ' + token,
+            // authorization:
+            //     'bearer ' + '49481234-gexpTbKRGfc7Q3HtPkA778FWz4R2As',
         },
     })
 

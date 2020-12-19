@@ -34,7 +34,6 @@ class Comment extends React.Component {
     componentDidMount() {
         getAuthorAvatar(this.props.commentData[this.props.commentId]?.author)
             .then((response) => {
-                console.log('response in comment.jsx', response)
                 const dataImg = response.data.data.icon_img
                 const modifiedImg = dataImg.split('?width')[0]
                 this.setState({
@@ -106,6 +105,7 @@ class Comment extends React.Component {
                         commentId={commentId}
                         getCommentReply={this.props.getCommentReply}
                         getCommentEdit={this.props.getCommentEdit}
+                        commentDelete={this.props.commentDelete}
                         // parent_Id={props.commentData[commentId].parent_id}
                     />
                 )
@@ -122,7 +122,9 @@ class Comment extends React.Component {
     //in render display null if you shouldn't display it
     render() {
         // console.log('get comment edit', this.props.getCommentEdit)
-
+        // console.log('commentId', this.props.commentId)
+        // console.log('commentData', this.props.commentData)
+        // console.log('parent_id', this.props.parent_Id)
         return (
             <>
                 <div className="comments__container">
@@ -223,8 +225,11 @@ class Comment extends React.Component {
                                             getCommentReply={
                                                 this.props.getCommentReply
                                             }
+                                            commentDelete={
+                                                this.props.commentDelete
+                                            }
                                             commentId={this.props.commentId}
-                                            // parent_Id={props.parent_Id}
+                                            // parent_Id={this.props.parent_Id}
                                             commentData={this.props.commentData}
                                             getCommentEdit={
                                                 this.props.getCommentEdit
