@@ -35,8 +35,8 @@ export function setupAxios(token, logout) {
         },
         (err) => {
             const { response } = err
-            console.log('HANDLING INTERCEPTOR', response)
-            console.log('interceptor thingy', response.status === 401)
+            // console.log('HANDLING INTERCEPTOR', response)
+            // console.log('interceptor thingy', response.status === 401)
             if (response.status === 401) {
                 logout()
                 return

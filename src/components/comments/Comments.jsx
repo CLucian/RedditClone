@@ -60,39 +60,49 @@ class Comments extends React.Component {
                     this
                 )
 
-                // create new array of child ids without the deleted id
-                const newChildIdsArr = this.state.comments[
-                    parentId
-                ].childIds.filter((el) => {
-                    return el !== id
-                })
-                const newParentArr = this.state.parentCommentsArr.filter(
-                    (el) => {
-                        return el !== id
-                    }
-                )
-                // set new child id array to parent (getting rid of deleted id)
-                this.state.comments[parentId].childIds = newChildIdsArr
-                // delete the entire id object
-                delete this.state.comments[id]
-                const newObj = { ...this.state.comments }
-                // const newArr = this.state.comments.id.filter(
-                //     (el) => {
-                //         return el !== id
-                //     }
-                // )
-                console.log('newObj', newObj)
+                let newObj
 
-                this.setState(
-                    {
+                // create new array of child ids without the deleted id
+                if (!parentId) {
+                    delete this.state.comments[id]
+                    newObj = { ...this.state.comments }
+                    this.setState({
                         comments: newObj,
-                        parentCommentsArr: newParentArr,
-                    },
-                    console.log(
-                        'you have set the new state',
-                        this.state.comments
+                    })
+                } else {
+                    const newChildIdsArr = this.state.comments[
+                        parentId
+                    ].childIds.filter((el) => {
+                        return el !== id
+                    })
+                    const newParentArr = this.state.parentCommentsArr.filter(
+                        (el) => {
+                            return el !== id
+                        }
                     )
-                )
+                    // set new child id array to parent (getting rid of deleted id)
+                    this.state.comments[parentId].childIds = newChildIdsArr
+                    // delete the entire id object
+                    delete this.state.comments[id]
+                    newObj = { ...this.state.comments }
+                    // const newArr = this.state.comments.id.filter(
+                    //     (el) => {
+                    //         return el !== id
+                    //     }
+                    // )
+                    console.log('newObj', newObj)
+
+                    this.setState(
+                        {
+                            comments: newObj,
+                            parentCommentsArr: newParentArr,
+                        },
+                        console.log(
+                            'you have set the new state',
+                            this.state.comments
+                        )
+                    )
+                }
             })
             .catch((err) => console.log(err))
     }
@@ -100,6 +110,7 @@ class Comments extends React.Component {
     getCommentReply(newCommentData, commentId) {
         //search to see if the id is already logged in the commentMap
         const id = newCommentData.id
+        console.log('whaat is this.state.comments', this.state)
         // check to see if this id already exists from a previous comment made
         if (!this.state.comments.id) {
             // if it does not exist then add the id to the parent childIds array

@@ -40,10 +40,20 @@ class CommentReply extends React.Component {
     }
 
     deleted = () => {
+        let newParentId
+        const comment = this.props.commentData[this.props.commentId]
+        if (comment.parent_id.substring(0, 2) === 't3') {
+            newParentId = null
+        } else {
+            newParentId = comment.parent_id.substring(3)
+        }
         this.props.commentDelete(
-            this.props.commentData[this.props.commentId].name,
-            this.props.commentData[this.props.commentId].id,
-            this.props.commentData[this.props.commentId].parent_id.substring(3)
+            comment.name,
+            comment.id,
+            newParentId
+            // this.props.commentData[
+            //     this.props.commentId
+            // ].parent_id.substring(3)
         )
         this.setState({
             confirm: false,

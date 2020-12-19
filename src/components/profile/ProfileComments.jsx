@@ -29,7 +29,7 @@ class ProfileComments extends React.Component {
         getAuthorAvatar(this.props.childData.data.link_author)
             .then((response) => {
                 const dataImg = response.data.data.icon_img
-                console.log('dataImg', dataImg)
+                // console.log('dataImg', dataImg)
                 const modifiedImg = dataImg.split('?width')[0]
                 this.setState({
                     authorImg: modifiedImg,
@@ -108,7 +108,7 @@ class ProfileComments extends React.Component {
     }
 
     render() {
-        console.log('this.props.childData.data', this.props.childData.data)
+        // console.log('this.props.childData.data', this.props.childData.data)
 
         const {
             link_title,

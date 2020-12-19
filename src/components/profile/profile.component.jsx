@@ -84,10 +84,12 @@ export default class Profile extends React.Component {
             this.context.userData.name,
             this.state.after,
             this.state.before
-        ).then((response) => {
-            this.handleResponse(response)
-            console.log('user comments response', response)
-        })
+        )
+            .then((response) => {
+                this.handleResponse(response)
+                console.log('user comments response', response)
+            })
+            .catch((err) => console.log(err))
     }
 
     handleResponse = (response) => {

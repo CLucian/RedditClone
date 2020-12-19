@@ -50,6 +50,7 @@ class PostModal extends React.Component {
     /// Incorporate an image thumbnail --> also links if clicked
 
     render() {
+        console.log('post modal this.state.data', this.state.data)
         if (!this.state.data) {
             return null
         }
