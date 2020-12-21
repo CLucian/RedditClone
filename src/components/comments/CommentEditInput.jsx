@@ -33,18 +33,20 @@ class CommentEditInput extends React.Component {
                 editComment(
                     this.props.commentData[this.props.commentId].name,
                     this.state.value
-                ).then((response) => {
-                    if (response.data.json.errors[0] !== undefined) {
-                        response.data.json.errors[0].map((err) => {
-                            return alert(err)
-                        })
-                    } else {
-                        this.props.getCommentEdit(
-                            response.data.json.data.things[0].data,
-                            this.props.oldChildArr
-                        )
-                    }
-                })
+                )
+                    .then((response) => {
+                        if (response.data.json.errors[0] !== undefined) {
+                            response.data.json.errors[0].map((err) => {
+                                return alert(err)
+                            })
+                        } else {
+                            this.props.getCommentEdit(
+                                response.data.json.data.things[0].data,
+                                this.props.oldChildArr
+                            )
+                        }
+                    })
+                    .catch((err) => console.log(err))
             })
         } else {
             alert('Please type something')

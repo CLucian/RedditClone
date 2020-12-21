@@ -108,10 +108,12 @@ export default class Profile extends React.Component {
                 this.context.userData.name,
                 this.state.after,
                 this.state.before
-            ).then((response) => {
-                console.log('getProfile response after deleting', response)
-                this.handleResponse(response)
-            })
+            )
+                .then((response) => {
+                    console.log('getProfile response after deleting', response)
+                    this.handleResponse(response)
+                })
+                .catch((err) => console.log(err))
         })
     }
 
@@ -128,9 +130,11 @@ export default class Profile extends React.Component {
                         this.context.userData.name,
                         this.state.after,
                         this.state.before
-                    ).then((response) => {
-                        this.handleResponse(response)
-                    })
+                    )
+                        .then((response) => {
+                            this.handleResponse(response)
+                        })
+                        .catch((err) => console.log(err))
             )
         } else if (pageDir === 'prev') {
             this.setState(
@@ -143,9 +147,11 @@ export default class Profile extends React.Component {
                         this.context.userData.name,
                         this.state.after,
                         this.state.before
-                    ).then((response) => {
-                        this.handleResponse(response)
-                    })
+                    )
+                        .then((response) => {
+                            this.handleResponse(response)
+                        })
+                        .catch((err) => console.log(err))
                 }
             )
         }

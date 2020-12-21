@@ -32,23 +32,25 @@ class CommentReplyInput extends React.Component {
                 postComment(
                     this.props.commentData[this.props.commentId].name,
                     this.state.value
-                ).then((response) => {
-                    if (response.data.json.errors[0] !== undefined) {
-                        response.data.json.errors[0].map((err) => {
-                            return alert(err)
-                        })
-                    } else {
-                        this.props.getCommentReply(
-                            response.data.json.data.things[0].data,
-                            this.props.commentId
-                        )
-                        this.context.getAndDisplayComment(
-                            this.props.parent_Id,
-                            this.state.value
-                        )
-                    }
-                    this.props.handleCommentPost()
-                })
+                )
+                    .then((response) => {
+                        if (response.data.json.errors[0] !== undefined) {
+                            response.data.json.errors[0].map((err) => {
+                                return alert(err)
+                            })
+                        } else {
+                            this.props.getCommentReply(
+                                response.data.json.data.things[0].data,
+                                this.props.commentId
+                            )
+                            this.context.getAndDisplayComment(
+                                this.props.parent_Id,
+                                this.state.value
+                            )
+                        }
+                        this.props.handleCommentPost()
+                    })
+                    .catch((err) => console.log(err))
             })
         } else {
             alert('Please type something')

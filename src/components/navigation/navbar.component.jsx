@@ -16,7 +16,7 @@ const getAuthorizationURL = () =>
 const menuLinks = [
     { name: 'Home', route: '' },
     { name: 'About', route: 'about' },
-    { name: 'Explore Topics', route: 'explore' },
+    { name: 'My Posts', route: 'posts' },
     { name: 'My Comments', route: 'comments' },
     { name: 'Profile', route: 'profile' },
 ]

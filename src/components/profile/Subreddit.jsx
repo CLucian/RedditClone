@@ -147,27 +147,35 @@ class Subreddit extends React.Component {
                         null,
                         this.state.category,
                         this.state.query
-                    ).then((response) => {
-                        this.handlePostsResponse(response)
-                    })
+                    )
+                        .then((response) => {
+                            this.handlePostsResponse(response)
+                        })
+                        .catch((err) => {
+                            console.log('this is the err', err)
+                        })
                 }
             )
         }
     }
 
     handleSubredditData = (response) => {
-        this.setState({
-            currentSubreddit: response.data.data,
-        })
+        if (response) {
+            this.setState({
+                currentSubreddit: response.data.data,
+            })
+        }
     }
 
     handlePostsResponse = (response) => {
-        this.setState({
-            subredditData: response.data.data.children,
-            isLoading: false,
-            before: response.data.data.before,
-            after: response.data.data.after,
-        })
+        if (response) {
+            this.setState({
+                subredditData: response.data.data.children,
+                isLoading: false,
+                before: response.data.data.before,
+                after: response.data.data.after,
+            })
+        }
     }
 
     render() {

@@ -28,7 +28,7 @@ class SideBar extends React.Component {
                     })
                 })
                 .catch((err) => {
-                    console.log('caught sidebar')
+                    console.log('caught sidebar', err)
                 })
         }
     }

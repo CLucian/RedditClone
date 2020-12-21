@@ -45,17 +45,19 @@ export default class CreatePostPage extends React.Component {
                 this.state.subreddit,
                 this.state.type,
                 this.state.text
-            ).then((response) => {
-                this.setState({
-                    title: '',
-                    subreddit: '',
-                    text: '',
-                    showSuggestions: false,
+            )
+                .then((response) => {
+                    this.setState({
+                        title: '',
+                        subreddit: '',
+                        text: '',
+                        showSuggestions: false,
+                    })
+                    if (response.data.success === false) {
+                        alert(response.data.jquery[14][3])
+                    }
                 })
-                if (response.data.success === false) {
-                    alert(response.data.jquery[14][3])
-                }
-            })
+                .catch((err) => console.log(err))
         }
     }
 

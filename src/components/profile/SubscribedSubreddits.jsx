@@ -18,9 +18,11 @@ class SubscribedSubreddits extends React.Component {
     }
 
     componentDidMount() {
-        getSubreddits().then((response) => {
-            this.handleResponse(response)
-        })
+        getSubreddits()
+            .then((response) => {
+                this.handleResponse(response)
+            })
+            .catch((err) => console.log('err in subscribed subreddits', err))
     }
 
     handleResponse = (response) => {

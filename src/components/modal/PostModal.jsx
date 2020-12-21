@@ -6,6 +6,7 @@ import Comments from '../comments/Comments'
 import { GlobalContext } from '../GlobalState'
 import Video from '../Video/Video'
 import Twitch from '../Video/Twitch'
+import PostComment from '../comments/PostComment'
 
 import marked from 'marked'
 import DOMPurify from 'dompurify'
@@ -162,7 +163,7 @@ class PostModal extends React.Component {
                     dangerouslySetInnerHTML={this.getMarkDown()}
                 ></div>
                 {/* <div className="modal-description">{this.props.postData.selftext}</div> */}
-
+                <PostComment data={this.state.data} />
                 <Comments
                     subreddit={this.state.data.subreddit_name_prefixed}
                     accessToken={this.context.accessToken}
