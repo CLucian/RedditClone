@@ -69,7 +69,6 @@ class CommentEditInput extends React.Component {
                             onChange={this.handleChange}
                         ></textarea>
                         <div className="comment-buttons">
-                            {this.state.value}
                             <button
                                 className="cancel-comment"
                                 onClick={this.props.handleEditPost}

@@ -74,27 +74,27 @@ class Comments extends React.Component {
                     //     })
                     // }
 
-                    let userPostData = this.props?.userParentCommentData?.data
-                        ?.json?.data?.things[0]?.data
+                    // let userPostData = this.props?.userParentCommentData?.data
+                    //     ?.json?.data?.things[0]?.data
 
-                    if (userPostData) {
-                        this.setState({
-                            comments: commentMap,
-                            parentCommentsArr: parentCommentIdsArr,
-                            isLoading: false,
-                            userPostsArr: [
-                                ...this.state.userPostsArr,
-                                userPostData,
-                            ],
-                        })
-                    } else {
-                        this.setState({
-                            comments: commentMap,
-                            parentCommentsArr: parentCommentIdsArr,
-                            isLoading: false,
-                            // userParentComment: this.props.userParentCommentData,
-                        })
-                    }
+                    // if (userPostData) {
+                    //     this.setState({
+                    //         comments: commentMap,
+                    //         parentCommentsArr: parentCommentIdsArr,
+                    //         isLoading: false,
+                    //         userPostsArr: [
+                    //             ...this.state.userPostsArr,
+                    //             userPostData,
+                    //         ],
+                    //     })
+                    // } else {
+                    this.setState({
+                        comments: commentMap,
+                        parentCommentsArr: parentCommentIdsArr,
+                        isLoading: false,
+                        // userParentComment: this.props.userParentCommentData,
+                    })
+                    // }
                 }
             )
         }
@@ -112,11 +112,14 @@ class Comments extends React.Component {
         if (this.props.userParentCommentData) {
             let parentData = this.props?.userParentCommentData?.data?.json?.data
                 ?.things[0]?.data
+            parentData.childIds = []
+
             console.log('parentData in comments---', parentData)
             let parentId = parentData?.id
+
             console.log('parentId in comments----', parentId)
             let newParentArr
-            let found = this.state.parentCommentsArr.find((comment) => {
+            const found = this.state.parentCommentsArr.find((comment) => {
                 return comment === parentId
             })
             if (found) {
@@ -216,6 +219,13 @@ class Comments extends React.Component {
     }
 
     getCommentEdit = (newCommentData, oldChildArr) => {
+        console.log('this.state.comments', this.state.comments)
+        console.log(
+            'this.state.parentCommentsArr',
+            this.state.parentCommentsArr
+        )
+        console.log('newCommentData', newCommentData)
+        console.log('oldChildArr', oldChildArr)
         newCommentData.childIds = [...oldChildArr]
         this.setState({
             comments: {

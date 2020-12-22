@@ -951,6 +951,7 @@ a {
 }
 
 .replyEdit-btn-container {
+  padding-bottom: 0.5rem;
   display: flex;
   justify-content: space-between;
 }
