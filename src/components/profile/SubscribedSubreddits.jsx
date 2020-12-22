@@ -69,7 +69,8 @@ class SubscribedSubreddits extends React.Component {
                 </div>
                 {this.state.subredditDataArr &&
                     this.state.subredditDataArr.map((subredditData) => {
-                        return <SubredditList data={subredditData} />
+                        // return <SubredditList data={subredditData} />
+                        return <SubredditList data={subredditData.data} />
                     })}
                 <div className="pagination-container">
                     {this.state.before && this.state.page > 1 && (

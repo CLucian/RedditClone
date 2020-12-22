@@ -5,6 +5,8 @@ import React from 'react'
 import { GlobalContext } from '../GlobalState'
 import SubredditLinks from '../profile/SubredditLinks'
 import { Link } from 'react-router-dom'
+import SearchForSubreddit from './SearchForSubreddit'
+import SearchSVG from '../svg-components/SearchSVG'
 
 import getSubreddits from '../../queries/sideBar'
 

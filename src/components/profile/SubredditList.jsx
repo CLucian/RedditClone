@@ -16,7 +16,8 @@ class SubredditList extends React.Component {
             banner_background_image,
             community_icon,
             icon_img,
-        } = this.props.data.data
+            // } = this.props.data.data
+        } = this.props.data
         console.log('subredditList', this.props.data)
 
         return (

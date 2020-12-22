@@ -16,6 +16,7 @@ import SubscribedSubreddits from './components/profile/SubscribedSubreddits'
 import TopNavbar from './components/navigation/TopNavbar'
 import Login from './components/Login'
 import CreatePostPage from './components/posting/CreatePostPage'
+import SearchForSubreddit from './components/navigation/SearchForSubreddit'
 
 import test from './components/test'
 
@@ -62,7 +63,12 @@ class App extends React.Component {
                                     </Route>
 
                                     {/* </HomeWrapper> */}
+
                                     <Route path="/about" component={About} />
+                                    <Route
+                                        path="/subreddits"
+                                        component={SearchForSubreddit}
+                                    />
                                     {/* <Route path="/authorize" component={Authorize} /> */}
                                     <Route
                                         path="/profile"
