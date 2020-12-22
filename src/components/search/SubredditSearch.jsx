@@ -41,12 +41,12 @@ export default class SubredditSearch extends React.Component {
     }
 
     searchSubreddits = debounce(() => {
-        getSubreddits(this.props.query, this.props.token).then(
-            (subredditInfoArray) => {
+        getSubreddits(this.props.query, this.props.token)
+            .then((subredditInfoArray) => {
                 console.log('subredditInfoArray', subredditInfoArray)
                 this.setState({ subInfoArr: subredditInfoArray })
-            }
-        )
+            })
+            .catch((err) => console.log(err))
     }, 500)
 
     handleClick = (subName) => {

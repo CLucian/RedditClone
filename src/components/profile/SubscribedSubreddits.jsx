@@ -52,7 +52,7 @@ class SubscribedSubreddits extends React.Component {
                     page: this.state.page - 1,
                 },
                 () =>
-                    this.getSubreddits(pageDir, this.state.before).then(
+                    getSubreddits(pageDir, this.state.before).then(
                         (response) => {
                             this.handleResponse(response)
                         }

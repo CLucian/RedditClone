@@ -22,12 +22,6 @@ class CommentReplyInput extends React.Component {
         e.preventDefault()
 
         if (this.state.value.length > 0) {
-            console.log(
-                'submitting',
-                this.props,
-                this.state.value,
-                this.props.commentId
-            )
             this.setState({ value: this.state.value }, () => {
                 postComment(
                     this.props.commentData[this.props.commentId].name,

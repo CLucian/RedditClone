@@ -61,14 +61,6 @@ class CommentReply extends React.Component {
     }
 
     render() {
-        console.log(
-            'this.props.commentData in CommentReply',
-            this.props.commentData
-        )
-        console.log(
-            'this.props.commentId in CommentReply',
-            this.props.commentId
-        )
         return (
             <div className="commentReplyEdit-container">
                 <div className="replyEdit-btn-container">

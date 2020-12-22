@@ -18,6 +18,8 @@ class Comments extends React.Component {
             isLoading: true,
             parentCommentsArr: [],
             replyComment: false,
+            userPostsArr: [],
+            userParentComment: null,
         }
 
         this.commentDelete = this.commentDelete.bind(this)
@@ -39,13 +41,98 @@ class Comments extends React.Component {
                     const commentMap = flattenCommentTree(responseData)
                     console.log('DATA AND COMMENT MAP', data, commentMap)
 
-                    this.setState({
-                        comments: commentMap,
-                        parentCommentsArr: parentCommentIdsArr,
-                        isLoading: false,
-                    })
+                    // let parentData = this.props?.userParentCommentData?.data
+                    //     ?.json?.data?.things[0]?.data
+                    // let parentId = parentData?.id
+                    // let newParentArr
+                    // let found = parentCommentIdsArr.find((comment) => {
+                    //     return comment === parentId
+                    // })
+                    // if (found) {
+                    //     this.setState({
+                    //         comments: commentMap,
+                    //         parentCommentsArr: parentCommentIdsArr,
+                    //         isLoading: false,
+                    //         // userParentComment: this.props.userParentCommentData,
+                    //     })
+                    // } else if (parentData) {
+                    //     newParentArr = [parentId, ...parentCommentIdsArr]
+                    //     this.setState({
+                    //         parentCommentsArr: newParentArr,
+                    //         isLoading: false,
+                    //         comments: {
+                    //             [parentId]: parentData,
+                    //             ...commentMap,
+                    //         },
+                    //     })
+                    // } else {
+                    //     this.setState({
+                    //         comments: commentMap,
+                    //         parentCommentsArr: parentCommentIdsArr,
+                    //         isLoading: false,
+                    //         // userParentComment: this.props.userParentCommentData,
+                    //     })
+                    // }
+
+                    let userPostData = this.props?.userParentCommentData?.data
+                        ?.json?.data?.things[0]?.data
+
+                    if (userPostData) {
+                        this.setState({
+                            comments: commentMap,
+                            parentCommentsArr: parentCommentIdsArr,
+                            isLoading: false,
+                            userPostsArr: [
+                                ...this.state.userPostsArr,
+                                userPostData,
+                            ],
+                        })
+                    } else {
+                        this.setState({
+                            comments: commentMap,
+                            parentCommentsArr: parentCommentIdsArr,
+                            isLoading: false,
+                            // userParentComment: this.props.userParentCommentData,
+                        })
+                    }
                 }
             )
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (
+            prevProps.userParentCommentData !== this.props.userParentCommentData
+        ) {
+            this.checkUserParent()
+        }
+    }
+
+    checkUserParent = () => {
+        if (this.props.userParentCommentData) {
+            let parentData = this.props?.userParentCommentData?.data?.json?.data
+                ?.things[0]?.data
+            console.log('parentData in comments---', parentData)
+            let parentId = parentData?.id
+            console.log('parentId in comments----', parentId)
+            let newParentArr
+            let found = this.state.parentCommentsArr.find((comment) => {
+                return comment === parentId
+            })
+            if (found) {
+                return
+            } else if (parentData) {
+                newParentArr = [parentId, ...this.state.parentCommentsArr]
+                // newCommentObj = { ...this.state.comments }
+                this.setState({
+                    parentCommentsArr: newParentArr,
+                    userPostsArr: [...this.state.userPostsArr, parentData],
+                    comments: {
+                        [parentId]: parentData,
+                        ...this.state.comments,
+                    },
+                })
+            }
         }
     }
 
@@ -139,6 +226,14 @@ class Comments extends React.Component {
     }
 
     render() {
+        console.log(
+            'userParentCommentData in Comments',
+            this.props.userParentCommentData
+        )
+        console.log(
+            'userParentCommentData state in Comments',
+            this.state.userParentComment
+        )
         console.log('this.state.comments', this.state.comments)
         console.log(
             'this.state.parentCommentsArr',
@@ -150,6 +245,8 @@ class Comments extends React.Component {
         }
 
         console.log('parentCommentsArr', this.state.parentCommentsArr)
+
+        console.log('==userPostsArr==', this.state.userPostsArr)
         return (
             <div>
                 {this.state.parentCommentsArr.map((parentId) => {
@@ -171,3 +268,6 @@ class Comments extends React.Component {
 export default Comments
 
 Comments.contextType = GlobalContext
+
+// Comment Id = ggn5iwg
+// Post Id = http://localhost:3000/?post_id=t3_khkikz

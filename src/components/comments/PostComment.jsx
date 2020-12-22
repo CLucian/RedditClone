@@ -17,12 +17,13 @@ class PostComment extends React.Component {
             postComment(this.props.data.name, this.state.comment)
                 .then((response) => {
                     console.log('response in postComment', response)
-                    if (response.data.json.errors) {
+                    if (response.data.json.errors.length > 0) {
                         alert(response.data.json.errors[0][1])
                     } else {
                         alert(
                             `Your comment '${this.state.comment}' has been submitted`
                         )
+                        this.props.getParentComment(response)
                     }
                     this.setState({
                         comment: '',

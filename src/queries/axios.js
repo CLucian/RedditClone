@@ -30,7 +30,7 @@ export function setupAxios(token, logout) {
     }) */
     instance.interceptors.response.use(
         (response) => {
-            console.log('response in getAxios', response)
+            // console.log('response in getAxios', response)
             return response
         },
         (err) => {

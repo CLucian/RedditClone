@@ -20,16 +20,19 @@ class PostModal extends React.Component {
         this.state = {
             commentsLoaded: false,
             data: '',
+            userParentCommentData: null,
         }
     }
 
     componentDidMount() {
         if (this.props.postId) {
-            getPostById(this.props.postId).then((response) => {
-                this.setState({
-                    data: response.data.data.children[0].data,
+            getPostById(this.props.postId)
+                .then((response) => {
+                    this.setState({
+                        data: response.data.data.children[0].data,
+                    })
                 })
-            })
+                .catch((err) => console.log(err))
         }
     }
 
@@ -48,10 +51,20 @@ class PostModal extends React.Component {
         return date
     }
 
+    getParentComment = (commentData) => {
+        this.setState({
+            userParentCommentData: commentData,
+        })
+    }
+
     /// Incorporate an image thumbnail --> also links if clicked
 
     render() {
         console.log('post modal this.state.data', this.state.data)
+        console.log(
+            'userCommentParentData in postmodal',
+            this.state.userParentCommentData
+        )
         if (!this.state.data) {
             return null
         }
@@ -163,13 +176,17 @@ class PostModal extends React.Component {
                     dangerouslySetInnerHTML={this.getMarkDown()}
                 ></div>
                 {/* <div className="modal-description">{this.props.postData.selftext}</div> */}
-                <PostComment data={this.state.data} />
+                <PostComment
+                    data={this.state.data}
+                    getParentComment={this.getParentComment}
+                />
                 <Comments
                     subreddit={this.state.data.subreddit_name_prefixed}
                     accessToken={this.context.accessToken}
                     postCommentsId={this.state.data.id}
                     commentsLoaded={this.commentsLoaded}
                     data={this.state.data}
+                    userParentCommentData={this.state.userParentCommentData}
                 />
             </div>
         )
