@@ -24,6 +24,7 @@ import {
     getSubredditPosts,
     currentSubreddit,
 } from '../../queries/subredditSearch'
+import subscribe from '../../queries/subscribe'
 
 const sortOptions = [
     { name: 'Best', value: 'best', icon: <BestSVG /> },
@@ -46,6 +47,7 @@ class Subreddit extends React.Component {
             page: 1,
             subreddit: this.props.match.params.id,
             query: null,
+            isSubbed: false,
         }
 
         this.handleSearchQuery = debounce(this.handleSearchQuery, 500)
@@ -163,6 +165,7 @@ class Subreddit extends React.Component {
         if (response) {
             this.setState({
                 currentSubreddit: response.data.data,
+                isSubbed: response.data.data.user_is_subscriber,
             })
         }
     }
@@ -178,7 +181,17 @@ class Subreddit extends React.Component {
         }
     }
 
+    handleSub = (action) => {
+        subscribe(this.state.currentSubreddit.name, action).then(() => {
+            this.setState({
+                isSubbed: !this.state.isSubbed,
+            })
+        })
+    }
+
     render() {
+        console.log('this.state.currentSubreddit', this.state.currentSubreddit)
+
         if (!this.context.accessToken) {
             return null
         }
@@ -193,6 +206,7 @@ class Subreddit extends React.Component {
             display_name_prefixed,
             public_description,
             active_user_count,
+            user_is_subscriber,
         } = this.state.currentSubreddit || {}
 
         return (
@@ -222,6 +236,7 @@ class Subreddit extends React.Component {
                     <div className="subreddit-title-homepage">
                         {display_name_prefixed}
                     </div>
+
                     <div
                         className="subreddit-page-description"
                         dangerouslySetInnerHTML={this.getMarkDown(
@@ -234,8 +249,14 @@ class Subreddit extends React.Component {
                     >
                         <Users />
                         <div className="active-users">{active_user_count}</div>
+                        {/* <button className="sub-button">Subscribe</button> */}
                     </div>
                 </div>
+                {/* <div className="sub-btn-container">
+                    <div className="sub-btn-wrapper">
+                        <button className="sub-button">Subscribe</button>
+                    </div>
+                </div> */}
                 <div className="sort-container">
                     <div className="sortByMenuContainer">
                         <div className="sort-by-text"></div>
@@ -256,9 +277,25 @@ class Subreddit extends React.Component {
                         ))}
                     </div>
                 </div>
+
                 <div className="create-post-master">
                     <div className="create-post-container">
                         <div className="media-post-container">
+                            {this.state.isSubbed ? (
+                                <button
+                                    className="sub-button"
+                                    onClick={() => this.handleSub('unsub')}
+                                >
+                                    Unsubscribe
+                                </button>
+                            ) : (
+                                <button
+                                    className="sub-button"
+                                    onClick={() => this.handleSub('sub')}
+                                >
+                                    Subscribe
+                                </button>
+                            )}
                             <SearchSubreddit
                                 subreddit={this.props.subreddit}
                                 handleSearchQuery={this.handleSearchQuery}

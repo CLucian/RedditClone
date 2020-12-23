@@ -16,8 +16,8 @@ export const getSubreddits = (query) => {
         })
         .catch((err) => {
             console.log(err)
-            console.log('what is the error', err.data)
-            alert('There was an error' + err)
+            // console.log('what is the error', err.data)
+            // alert('There was an error' + err)
         })
 }
 
