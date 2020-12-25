@@ -11,10 +11,7 @@ import UpArrowSVG from '../svg-components/UpArrow'
 import DownArrowSVG from '../svg-components/DownArrow'
 import AuthorSVG from '../svg-components/Author'
 
-import Axios from 'axios'
-import qs from 'qs'
-
-import getAuthorAvatar, { deleteComment } from '../../queries/profileComments'
+import getAuthorAvatar from '../../queries/profileComments'
 
 class ProfileComments extends React.Component {
     constructor(props) {
@@ -28,16 +25,47 @@ class ProfileComments extends React.Component {
     componentDidMount() {
         getAuthorAvatar(this.props.childData.data.link_author)
             .then((response) => {
-                const dataImg = response.data.data.icon_img
-                // console.log('dataImg', dataImg)
-                const modifiedImg = dataImg.split('?width')[0]
-                this.setState({
-                    authorImg: modifiedImg,
-                })
+                this.handleAuthorResponse(response)
+                // if (response.data.data.icon_img) {
+                //     const dataImg = response.data.data.icon_img
+                //     const modifiedImg = dataImg.split('?width')[0]
+                //     this.setState({
+                //         authorImg: modifiedImg,
+                //     })
+                // } else {
+                //     this.setState({
+                //         authorImg: null,
+                //     })
+                // }
             })
             .catch((err) => {
                 console.log('error in profilecomments', err)
             })
+    }
+
+    componentDidUpdate(prevProps) {
+        if (
+            prevProps.postNum !== this.props.postNum ||
+            prevProps.after !== this.props.after
+        ) {
+            getAuthorAvatar(
+                this.props.childData.data.link_author
+            ).then((response) => this.handleAuthorResponse(response))
+        }
+    }
+
+    handleAuthorResponse = (response) => {
+        if (response?.data?.data?.icon_img) {
+            const dataImg = response.data.data.icon_img
+            const modifiedImg = dataImg.split('?width')[0]
+            this.setState({
+                authorImg: modifiedImg,
+            })
+        } else {
+            this.setState({
+                authorImg: null,
+            })
+        }
     }
 
     getMarkDown = (markDown) => {
@@ -94,13 +122,6 @@ class ProfileComments extends React.Component {
             confirm: false,
         })
     }
-
-    // confirmDelete = (e) => {
-    //     e.preventDefault()
-    //     deleteComment(this.props.childData.data.name).then((response) => {
-    //         console.log('response from delete', response)
-    //     })
-    // }
 
     getDate = (unixValue) => {
         const date = moment.unix(unixValue).format('MMM Do YYYY')
@@ -208,6 +229,7 @@ class ProfileComments extends React.Component {
                     <div className="post-sub-info">
                         <div className="post-author">
                             <div className="author-img-container">
+                                {/* {this.state.authorImg} */}
                                 {this.state.authorImg && (
                                     <img
                                         className="author-img"
@@ -264,112 +286,6 @@ class ProfileComments extends React.Component {
                     )}
                 </div>
             </div>
-            // <div className="master-container">
-            //     <div
-            //         className="profile-post-container"
-            //         onClick={this.openModal}
-            //     >
-            //         {/* <div className="post-thumbnail-container">
-            //             <img
-            //                 className="post-thumbnail"
-            //                 src={this.defaultThumbnail()}
-            //                 alt="thumbnail"
-            //             />
-            //         </div> */}
-
-            //         <div className="post-main-info">
-            //             <div className="post-score">
-            //                 {/* <HeartSVG /> */}
-            //                 <div className="UpArrowSVG-container">
-            //                     <UpArrowSVG />
-            //                 </div>
-            //                 <div className="score-text">{score}</div>
-            //                 {/* <div className="DownArrowSVG-container">
-            //                     <DownArrowSVG />
-            //                 </div> */}
-            //             </div>
-            //             <div className="main-text-container">
-            //                 <div className="post-title">
-            //                     <Link
-            //                         id="modal-open"
-            //                         className="postLinks"
-            //                         to={{
-            //                             search: `?post_id=${link_id}`,
-            //                         }}
-            //                     >
-            //                         <div className="post-title-text">
-            //                             {this.getLengthTitle(link_title)}
-            //                         </div>
-            //                     </Link>
-            //                     {/* <Link>
-            //                         <div className="post-title-text">
-            //                             {link_title}
-            //                         </div>
-            //                     </Link> */}
-            //                     <div className="post-subreddit">
-            //                         {subreddit}
-            //                     </div>
-            //                 </div>
-            //                 <div className="post-description">
-            //                     <div
-            //                         className="post-description-text"
-            //                         dangerouslySetInnerHTML={this.getMarkDown(
-            //                             this.getLength(body)
-            //                         )}
-            //                     ></div>
-            //                 </div>
-            //                 <div className="hr-container">
-            //                     <hr className="post-hr" />
-            //                 </div>
-            //             </div>
-            //         </div>
-            //         <div className="post-sub-info">
-            //             <div className="post-author">
-            //                 <div className="author-img-container">
-            //                     {this.state.authorImg && (
-            //                         <img
-            //                             className="author-img"
-            //                             src={this.state.authorImg}
-            //                         />
-            //                     )}
-            //                 </div>
-            //                 Posted by:
-            //                 <div className="author-text">
-            //                     &nbsp; {link_author}
-            //                 </div>
-            //             </div>
-            //             <div className="post-date">
-            //                 <div>
-            //                     {`Commented on ${this.getDate(created_utc)}`}
-            //                 </div>
-            //             </div>
-            //             <div className="post-comment-number">
-            //                 <BubbleSVG />
-            //                 &nbsp;
-            //                 <div>{num_comments}</div>
-            //             </div>
-            //         </div>
-            //         {/* <div className="delete-div">
-            //             <button className="delete-btn" onClick={this.deleteBtn}>
-            //                 Delete Comment
-            //             </button>
-            //         </div>
-            //         {this.state.confirm && (
-            //             <div className="confirm-div">
-            //                 <div className="confirm-text">
-            //                     <p>
-            //                         Are you sure you want to delete this
-            //                         comment?
-            //                     </p>
-            //                 </div>
-            //                 <div className="confirm-btns">
-            //                     <button className="yes-btn">Yes</button>
-            //                     <button className="no-btn">No</button>
-            //                 </div>
-            //             </div>
-            //         )} */}
-            //     </div>
-            // </div>
         )
     }
 }

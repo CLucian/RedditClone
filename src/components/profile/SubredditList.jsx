@@ -7,6 +7,10 @@ class SubredditList extends React.Component {
     }
 
     render() {
+        // if (!this.props.data.data) {
+        //     return null
+        // }
+        console.log('subredditList=-', this.props.data)
         const {
             display_name,
             header_img,
@@ -16,9 +20,7 @@ class SubredditList extends React.Component {
             banner_background_image,
             community_icon,
             icon_img,
-            // } = this.props.data.data
         } = this.props.data
-        console.log('subredditList', this.props.data)
 
         return (
             <Link to={`/r/${display_name}`}>

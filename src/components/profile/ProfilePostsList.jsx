@@ -1,39 +1,24 @@
 import React from 'react'
 
-import Login from '../Login'
-import ProfileComments from './ProfileComments'
+import ProfilePost from './ProfilePost'
+import getPosts from '../../queries/profilePosts'
 import { GlobalContext } from '../GlobalState'
 
 import { deleteComment } from '../../queries/profileComments'
 
-import getProfile from '../../queries/profile'
-
-/* 
-    wrap withrouter for whichever component is responsible for fetching posts or whatever
-        - whatever needs to subscribe to route state
-    - link just sets any url/route state like "after"
-    - whatever component is responsible for fetching posts (See above), add a componentdidupdate
-    method and compare previous to current props - if `after` changed, then do whatever
-
-    create a util that passes an object into the Link to --> with pathname and search
-    search gets changed depending on what data you need
-
-*/
-
-export default class Profile extends React.Component {
-    constructor(props) {
-        super(props)
+class ProfilePostsList extends React.Component {
+    constructor() {
+        super()
         this.state = {
             postChildren: '',
             page: 1,
             before: null,
             after: null,
-            postNum: null,
         }
     }
 
     componentDidMount() {
-        getProfile(
+        getPosts(
             undefined,
             this.context.userData.name,
             this.state.after,
@@ -41,7 +26,7 @@ export default class Profile extends React.Component {
         )
             .then((response) => {
                 this.handleResponse(response)
-                console.log('user comments response', response)
+                console.log('user posts response', response)
             })
             .catch((err) => console.log(err))
     }
@@ -51,14 +36,13 @@ export default class Profile extends React.Component {
             postChildren: response.data.data.children,
             before: response.data.data.before,
             after: response.data.data.after,
-            postNum: response.data.data.dist,
         })
     }
 
     confirmDelete = (id) => {
         deleteComment(id).then((response) => {
             console.log(response)
-            getProfile(
+            getPosts(
                 undefined,
                 this.context.userData.name,
                 this.state.after,
@@ -80,7 +64,7 @@ export default class Profile extends React.Component {
                     page: this.state.page + 1,
                 },
                 () =>
-                    getProfile(
+                    getPosts(
                         pageDir,
                         this.context.userData.name,
                         this.state.after,
@@ -97,7 +81,7 @@ export default class Profile extends React.Component {
                     page: this.state.page - 1,
                 },
                 () => {
-                    getProfile(
+                    getPosts(
                         pageDir,
                         this.context.userData.name,
                         this.state.after,
@@ -113,27 +97,24 @@ export default class Profile extends React.Component {
     }
 
     render() {
-        console.log('profile component state', this.state.postChildren)
         return (
             <div>
                 <div>
                     <div className="myComments-wrapper">
                         <div className="myComments-container">
                             <h1 className="myComments-container-title">
-                                My Comments
+                                My Posts
                             </h1>
                         </div>
                     </div>
                     {this.state.postChildren &&
                         this.state.postChildren.map((child) => {
                             return (
-                                <ProfileComments
+                                <ProfilePost
                                     confirmDelete={this.confirmDelete}
                                     childData={child}
                                     id={child.id}
-                                    postNum={this.state.postNum}
                                     accessToken={this.context.accessToken}
-                                    after={this.state.after}
                                 />
                             )
                         })}
@@ -158,6 +139,7 @@ export default class Profile extends React.Component {
                             className="pagination"
                         >
                             Next Page
+                            {this.state.after}
                         </div>
                         // </Link>
                     )}
@@ -167,4 +149,6 @@ export default class Profile extends React.Component {
     }
 }
 
-Profile.contextType = GlobalContext
+ProfilePostsList.contextType = GlobalContext
+
+export default ProfilePostsList

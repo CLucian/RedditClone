@@ -190,20 +190,10 @@ class Home extends React.Component {
                         ))}
                     </div>
                 </div>
-                {/* <div className="create-post-master">
-                    <div className="create-post-container">
-                        <div className="media-post-container">
-                            <CreatePost />
-                        </div>
-                    </div>
-                </div> */}
                 <div className="create-post-master">
                     <div className="create-post-container">
                         <div className="media-post-container">
-                            <MasterSearch
-                            // subreddit={this.props.subreddit}
-                            // handleSearchQuery={this.handleSearchQuery}
-                            />
+                            <MasterSearch />
                             <CreatePost />
                         </div>
                     </div>
@@ -213,7 +203,6 @@ class Home extends React.Component {
                         <Post
                             onClick={this.openModal}
                             postData={postData}
-                            // accessToken={this.context.accessToken}
                             key={postData.data.id}
                         />
                     )
@@ -240,42 +229,6 @@ class Home extends React.Component {
                         </div>
                     )}
                 </div>
-                {/* <div className="pagination-container">
-                    <Link
-                        to={{
-                            pathname: '/',
-                            search: `?before=${this.state.before}`,
-                        }}
-                    >
-                        {this.state.before && this.state.page > 1 && (
-                            <div
-                                onClick={() => {
-                                    this.getPage('prev')
-                                }}
-                                className="pagination"
-                            >
-                                Prev Page
-                            </div>
-                        )}
-                    </Link>
-                    <Link
-                        to={{
-                            pathname: '/',
-                            search: `?after=${this.state.after}`,
-                        }}
-                    >
-                        {this.state.after && (
-                            <div
-                                onClick={() => {
-                                    this.getPage('next')
-                                }}
-                                className="pagination"
-                            >
-                                Next Page
-                            </div>
-                        )}
-                    </Link>
-                </div> */}
             </div>
         )
     }

@@ -1,87 +1,67 @@
 import React from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-// import Modal from './modal/Modal'
-// import PostModal from './modal/PostModal'
-import Login from './Login'
-import ErrorPage from './errorPage.component'
-import { GlobalContext } from './GlobalState'
-import { postVote, getAuthorAvatar } from '../queries/postPage'
-
-import Axios from 'axios'
-import qs from 'qs'
-import moment from 'moment'
 import marked from 'marked'
 import DOMPurify from 'dompurify'
+import moment from 'moment'
 
-import HeartSVG from './svg-components/Heart'
-import BubbleSVG from './svg-components/Bubble'
-import UpArrowSVG from './svg-components/UpArrow'
-import DownArrowSVG from './svg-components/DownArrow'
-import AuthorSVG from './svg-components/Author'
+import HeartSVG from '../svg-components/Heart'
+import BubbleSVG from '../svg-components/Bubble'
+import UpArrowSVG from '../svg-components/UpArrow'
+import DownArrowSVG from '../svg-components/DownArrow'
+import AuthorSVG from '../svg-components/Author'
 
-class Post extends React.Component {
+import getAuthorAvatar, { deleteComment } from '../../queries/profileComments'
+
+class ProfilePost extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            moreInfo: false,
-            showModal: false,
-            voteVal: 0,
-            updatedScore: '',
-            isLoading: true,
             authorImg: '',
-            // err: null,
+            confirm: false,
         }
     }
 
     componentDidMount() {
-        getAuthorAvatar(this.props.postData.data.author).then((response) => {
-            console.log('response in post', response.data.data.icon_img)
-            if (response.data.data.icon_img) {
+        getAuthorAvatar(this.props.childData.data.author)
+            .then((response) => {
                 const dataImg = response.data.data.icon_img
+                // console.log('dataImg', dataImg)
                 const modifiedImg = dataImg.split('?width')[0]
                 this.setState({
                     authorImg: modifiedImg,
-                    isLoading: false,
                 })
-            } else {
-                this.setState({
-                    authorImg: null,
-                })
+            })
+            .catch((err) => {
+                console.log('error in profilecomments', err)
+            })
+    }
+
+    getMarkDown = (markDown) => {
+        if (markDown) {
+            const rawMarkup = marked(markDown)
+            const clean = DOMPurify.sanitize(rawMarkup)
+            return { __html: clean }
+        } else {
+            return {
+                __html: '<p className="deleted-comment">Deleted Comment<p>',
             }
-        })
-        // .catch((err) => {
-        //     this.setState({
-        //         err,
-        //     })
-        // })
+        }
     }
 
-    openModal = () => {
-        this.setState({
-            showModal: true,
-        })
-    }
-
-    closeModal = () => {
-        this.setState({
-            showModal: false,
-        })
-    }
-
-    getLength = (description) => {
+    getLengthTitle = (description) => {
         const maxLength = 150
         if (description.length > maxLength) {
-            return description.substring(0, maxLength)
+            return description.substring(0, maxLength) + '...'
         } else {
             return description
         }
     }
 
-    getLengthTitle = (description) => {
-        const maxLength = 100
+    getLength = (description) => {
+        const maxLength = 250
         if (description.length > maxLength) {
-            return description.substring(0, maxLength)
+            return description.substring(0, maxLength) + '...'
         } else {
             return description
         }
@@ -99,42 +79,44 @@ class Post extends React.Component {
         }
     }
 
+    deleteBtn = () => {
+        this.setState({
+            confirm: !this.state.confirm,
+        })
+    }
+
+    deleted = () => {
+        this.props.confirmDelete(this.props.childData.data.name)
+        this.setState({
+            confirm: false,
+        })
+    }
+
+    // confirmDelete = (e) => {
+    //     e.preventDefault()
+    //     deleteComment(this.props.childData.data.name).then((response) => {
+    //         console.log('response from delete', response)
+    //     })
+    // }
+
     getDate = (unixValue) => {
         const date = moment.unix(unixValue).format('MMM Do YYYY')
         return date
     }
 
-    handleArrowClick = (vote) => {
-        let voteValue
-
-        if (vote === 1 && this.state.voteVal === 1) {
-            voteValue = 0
-        } else if (vote === -1 && this.state.voteVal === -1) {
-            voteValue = 0
-        } else if (vote === 1) {
-            voteValue = 1
-        } else if (vote === -1) {
-            voteValue = -1
-        } else {
-            console.log('something went wrong', vote)
-        }
-
-        this.setState(
-            {
-                voteVal: voteValue,
-                updatedScore: this.props.postData.data.score + voteValue,
-            },
-
-            () => postVote(voteValue)
-        )
-    }
-
     render() {
-        // if (this.state.err) {
-        //     return <Redirect to="/ErrorPage" />
-        // }
+        // console.log('this.props.childData.data', this.props.childData.data)
 
-        const { subreddit } = this.props.postData.data
+        const {
+            title,
+            name,
+            author,
+            subreddit,
+            selftext,
+            num_comments,
+            created_utc,
+            score,
+        } = this.props.childData.data
 
         return (
             <div className="master-container">
@@ -142,32 +124,13 @@ class Post extends React.Component {
                     className="profile-post-container"
                     onClick={this.openModal}
                 >
-                    <Link to={`/r/${subreddit}`}>
-                        <div className="post-listing-subreddit">
-                            <span className="post-listing-span">
-                                {subreddit}
-                            </span>
-                        </div>
-                    </Link>
+                    <div className="post-listing-subreddit">{subreddit}</div>
                     <div className="post-main-info">
                         <div className="post-score">
-                            <div
-                                className="UpArrowSVG-container"
-                                onClick={() => this.handleArrowClick(1)}
-                            >
+                            <div className="UpArrowSVG-container">
                                 <UpArrowSVG isActive={this.state.voteVal} />
                             </div>
-                            <div className="score-text">
-                                {this.state.updatedScore
-                                    ? this.state.updatedScore
-                                    : this.props.postData.data.score}
-                            </div>
-                            <div
-                                className="DownArrowSVG-container"
-                                onClick={() => this.handleArrowClick(-1)}
-                            >
-                                <DownArrowSVG isActive={this.state.voteVal} />
-                            </div>
+                            <div className="score-text">{score}</div>
                         </div>
                         <div className="main-text-container">
                             {/* <div className="post-listing-subreddit">
@@ -178,45 +141,44 @@ class Post extends React.Component {
                                     id="modal-open"
                                     className="postLinks"
                                     to={{
-                                        search: `?post_id=${this.props.postData.data.name}`,
+                                        search: `?post_id=${name}`,
                                     }}
                                 >
                                     <div className="post-title-text">
-                                        {this.getLengthTitle(
-                                            this.props.postData.data.title
-                                        )}
+                                        {this.getLengthTitle(title)}
                                     </div>
                                 </Link>
-                                {this.props.postData.data?.thumbnail && (
+                                {this.props.childData.data?.thumbnail && (
                                     <div className="subreddit-image-container">
                                         {/* <div className="post-subreddit">
                                         {this.props.postData.data.subreddit}
                                     </div> */}
-                                        {this.props.postData.data.thumbnail !==
+                                        {this.props.childData.data.thumbnail !==
                                             'self' &&
-                                        this.props.postData.data.thumbnail !==
+                                        this.props.childData.data.thumbnail !==
                                             'thumbnail' &&
-                                        this.props.postData.data.thumbnail !==
+                                        this.props.childData.data.thumbnail !==
                                             'image' &&
-                                        this.props.postData.data.thumbnail !==
+                                        this.props.childData.data.thumbnail !==
                                             'nsfw' &&
-                                        this.props.postData.data.thumbnail !==
+                                        this.props.childData.data.thumbnail !==
                                             'default' ? (
                                             <a
                                                 href={
-                                                    this.props.postData.data.url
+                                                    this.props.childData.data
+                                                        .url
                                                 }
                                             >
                                                 <div className="post-listing-thumbnail-container">
                                                     <img
                                                         className="post-thumbnail"
                                                         src={
-                                                            this.props.postData
+                                                            this.props.childData
                                                                 .data.thumbnail
                                                         }
                                                         // src={this.state.data.thumbnail}
                                                         alt={
-                                                            this.props.postData
+                                                            this.props.childData
                                                                 .data.thumbnail
                                                         }
                                                     />
@@ -231,9 +193,7 @@ class Post extends React.Component {
                                 <div
                                     className="post-description-text"
                                     dangerouslySetInnerHTML={this.getMarkDown(
-                                        this.getLength(
-                                            this.props.postData.data.selftext
-                                        )
+                                        this.getLength(selftext)
                                     )}
                                 ></div>
                             </div>
@@ -253,27 +213,53 @@ class Post extends React.Component {
                                 )}
                             </div>
                             Posted by:
-                            <div className="author-text">
-                                &nbsp; {this.props.postData.data.author}
-                            </div>
+                            <div className="author-text">&nbsp; {author}</div>
                         </div>
                         <div className="post-date">
-                            <div>
-                                {this.getDate(this.props.postData.data.created)}
-                            </div>
+                            <div>{this.getDate(created_utc)}</div>
                         </div>
                         <div className="post-comment-number">
                             <BubbleSVG />
                             &nbsp;
-                            <div>{this.props.postData.data.num_comments}</div>
+                            <div>{num_comments}</div>
                         </div>
                     </div>
+                    {!this.state.confirm ? (
+                        <div className="delete-div">
+                            <button
+                                className="delete-btn"
+                                onClick={this.deleteBtn}
+                            >
+                                Delete Post
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="confirm-div">
+                            <div className="confirm-text">
+                                <p>
+                                    Are you sure you want to delete this post?
+                                </p>
+                            </div>
+                            <div className="confirm-btns">
+                                <button
+                                    className="yes-btn"
+                                    onClick={this.deleted}
+                                >
+                                    Yes
+                                </button>
+                                <button
+                                    className="no-btn"
+                                    onClick={this.deleteBtn}
+                                >
+                                    No
+                                </button>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
         )
     }
 }
 
-Post.contextType = GlobalContext
-
-export default Post
+export default ProfilePost

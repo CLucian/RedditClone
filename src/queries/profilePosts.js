@@ -1,18 +1,19 @@
 import axiosInstance from './axios'
 import qs from 'qs'
 
-export default function getProfile(pageDir, name, after, before) {
+export default function getPosts(pageDir, name, after, before) {
     let axios = axiosInstance()
 
-    let url = `https://oauth.reddit.com/user/${name}/comments?count=555&limit=10`
+    // let url = `https://oauth.reddit.com/user/${name}/submitted?count=555&limit=10`
+    let url = `https://oauth.reddit.com/user/${name}/submitted?limit=10`
     if (pageDir === 'next') {
-        url = `https://oauth.reddit.com/user/${name}/comments?after=${after}&count=555&limit=10`
+        url = `https://oauth.reddit.com/user/${name}/submitted?count=555&after=${after}&limit=10`
     } else if (pageDir === 'prev') {
-        url = `https://oauth.reddit.com/user/${name}/comments?before=${before}&count=555&&limit=10`
+        url = `https://oauth.reddit.com/user/${name}/submitted?count=555&before=${before}&limit=10`
     }
     const data = {
         t: 'all',
-        type: 'comments',
+        // type: 'comments',
         sort: 'new',
         limit: '100',
     }
@@ -22,8 +23,8 @@ export default function getProfile(pageDir, name, after, before) {
         data: qs.stringify(data),
     })
         .then((response) => {
-            return response
             console.log('user comments response', response)
+            return response
         })
         .catch((err) => {
             console.log(err)

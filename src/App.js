@@ -17,6 +17,8 @@ import TopNavbar from './components/navigation/TopNavbar'
 import Login from './components/Login'
 import CreatePostPage from './components/posting/CreatePostPage'
 import SearchForSubreddit from './components/navigation/SearchForSubreddit'
+import User from './components/profile/User'
+import ProfilePostsList from './components/profile/ProfilePostsList'
 
 import test from './components/test'
 
@@ -70,9 +72,14 @@ class App extends React.Component {
                                         component={SearchForSubreddit}
                                     />
                                     {/* <Route path="/authorize" component={Authorize} /> */}
+                                    <Route path="/user" component={User} />
                                     <Route
-                                        path="/profile"
+                                        path="/comments"
                                         component={Profile}
+                                    />
+                                    <Route
+                                        path="/posts"
+                                        component={ProfilePostsList}
                                     />
                                     {/* <Route path="/r/:id" exact component={Subreddit} /> */}
                                     <Route
