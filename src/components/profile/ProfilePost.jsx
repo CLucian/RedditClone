@@ -11,8 +11,6 @@ import UpArrowSVG from '../svg-components/UpArrow'
 import DownArrowSVG from '../svg-components/DownArrow'
 import AuthorSVG from '../svg-components/Author'
 
-import getAuthorAvatar, { deleteComment } from '../../queries/profileComments'
-
 class ProfilePost extends React.Component {
     constructor(props) {
         super(props)
@@ -20,21 +18,6 @@ class ProfilePost extends React.Component {
             authorImg: '',
             confirm: false,
         }
-    }
-
-    componentDidMount() {
-        getAuthorAvatar(this.props.childData.data.author)
-            .then((response) => {
-                const dataImg = response.data.data.icon_img
-                // console.log('dataImg', dataImg)
-                const modifiedImg = dataImg.split('?width')[0]
-                this.setState({
-                    authorImg: modifiedImg,
-                })
-            })
-            .catch((err) => {
-                console.log('error in profilecomments', err)
-            })
     }
 
     getMarkDown = (markDown) => {
@@ -92,21 +75,12 @@ class ProfilePost extends React.Component {
         })
     }
 
-    // confirmDelete = (e) => {
-    //     e.preventDefault()
-    //     deleteComment(this.props.childData.data.name).then((response) => {
-    //         console.log('response from delete', response)
-    //     })
-    // }
-
     getDate = (unixValue) => {
         const date = moment.unix(unixValue).format('MMM Do YYYY')
         return date
     }
 
     render() {
-        // console.log('this.props.childData.data', this.props.childData.data)
-
         const {
             title,
             name,
@@ -205,10 +179,10 @@ class ProfilePost extends React.Component {
                     <div className="post-sub-info">
                         <div className="post-author">
                             <div className="author-img-container">
-                                {this.state.authorImg && (
+                                {this.props.authorImg && (
                                     <img
                                         className="author-img"
-                                        src={this.state.authorImg}
+                                        src={this.props.authorImg}
                                     />
                                 )}
                             </div>

@@ -26,17 +26,6 @@ class ProfileComments extends React.Component {
         getAuthorAvatar(this.props.childData.data.link_author)
             .then((response) => {
                 this.handleAuthorResponse(response)
-                // if (response.data.data.icon_img) {
-                //     const dataImg = response.data.data.icon_img
-                //     const modifiedImg = dataImg.split('?width')[0]
-                //     this.setState({
-                //         authorImg: modifiedImg,
-                //     })
-                // } else {
-                //     this.setState({
-                //         authorImg: null,
-                //     })
-                // }
             })
             .catch((err) => {
                 console.log('error in profilecomments', err)

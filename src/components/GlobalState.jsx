@@ -75,6 +75,7 @@ class GlobalState extends React.Component {
     setGlobalState = (accessToken) => {
         this.getUserData(accessToken)
             .then((userData) => {
+                console.log('userData', userData)
                 console.log('getUserData this gets hit')
                 this.setState({
                     userData,

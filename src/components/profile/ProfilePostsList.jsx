@@ -4,7 +4,7 @@ import ProfilePost from './ProfilePost'
 import getPosts from '../../queries/profilePosts'
 import { GlobalContext } from '../GlobalState'
 
-import { deleteComment } from '../../queries/profileComments'
+import getAuthorAvatar, { deleteComment } from '../../queries/profileComments'
 
 class ProfilePostsList extends React.Component {
     constructor() {
@@ -14,6 +14,7 @@ class ProfilePostsList extends React.Component {
             page: 1,
             before: null,
             after: null,
+            authorImg: null,
         }
     }
 
@@ -29,6 +30,19 @@ class ProfilePostsList extends React.Component {
                 console.log('user posts response', response)
             })
             .catch((err) => console.log(err))
+
+        getAuthorAvatar(this.context.userData.name)
+            .then((response) => {
+                const dataImg = response.data.data.icon_img
+                // console.log('dataImg', dataImg)
+                const modifiedImg = dataImg.split('?width')[0]
+                this.setState({
+                    authorImg: modifiedImg,
+                })
+            })
+            .catch((err) => {
+                console.log('error in profilePostsList', err)
+            })
     }
 
     handleResponse = (response) => {
@@ -115,6 +129,7 @@ class ProfilePostsList extends React.Component {
                                     childData={child}
                                     id={child.id}
                                     accessToken={this.context.accessToken}
+                                    authorImg={this.state.authorImg}
                                 />
                             )
                         })}
@@ -139,7 +154,6 @@ class ProfilePostsList extends React.Component {
                             className="pagination"
                         >
                             Next Page
-                            {this.state.after}
                         </div>
                         // </Link>
                     )}

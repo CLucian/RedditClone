@@ -5,7 +5,7 @@ export default function getPosts(pageDir, name, after, before) {
     let axios = axiosInstance()
 
     // let url = `https://oauth.reddit.com/user/${name}/submitted?count=555&limit=10`
-    let url = `https://oauth.reddit.com/user/${name}/submitted?limit=10`
+    let url = `https://oauth.reddit.com/user/${name}/submitted`
     if (pageDir === 'next') {
         url = `https://oauth.reddit.com/user/${name}/submitted?count=555&after=${after}&limit=10`
     } else if (pageDir === 'prev') {
