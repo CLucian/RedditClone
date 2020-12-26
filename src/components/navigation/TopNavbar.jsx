@@ -14,14 +14,16 @@ const TopNavbar = () => {
         return (
             <div className="top-navbar">
                 <div className="profile-picture-container">
-                    <Link to="/profile">
+                    <Link to="/user">
                         <div className="profile-avatar">
                             <img
                                 className="profile-img"
                                 src={context.userData.icon_img}
                                 alt="profile-avatar"
                             />
-                            <div>{context.userData.name}</div>
+                            <span className="profile-name-span">
+                                {context.userData.name}
+                            </span>
                         </div>
                     </Link>
                 </div>

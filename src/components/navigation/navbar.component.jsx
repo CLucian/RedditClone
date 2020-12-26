@@ -4,6 +4,12 @@ import { GlobalContext } from '../GlobalState'
 
 import Login from '../Login'
 
+import CommentsSVG from '../svg-components/navbar-svgs/CommentsSVG'
+import SearchSubs from '../svg-components/navbar-svgs/SearchSubs'
+import PostsSVG from '../svg-components/navbar-svgs/PostsSVG'
+import ProfileSVG from '../svg-components/navbar-svgs/ProfileSVG'
+import HomeSVG from '../svg-components/navbar-svgs/HomeSVG'
+
 const CLIENT_ID = 'MMej7E1hI1x82A'
 const REDIRECT_URI = 'http://localhost:3000/authorize'
 const DURATION = 'permanent'
@@ -11,14 +17,14 @@ const SCOPE =
     'identity edit flair history modconfig modflair modlog modposts modwiki mysubreddits privatemessages read report save submit subscribe vote wikiedit wikiread'
 
 const getAuthorizationURL = () =>
-    `https://www.reddit.com/api/v1/authorize?client_id=${CLIENT_ID}&response_type=code&state=${Math.random()}&redirect_uri=${REDIRECT_URI}&duration=${DURATION}&scope=${SCOPE}`
+    `https://www.reddit.com /api/v1/authorize?client_id=${CLIENT_ID}&response_type=code&state=${Math.random()}&redirect_uri=${REDIRECT_URI}&duration=${DURATION}&scope=${SCOPE}`
 
 const menuLinks = [
-    { name: 'Home', route: '' },
-    { name: 'Find Subreddit', route: 'subreddits' },
-    { name: 'My Posts', route: 'posts' },
-    { name: 'My Comments', route: 'comments' },
-    { name: 'Profile', route: 'user' },
+    { name: 'Home', route: '', component: <HomeSVG /> },
+    { name: 'Find Subreddit', route: 'subreddits', component: <SearchSubs /> },
+    { name: 'My Posts', route: 'posts', component: <PostsSVG /> },
+    { name: 'My Comments', route: 'comments', component: <CommentsSVG /> },
+    { name: 'Profile', route: 'user', component: <ProfileSVG /> },
 ]
 
 class Navbar extends React.Component {
@@ -47,6 +53,11 @@ class Navbar extends React.Component {
                                 to={`/${link.route}`}
                             >
                                 <li className="list-item">
+                                    <div className="link-text">{link.name}</div>
+                                    {link.component}
+                                </li>
+
+                                {/* <li className="list-item">
                                     <div
                                         className={`menu-margin
                                             ${
@@ -70,8 +81,9 @@ class Navbar extends React.Component {
                                         <div className="link-text">
                                             {link.name}
                                         </div>
+                                        <CommentsSVG />
                                     </div>
-                                </li>
+                                </li> */}
                             </NavLink>
                         ))}
 
@@ -81,17 +93,20 @@ class Navbar extends React.Component {
                             </li>
                         )}
                         <div className="userInfo">
-                            {this.context.userData ? (
+                            {/* {this.context.userData ? (
                                 <li className="user">
                                     {this.context.userData.name}
                                 </li>
-                            ) : null}
+                            ) : null} */}
                             {this.context.accessToken ? (
-                                <li className="list-item login-btn">
-                                    <button onClick={this.context.invalidate}>
+                                <div>
+                                    <button
+                                        className="logout-btn-nav"
+                                        onClick={this.context.invalidate}
+                                    >
                                         Log out
                                     </button>
-                                </li>
+                                </div>
                             ) : null}
                         </div>
                     </ul>
