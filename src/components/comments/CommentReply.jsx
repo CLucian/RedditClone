@@ -3,8 +3,12 @@ import CommentReplyInput from './CommentReplyInput'
 import CommentEditInput from './CommentEditInput'
 import { GlobalContext } from '../GlobalState'
 
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 // import InputField from './InputField';
 
+toast.configure()
 class CommentReply extends React.Component {
     constructor(props) {
         super(props)
@@ -39,6 +43,12 @@ class CommentReply extends React.Component {
         })
     }
 
+    deleteToast = () => {
+        toast.success('Your comment has been successfuly deleted!', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+    }
+
     deleted = () => {
         let newParentId
         const comment = this.props.commentData[this.props.commentId]
@@ -55,6 +65,7 @@ class CommentReply extends React.Component {
             //     this.props.commentId
             // ].parent_id.substring(3)
         )
+        this.deleteToast()
         this.setState({
             confirm: false,
         })

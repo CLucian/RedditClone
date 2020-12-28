@@ -15,10 +15,9 @@ export default function submitPost(title, subreddit, type, text) {
         data: qs.stringify(data),
     })
         .then((response) => {
-            alert('your post has gone through, ' + response)
             return response
         })
         .catch((err) => {
-            alert('There was an error' + err)
+            return err
         })
 }

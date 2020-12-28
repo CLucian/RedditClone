@@ -42,6 +42,14 @@ class Navbar extends React.Component {
     }
 
     render() {
+        const { pathname } = this.props.location
+
+        console.log('this.state.activeRoute', this.state.activeRoute)
+        console.log(
+            'this.state.activeRoute',
+            this.props.location.pathname.substring(1)
+        )
+
         return (
             <React.Fragment>
                 <div className="navbar">
@@ -52,38 +60,21 @@ class Navbar extends React.Component {
                                 onClick={() => this.handleClick(link.route)}
                                 to={`/${link.route}`}
                             >
-                                <li className="list-item">
-                                    <div className="link-text">{link.name}</div>
-                                    {link.component}
-                                </li>
-
-                                {/* <li className="list-item">
-                                    <div
-                                        className={`menu-margin
-                                            ${
-                                                this.state.activeRoute ===
-                                                link.route
-                                                    ? 'activeMargin'
-                                                    : null
-                                            }`}
-                                    >
-                                        &nbsp;
-                                    </div>
-                                    <div
-                                        className={`menu-text
-                                            ${
-                                                this.state.activeRoute ===
-                                                link.route
-                                                    ? 'activeText'
-                                                    : null
-                                            }`}
-                                    >
+                                {pathname.substring(1) === link.route ? (
+                                    <li className="list-item-active">
                                         <div className="link-text">
                                             {link.name}
                                         </div>
-                                        <CommentsSVG />
-                                    </div>
-                                </li> */}
+                                        {link.component}
+                                    </li>
+                                ) : (
+                                    <li className="list-item">
+                                        <div className="link-text">
+                                            {link.name}
+                                        </div>
+                                        {link.component}
+                                    </li>
+                                )}
                             </NavLink>
                         ))}
 

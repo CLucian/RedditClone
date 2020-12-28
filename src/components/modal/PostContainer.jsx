@@ -1,6 +1,7 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 
+// import Toast from './Toast'
 import Modal from './Modal'
 import PostModal from './PostModal'
 
@@ -26,8 +27,7 @@ class PostContainer extends React.Component {
         }
 
         return (
-            <div>
-                <p>This is the PostContainer component</p>
+            <div className="postContainer-container">
                 <Modal closeModal={this.closeModal}>
                     <PostModal postId={postId} closeModal={this.closeModal} />
                 </Modal>

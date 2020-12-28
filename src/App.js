@@ -1,7 +1,13 @@
 import React from 'react'
+
 import './App.css'
+
+// import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 import { Route, Switch } from 'react-router-dom'
 
+import ToastProvider from './components/toasts/ToastProvider'
 import MasterSearchProvider from './components/search/MasterSearchProvider'
 import Home from './components/home.component'
 import About from './components/about.component'
@@ -15,6 +21,7 @@ import Subreddit from './components/profile/Subreddit'
 import SubscribedSubreddits from './components/profile/SubscribedSubreddits'
 import TopNavbar from './components/navigation/TopNavbar'
 import Login from './components/Login'
+import CreatePostPageWrapper from './components/posting/CreatePostPageWrapper'
 import CreatePostPage from './components/posting/CreatePostPage'
 import SearchForSubreddit from './components/navigation/SearchForSubreddit'
 import User from './components/profile/User'
@@ -49,82 +56,103 @@ class App extends React.Component {
             return (
                 <div className="app">
                     <MasterSearchProvider>
-                        <TopNavbar />
-                        <div className="master-app-container">
-                            <div className="left-side-app">
-                                <Navbar />
-                            </div>
-                            <div className="main-routes">
-                                <Switch>
-                                    {/* <HomeWrapper> */}
-                                    {/* <Route path="/" exact component={Home} /> */}
-                                    <Route path="/" exact>
-                                        <HomeWrapper>
-                                            <Home />
-                                        </HomeWrapper>
-                                    </Route>
+                        <ToastProvider>
+                            {/* <ToastContainer
+                                autoClose={2000}
+                                position="top-center"
+                                className="toast-container"
+                                closeOnClick
+                            /> */}
+                            <TopNavbar />
+                            <div className="master-app-container">
+                                <div className="left-side-app">
+                                    <Navbar />
+                                </div>
+                                <div className="main-routes">
+                                    <Switch>
+                                        {/* <HomeWrapper> */}
+                                        {/* <Route path="/" exact component={Home} /> */}
+                                        <Route path="/" exact>
+                                            <HomeWrapper>
+                                                <Home />
+                                            </HomeWrapper>
+                                        </Route>
 
-                                    {/* </HomeWrapper> */}
+                                        {/* </HomeWrapper> */}
 
-                                    <Route path="/about" component={About} />
+                                        <Route
+                                            path="/about"
+                                            component={About}
+                                        />
+                                        <Route
+                                            path="/subreddits"
+                                            component={SearchForSubreddit}
+                                        />
+                                        {/* <Route path="/authorize" component={Authorize} /> */}
+                                        <Route path="/user" component={User} />
+                                        <Route
+                                            path="/comments"
+                                            component={Profile}
+                                        />
+                                        <Route
+                                            path="/posts"
+                                            component={ProfilePostsList}
+                                        />
+                                        {/* <Route path="/r/:id" exact component={Subreddit} /> */}
+                                        <Route
+                                            path="/create_post"
+                                            component={CreatePostPage}
+                                        />
+                                        {/* <Route path="/create_post" exact>
+                                            <CreatePostPageWrapper>
+                                                <CreatePostPage />
+                                            </CreatePostPageWrapper>
+                                        </Route> */}
+                                        <Route
+                                            path="/r/:id"
+                                            exact
+                                            // This will alternative componentDidUpdate to ensure that each time
+                                            // a new key is passed to the Subreddit component
+                                            // then it will update the component with the new data
+                                            render={({ match }) => {
+                                                const subreddit =
+                                                    match.params.id
+                                                if (!subreddit) {
+                                                    return null
+                                                }
+                                                // return null
+                                                return (
+                                                    <Subreddit
+                                                        key={subreddit}
+                                                    />
+                                                )
+                                            }}
+                                        />
+                                        <Route
+                                            path="/ErrorPage"
+                                            exact
+                                            component={ErrorPage}
+                                        />
+                                        <Route
+                                            path="/"
+                                            exact
+                                            component={ErrorPage}
+                                        />
+                                    </Switch>
                                     <Route
-                                        path="/subreddits"
-                                        component={SearchForSubreddit}
+                                        path="/me/subreddits"
+                                        component={SubscribedSubreddits}
                                     />
-                                    {/* <Route path="/authorize" component={Authorize} /> */}
-                                    <Route path="/user" component={User} />
-                                    <Route
-                                        path="/comments"
-                                        component={Profile}
-                                    />
-                                    <Route
-                                        path="/posts"
-                                        component={ProfilePostsList}
-                                    />
-                                    {/* <Route path="/r/:id" exact component={Subreddit} /> */}
-                                    <Route
-                                        path="/create_post"
-                                        component={CreatePostPage}
-                                    />
-                                    <Route
-                                        path="/r/:id"
-                                        exact
-                                        // This will alternative componentDidUpdate to ensure that each time
-                                        // a new key is passed to the Subreddit component
-                                        // then it will update the component with the new data
-                                        render={({ match }) => {
-                                            const subreddit = match.params.id
-                                            if (!subreddit) {
-                                                return null
-                                            }
-                                            // return null
-                                            return <Subreddit key={subreddit} />
-                                        }}
-                                    />
-                                    <Route
-                                        path="/ErrorPage"
-                                        exact
-                                        component={ErrorPage}
-                                    />
-                                    <Route
-                                        path="/"
-                                        exact
-                                        component={ErrorPage}
-                                    />
-                                </Switch>
-                                <Route
-                                    path="/me/subreddits"
-                                    component={SubscribedSubreddits}
-                                />
-                                <Route path="/" component={PostContainer} />
-                            </div>
-                            <div className="right-side-app">
-                                <div className="sidebar-nav">
-                                    <SideBar />
-                                    {/* <div></div> */}
+                                    <Route path="/" component={PostContainer} />
+                                </div>
+                                <div className="right-side-app">
+                                    <div className="sidebar-nav">
+                                        <SideBar />
+                                        {/* <div></div> */}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </ToastProvider>
                     </MasterSearchProvider>
                 </div>
             )

@@ -11,6 +11,10 @@ import UpArrowSVG from '../svg-components/UpArrow'
 import DownArrowSVG from '../svg-components/DownArrow'
 import AuthorSVG from '../svg-components/Author'
 
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
+toast.configure()
 class ProfilePost extends React.Component {
     constructor(props) {
         super(props)
@@ -62,6 +66,12 @@ class ProfilePost extends React.Component {
         }
     }
 
+    deleteToast = () => {
+        toast.success('Your post has been successfuly deleted!', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+    }
+
     deleteBtn = () => {
         this.setState({
             confirm: !this.state.confirm,
@@ -69,6 +79,7 @@ class ProfilePost extends React.Component {
     }
 
     deleted = () => {
+        this.deleteToast()
         this.props.confirmDelete(this.props.childData.data.name)
         this.setState({
             confirm: false,

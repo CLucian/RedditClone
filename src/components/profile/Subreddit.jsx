@@ -17,6 +17,9 @@ import NewSVG from '../svg-components/NewSVG'
 import TopSVG from '../svg-components/TopSVG'
 import RisingSVG from '../svg-components/RisingSVG'
 
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 import { GlobalContext } from '../GlobalState'
 import {
     searchSubreddit,
@@ -34,6 +37,7 @@ const sortOptions = [
     { name: 'Rising', value: 'rising', icon: <RisingSVG /> },
 ]
 
+toast.configure()
 class Subreddit extends React.Component {
     constructor(props) {
         super(props)
@@ -62,6 +66,16 @@ class Subreddit extends React.Component {
         getSubredditDetails(this.state.subreddit).then((response) => {
             this.handleSubredditData(response)
         })
+    }
+
+    handleToast = (users) => {
+        toast.info(
+            `There are currently ${users} active users on this subreddit`,
+            {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 5000,
+            }
+        )
     }
 
     handleClick = (val) => {
@@ -244,6 +258,8 @@ class Subreddit extends React.Component {
                         )}
                     ></div>
                     <div
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => this.handleToast(active_user_count)}
                         className="active-users-container"
                         title="Active Users"
                     >

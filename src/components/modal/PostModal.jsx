@@ -70,93 +70,96 @@ class PostModal extends React.Component {
         }
 
         return (
-            <div className="modal-post-content">
-                <div className="close-container">
-                    <div
-                        className="close-svg-container"
-                        onClick={this.props.closeModal}
-                    >
-                        <Close className="close-modal-btn" />
-                    </div>
-                </div>
-                <div className="post-details">
-                    <div className="author-subreddit-container">
-                        <div className="modal-post-subreddit">
-                            {this.state.data.subreddit}
-                        </div>
-                        <div className="modal-post-author">
-                            {this.state.data.author}
+            <div className="modal-info-container">
+                <div className="modal-post-content">
+                    <div className="close-container">
+                        <div
+                            className="close-svg-container"
+                            onClick={this.props.closeModal}
+                        >
+                            <Close className="close-modal-btn" />
                         </div>
                     </div>
+                    <div className="post-details">
+                        <div className="author-subreddit-container">
+                            <div className="modal-post-subreddit">
+                                {this.state.data.subreddit}
+                            </div>
+                            <div className="modal-post-author">
+                                {this.state.data.author}
+                            </div>
+                        </div>
 
-                    <div className="modal-post-date">
-                        {this.getDate(this.state.data.created_utc)}
-                    </div>
-                </div>
-                <div className="modal-post-header">
-                    <div className="modal-post-title">
-                        <div>{this.state.data.title}</div>
-                        <div className="post-url">
-                            <a href={this.state.data.url}>
-                                {this.state.data.url}
-                            </a>
+                        <div className="modal-post-date">
+                            {this.getDate(this.state.data.created_utc)}
                         </div>
                     </div>
+                    <div className="modal-post-header">
+                        <div className="modal-post-title">
+                            <div>{this.state.data.title}</div>
+                            <div className="post-url">
+                                <a href={this.state.data.url}>
+                                    {this.state.data.url}
+                                </a>
+                            </div>
+                        </div>
 
-                    {/* <div className="modal-post-date">
+                        {/* <div className="modal-post-date">
                         {this.getDate(this.state.data.created)}
                     </div> */}
-                    {!this.state.data.preview?.enabled &&
-                    !this.state.data?.media?.oembed?.author_url &&
-                    this.state.data.thumbnail !== 'self' &&
-                    this.state.data.thumbnail !== 'image' &&
-                    this.state.data.thumbnail !== 'thumbnail' &&
-                    this.state.data.thumbnail !== 'nsfw' &&
-                    this.state.data.thumbnail !== 'default' ? (
-                        <div className="post-thumbnail-container">
+                        {!this.state.data.preview?.enabled &&
+                        !this.state.data?.media?.oembed?.author_url &&
+                        this.state.data.thumbnail !== 'self' &&
+                        this.state.data.thumbnail !== 'image' &&
+                        this.state.data.thumbnail !== 'thumbnail' &&
+                        this.state.data.thumbnail !== 'nsfw' &&
+                        this.state.data.thumbnail !== 'default' ? (
+                            <div className="post-thumbnail-container">
+                                <a href={this.state.data.url}>
+                                    <img
+                                        className="post-thumbnail"
+                                        src={this.state.data.thumbnail}
+                                        // src={this.state.data.thumbnail}
+                                        alt="thumbnail"
+                                    />
+                                </a>
+                            </div>
+                        ) : null}
+                    </div>
+                    {this.state.data.preview?.enabled &&
+                    this.state.data?.preview?.images ? (
+                        <div className="full-post-image">
                             <a href={this.state.data.url}>
                                 <img
-                                    className="post-thumbnail"
-                                    src={this.state.data.thumbnail}
-                                    // src={this.state.data.thumbnail}
-                                    alt="thumbnail"
+                                    className="full-post-img"
+                                    src={this.state.data.url}
+                                    style={
+                                        {
+                                            // width: `${this.state.data.preview.images[0].resolutions[2].width}px`,
+                                            // height: `${this.state.data.preview.images[0].resolutions[2].height}px`,
+                                        }
+                                    }
                                 />
                             </a>
                         </div>
                     ) : null}
-                </div>
-                {this.state.data.preview?.enabled &&
-                this.state.data?.preview?.images ? (
-                    <div className="full-post-image">
-                        <a href={this.state.data.url}>
-                            <img
-                                className="full-post-img"
-                                src={this.state.data.url}
-                                style={
-                                    {
-                                        // width: `${this.state.data.preview.images[0].resolutions[2].width}px`,
-                                        // height: `${this.state.data.preview.images[0].resolutions[2].height}px`,
-                                    }
+                    {this.state.data?.media?.type !== 'twitter.com' &&
+                        this.state.data?.media?.oembed?.author_url && (
+                            <Video
+                                video={
+                                    this.state.data?.media?.oembed?.author_url
                                 }
                             />
-                        </a>
-                    </div>
-                ) : null}
-                {this.state.data?.media?.type !== 'twitter.com' &&
-                    this.state.data?.media?.oembed?.author_url && (
-                        <Video
-                            video={this.state.data?.media?.oembed?.author_url}
+                        )}
+                    {this.state.data?.secure_media_embed?.media_domain_url && (
+                        <Twitch
+                            url={
+                                this.state.data?.secure_media_embed
+                                    ?.media_domain_url
+                            }
                         />
                     )}
-                {this.state.data?.secure_media_embed?.media_domain_url && (
-                    <Twitch
-                        url={
-                            this.state.data?.secure_media_embed
-                                ?.media_domain_url
-                        }
-                    />
-                )}
-                {/* {this.state.data?.media?.reddit_video && (
+                    {/* {this.state.data?.media?.reddit_video && (
                     <Video
                         video={
                             this.state.data?.media?.reddit_video?.fallback_url
@@ -171,23 +174,24 @@ class PostModal extends React.Component {
                         }
                     />
                 )} */}
-                <div
-                    className="modal-description"
-                    dangerouslySetInnerHTML={this.getMarkDown()}
-                ></div>
-                {/* <div className="modal-description">{this.props.postData.selftext}</div> */}
-                <PostComment
-                    data={this.state.data}
-                    getParentComment={this.getParentComment}
-                />
-                <Comments
-                    subreddit={this.state.data.subreddit_name_prefixed}
-                    accessToken={this.context.accessToken}
-                    postCommentsId={this.state.data.id}
-                    commentsLoaded={this.commentsLoaded}
-                    data={this.state.data}
-                    userParentCommentData={this.state.userParentCommentData}
-                />
+                    <div
+                        className="modal-description"
+                        dangerouslySetInnerHTML={this.getMarkDown()}
+                    ></div>
+                    {/* <div className="modal-description">{this.props.postData.selftext}</div> */}
+                    <PostComment
+                        data={this.state.data}
+                        getParentComment={this.getParentComment}
+                    />
+                    <Comments
+                        subreddit={this.state.data.subreddit_name_prefixed}
+                        accessToken={this.context.accessToken}
+                        postCommentsId={this.state.data.id}
+                        commentsLoaded={this.commentsLoaded}
+                        data={this.state.data}
+                        userParentCommentData={this.state.userParentCommentData}
+                    />
+                </div>
             </div>
         )
     }

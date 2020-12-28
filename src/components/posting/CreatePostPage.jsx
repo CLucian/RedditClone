@@ -3,10 +3,12 @@ import React from 'react'
 import { GlobalContext } from '../GlobalState'
 import SubredditSearch from '../search/SubredditSearch'
 
-import Axios from 'axios'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 import submitPost from '../../queries/createPostPage'
 
+toast.configure()
 export default class CreatePostPage extends React.Component {
     constructor() {
         super()
@@ -16,6 +18,18 @@ export default class CreatePostPage extends React.Component {
             type: 'self',
             text: null,
             showSuggestions: false,
+        }
+    }
+
+    postToast = (response) => {
+        if (response) {
+            toast.error(response, {
+                position: toast.POSITION.TOP_CENTER,
+            })
+        } else {
+            toast.success('Your post has gone through successfully!', {
+                position: toast.POSITION.TOP_CENTER,
+            })
         }
     }
 
@@ -47,6 +61,8 @@ export default class CreatePostPage extends React.Component {
                 this.state.text
             )
                 .then((response) => {
+                    console.log('createpostpage response', response)
+                    this.postToast()
                     this.setState({
                         title: '',
                         subreddit: '',
@@ -54,7 +70,7 @@ export default class CreatePostPage extends React.Component {
                         showSuggestions: false,
                     })
                     if (response.data.success === false) {
-                        alert(response.data.jquery[14][3])
+                        this.postToast(response.data.jquery[14][3])
                     }
                 })
                 .catch((err) => console.log(err))
@@ -74,9 +90,16 @@ export default class CreatePostPage extends React.Component {
         })
     }
 
+    // notify = () => {
+    //     toast.error('Your post has gone through successfully!', {
+    //         position: toast.POSITION.TOP_CENTER,
+    //     })
+    // }
+
     render() {
         return (
             <div className="create-post-page-container">
+                {/* <button onClick={this.notify}>Click</button> */}
                 <form
                     className="create-post-form"
                     type="submit"

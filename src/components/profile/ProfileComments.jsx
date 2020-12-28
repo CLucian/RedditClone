@@ -13,6 +13,10 @@ import AuthorSVG from '../svg-components/Author'
 
 import getAuthorAvatar from '../../queries/profileComments'
 
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
+toast.configure()
 class ProfileComments extends React.Component {
     constructor(props) {
         super(props)
@@ -105,7 +109,14 @@ class ProfileComments extends React.Component {
         })
     }
 
+    deleteToast = () => {
+        toast.success('Your comment has been successfuly deleted!', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+    }
+
     deleted = () => {
+        this.deleteToast()
         this.props.confirmDelete(this.props.childData.data.name)
         this.setState({
             confirm: false,
