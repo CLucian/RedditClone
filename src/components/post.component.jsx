@@ -79,7 +79,7 @@ class Post extends React.Component {
     }
 
     getLengthTitle = (description) => {
-        const maxLength = 100
+        const maxLength = 400
         if (description.length > maxLength) {
             return description.substring(0, maxLength)
         } else {

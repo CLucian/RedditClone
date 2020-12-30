@@ -1,7 +1,7 @@
 import React from 'react'
+
 import { Link, NavLink, withRouter } from 'react-router-dom'
 import { GlobalContext } from '../GlobalState'
-
 import Login from '../Login'
 
 import CommentsSVG from '../svg-components/navbar-svgs/CommentsSVG'
@@ -27,7 +27,7 @@ const menuLinks = [
     { name: 'Profile', route: 'user', component: <ProfileSVG /> },
 ]
 
-class Navbar extends React.Component {
+class HamburgerNav extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -41,14 +41,14 @@ class Navbar extends React.Component {
         })
     }
 
+    handleClick = () => {
+        this.setState({
+            navShow: true,
+        })
+    }
+
     render() {
         const { pathname } = this.props.location
-
-        console.log('this.state.activeRoute', this.state.activeRoute)
-        console.log(
-            'this.state.activeRoute',
-            this.props.location.pathname.substring(1)
-        )
 
         return (
             <React.Fragment>
@@ -102,6 +102,6 @@ class Navbar extends React.Component {
     }
 }
 
-export default withRouter(Navbar)
+export default withRouter(HamburgerNav)
 
-Navbar.contextType = GlobalContext
+HamburgerNav.contextType = GlobalContext

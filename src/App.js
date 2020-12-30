@@ -34,14 +34,36 @@ import MasterSearch from './components/search/MasterSearch'
 import HomeWrapper from './components/search/HomeWrapper'
 
 class App extends React.Component {
-    // constructor(props) {
-    //     super(props)
-    //     this.state = {}
-    // }
+    constructor() {
+        super()
+        this.state = {
+            hideNav: '',
+        }
+    }
 
     // Do this in /authorize, set state for islogged in and the auth token and then conditionally redirect IF islogged in back to home page
 
+    componentDidMount() {
+        window.addEventListener('resize', this.resize)
+        this.resize()
+    }
+
+    resize = () => {
+        let currentHideNav = window.innerWidth <= 740
+        if (currentHideNav !== this.state.hideNav) {
+            this.setState({
+                hideNav: currentHideNav,
+            })
+        }
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.resize)
+    }
+
     render() {
+        console.log('hideNav', this.state.hideNav)
+
         const { status } = this.context
 
         if (status === STATUS.INAUTHENTICATED) {
@@ -65,9 +87,11 @@ class App extends React.Component {
                             /> */}
                             <TopNavbar />
                             <div className="master-app-container">
-                                <div className="left-side-app">
-                                    <Navbar />
-                                </div>
+                                {!this.state.hideNav && (
+                                    <div className="left-side-app">
+                                        <Navbar />
+                                    </div>
+                                )}
                                 <div className="main-routes">
                                     <Switch>
                                         {/* <HomeWrapper> */}
@@ -145,12 +169,14 @@ class App extends React.Component {
                                     />
                                     <Route path="/" component={PostContainer} />
                                 </div>
-                                <div className="right-side-app">
-                                    <div className="sidebar-nav">
-                                        <SideBar />
-                                        {/* <div></div> */}
+                                {!this.state.hideNav && (
+                                    <div className="right-side-app">
+                                        <div className="sidebar-nav">
+                                            <SideBar />
+                                            {/* <div></div> */}
+                                        </div>
                                     </div>
-                                </div>
+                                )}
                             </div>
                         </ToastProvider>
                     </MasterSearchProvider>

@@ -79,6 +79,7 @@ li, ul {
   /* justify-content: space-between; */
   flex-direction: row-reverse;
   align-items: center;
+  justify-content: space-between;
   /* padding-right: 2rem; */
   height: 100%;
   /* width: 10%; */
@@ -2286,11 +2287,137 @@ select.post-select {
 }
 
 
+@media (max-width: 1050px) {
+  .link-text {
+    font-size: 1.2rem;
+  }
+
+	.post-score {
+    font-size: 1.7rem;
+  }
+
+  .profile-post-container {
+    /* padding: 1rem; */
+    /* padding: 5rem; */
+  }
+
+  .list-item {
+    /* margin: 0 */
+  }
+
+  .post-thumbnail {
+    max-width: 12rem;
+    max-height: 12rem;
+  }
+
+  .author-img-container {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .post-title {
+    padding-right: 0;
+  }
+
+  .post-title-text {
+    padding-right: 1rem;
+  }
+  .post-description-text {
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 940px) {
+  .list-item-active {
+    padding: 1rem 1rem;
+  }
+
+  .list-item {
+    padding: 1rem 1rem;
+  }
+}
+
+@media (max-width: 880px) {
+   .list-item-subreddit {
+    padding: 0.5rem 1rem;
+  }
+
+  .main-text-container {
+    padding: 3rem 1rem 1rem 1rem
+  }
+
+  .post-thumbnail {
+    max-width: 10rem;
+  }
+
+  .post-title-text {
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+    /* overflow: hidden; */
+    /* text-overflow: ellipsis; */
+    /* display: -webkit-box; */
+    -webkit-line-clamp: 5;
+    /* word-wrap: break-word; */
+    /* -webkit-box-orient: vertical; */
+    /* color: #4a4a4a;
+    padding-right: 2rem;
+    padding: 0.5rem; */
+  }
+
+  .post-description-text {
+    font-size: 1.2rem;
+  }
+
+  .post-sub-info {
+    flex-direction: column;
+  }
+
+  .post-author {
+    padding-bottom: 0.5rem;
+  }
+  
+  .post-date {
+    padding-bottom: 1rem;
+  }
+}
+
+@media (max-width: 840px) {
+  .list-item-subreddit {
+    padding: 0.5rem 1rem;
+  }
+
+  .subreddit-img-container {
+    width: 2rem;
+  }
+}
 
 
+@media (max-width: 770px) {
+  .sortByMenuContainer {
+    /* paddding */
+  }
 
+  .menu-svg-container {
+    font-size: 1rem;
+  }
+  .sort-by-text {
+    font-size: 1.2rem;
+  }
+  .create-post {
+    /* padding: 1rem 0.3rem 1rem 1rem; */
+    font-size: 1.3rem;
+  }
 
+  .query-search-div input[type="text"] {
+    width: 90%;
+    font-size: 1.3rem;
+  }
 
+}
+
+@media (max-width: 770px) {
+
+}
 
 
 
