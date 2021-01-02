@@ -100,11 +100,11 @@ li, ul {
   font-size: 1rem;
   background: #fff;
   width: 100%;
-  height: 7vh;
+  height: 8rem;
   /* display: fixed; */
   font-style: Arial;
   text-decoration: none;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   margin-bottom: 2rem;
   
 }
@@ -120,7 +120,7 @@ li, ul {
   /* display: fixed; */
   font-style: Arial;
   text-decoration: none;
-  /* box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); */
+  /* box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1); */
   /* display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -134,7 +134,7 @@ li, ul {
   justify-content: flex-start;
   align-items: center; */
   background: #fff;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .more-subreddits {
@@ -219,7 +219,7 @@ li, ul {
 
 
 .subreddit-header-banner {
-  max-width: 95%;
+  max-width: 100%;
   max-height: 15vh;
   margin: auto;
   margin-bottom: 2rem;
@@ -318,7 +318,7 @@ li, ul {
 }
 
 .subreddit-img-container {
-  width: 3rem;
+  width: 4rem;
   /* border-radius: 2rem; */
 }
 
@@ -343,7 +343,7 @@ li, ul {
   /* display: fixed; */
   font-style: Arial;
   text-decoration: none;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -376,11 +376,11 @@ li, ul {
 
 
 
-.activeMargin {
+/* .activeMargin {
   background-color: #3d5af1;
-  /* height: 100%; */
+  height: 100%;
 
-}
+} */
 
 .activeText {
   width: 100%;
@@ -434,6 +434,7 @@ li, ul {
   text-decoration: none;
   border: 0.1rem solid #fff;
   margin: 0 1.5rem;
+  z-index: 999;
 }
 
 .list-item-active {
@@ -448,6 +449,7 @@ li, ul {
   margin: 0 1.5rem;
   font-size: 1.5rem;
   text-decoration: none;
+  z-index: 999;
 }
 
 .navbar-svgs {
@@ -458,11 +460,6 @@ li, ul {
   fill: #5c75f3;
 } */
 
-.active {
-  background-color:#3d5af1;
-  /* color: #3d5af1; */
-
-}
 
 
 
@@ -669,6 +666,7 @@ a {
 }
 
 .modal-post-header {
+
   display: flex;
   justify-content: space-between;
   /* align-items: center; */
@@ -676,15 +674,27 @@ a {
 }
 
 .modal-post-title {
+  width: 100%;
   font-size: 2.5rem;
   text-align: left;
   padding: 2rem 2rem 2rem 0rem;
   color: #4a4a4a;
 }
 
+.modal-url-post {
+  color: #5c75f3;
+}
+
 .post-url {
+  width: 30rem;
+  padding-right: 5rem;
   padding-top: 2rem;
   font-size: 1.5rem;
+}
+
+.post-url a {
+  
+  width: 100%;
 }
 
 .post-details {
@@ -1192,20 +1202,36 @@ textarea {
   padding: 2rem;
   border-radius: 0.5rem;
   /* box-shadow: 0 1px 2px rgba(0,0,0,0.15); */
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
 
   transition: all 0.3s ease-in-out;
 }
 
+.subreddit-item-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 5px;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  border-radius: 0.5rem;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  transition: opacity 0.3s ease-in-out;
+}
+
 
 .subreddit-text-container {
+  padding-left: 1rem;
   width: 60%;
   height: auto;
 }
 
 .subreddit-list-title {
   font-size: 2rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 
@@ -1295,6 +1321,7 @@ textarea {
   background-color: red;
   color: #fff;
   padding: 1rem;
+  margin-left: 1rem;
   border: 0.1rem solid red;
   border-radius: 0.2rem;
   cursor: pointer;
@@ -1306,16 +1333,35 @@ textarea {
   transform: scale(1.05, 1.05);
 }
 
+.subreddit-page-desc-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+
 .subreddit-page-description {
   width: 20rem;
   color: #b1b1b1;
   font-size: 1.3rem; 
-  overflow: hidden;
+  /* overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 5;
-  -webkit-box-orient: vertical;
+  -webkit-box-orient: vertical; */
   color: #4a4a4a;
+  padding: 0rem 1rem;
+}
+
+.read-more {
+  padding-top: 0.5rem;
+  color: #5c75f3;
+  cursor: pointer;
+}
+
+.subreddit-page-description p {
+  margin: 0;
 }
 
 
@@ -1348,8 +1394,9 @@ textarea {
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 0.3rem;
   width: 90%;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
 }
 
 .sort-by-text {
@@ -1361,17 +1408,13 @@ textarea {
   background-color: inherit;
   border: none;
   text-decoration: none;
-  /* margin: 0 2rem 0 2rem; */
   padding: 1rem;
   display: flex;
-  /* min-height: 3rem;
-  min-width: 3rem; */
-  width: 15%;
   justify-content: center;
   align-items: center;
-  /* background-color: #ececec; */
   border-radius: 10%;
   cursor: pointer;
+  border: 0.1rem solid transparent;
 }
 
 
@@ -1415,7 +1458,7 @@ textarea {
   height: auto;
 }
 .RisingSVG {
-  /* width: 30%; */
+  width: 30%;
   min-width: 1rem;
   height: auto;
 }
@@ -1439,7 +1482,8 @@ textarea {
 }
 
 .active {
-  background-color: #ececec;
+  background-color: #87CEFA;
+  /* border: 0.1rem solid #5c75f3; */
 }
 
 
@@ -1454,7 +1498,7 @@ textarea {
   padding: 2rem;
   border-radius: 0.5rem;
   /* box-shadow: 0 1px 2px rgba(0,0,0,0.15); */
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 
   transition: all 0.3s ease-in-out;
 }
@@ -1487,12 +1531,13 @@ textarea {
   /* margin: 1rem; */
   /* padding-left: 2rem; */
   /* padding-bottom: 3rem; */
-  padding-bottom: 1rem;
+  /* padding-bottom: 1rem; */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 2.25rem;
+  font-size: 1.8rem;
   padding-right: 4rem;
+  
   
 }
 
@@ -1514,16 +1559,18 @@ textarea {
 
 .post-title-text {
   /* max-height: 7rem; */
-  line-height: 2.5rem;
-  font-size: 2rem;
+  /* padding-bottom: 1rem; */
+  padding-right: 1rem;
+  line-height: 2rem;
+  font-size: 1.5rem;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
-  /* word-wrap: break-word; */
+  -webkit-line-clamp: 6;
+  word-wrap: break-word;
   -webkit-box-orient: vertical;
-  color: #4a4a4a;
-  padding-right: 2rem;
+  /* color: #4a4a4a;
+  padding-right: 2rem; */
 }
 
 
@@ -1571,7 +1618,7 @@ textarea {
   /* width: 60%; */
   color: #b1b1b1;
   font-size: 1.5rem;
-  padding-right: 4rem;
+  padding: 1rem 4rem 0rem 1rem;
   line-height: 2.5rem;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1584,6 +1631,10 @@ textarea {
   word-break: break-word;
   margin-bottom: 0.5rem;
   
+}
+
+.post-description-text p {
+  margin: 0;
 }
 
 .author-img-container {
@@ -1761,15 +1812,17 @@ textarea {
 }
 
 .create-post-container {
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
   /* background-color: red; */
   padding: 1rem;
   margin-bottom: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 92%;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  /* border: 1px solid #5c75f3; */
+  border-radius: 0.2rem;
+  /* box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2); */
 
 }
 
@@ -1806,9 +1859,10 @@ textarea {
   height: auto;
   font-size: 1.5rem;
   font-weight: bold;
+  padding: 0rem 1rem;
   /* border: 0.1rem solid black; */
   /* border-radius: 0.3rem; */
-  padding: 1rem;
+  /* padding: 1rem; */
 }
 
 .create-media-post {
@@ -1831,9 +1885,17 @@ textarea {
 
 
 /* Create Post Page */
+
+.create-post-header {
+  font-size: 3rem;
+  text-align: center;
+  padding-bottom: 1rem;
+}
+
+
 .create-post-page-container {
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   /* border: 0.1rem solid black; */
   border-radius: 0.2rem;
   background-color: #fff;
@@ -1842,9 +1904,10 @@ textarea {
 
 
 .create-post-form {
+  border-radius: 0.3rem;
   height: 100%;
   width: 100%;
-  background-color: #fcfcfc
+  background-color: #ececec;
 }
 
 .create-post-page-title-container {
@@ -1900,7 +1963,7 @@ textarea {
   justify-content: center;
   align-items: center;
   /* border: 0.1rem solid red; */
-  width: 40%;
+  width: 60%;
   padding: 0rem;
   margin: 0rem;
   height: 100%;
@@ -1990,7 +2053,7 @@ select.post-select {
   margin-top: 0.5rem;
   padding: 0;
   margin: 0;
-  width: 100%;
+  width: 20rem;
   /* display: flex; */
   /* flex-direction: column; */
   /* justify-content: center; */
@@ -2006,16 +2069,19 @@ select.post-select {
   align-items: center;
   /* justify-content: center; */
   /* margin-left: 2rem; */
-  padding: 2rem;
+  padding: 1rem;
+  /* margin: 0.1rem; */
   padding-right: 4rem;
-  font-size: 1.5rem;
+  font-size: 2rem;
   list-style: none;
+  border-radius: 0.5rem;
   /* background-color: rgba(177, 177, 177, 1); */
-  background-color: #fff;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  background-color: #fcfcfc;
+  /* box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); */
   
+  width: 20rem;
   /* width: 100%; */
-  height: 3rem;
+  height: 5rem;
   cursor: pointer;
   border: 0.1rem solid #b1b1b1;
   transition: opacity 0.3s ease-in-out;
@@ -2032,12 +2098,22 @@ select.post-select {
 
 }
 
+.subreddit-suggestion-name-container {
+
+}
+
+.subreddit-suggestion-members-container {
+  font-size: 1.3rem;
+  color: #b1b1b1;
+}
+
 .subreddit-subscribers-container {
   display: flex;
   /* justify-content: space-evenly; */
   align-items: center;
-  font-size: 1rem;
+  font-size: 1.5rem;
   width: 100%;
+  height: 3rem;
 }
 
 .subreddit-suggestion-info-container {
@@ -2048,12 +2124,14 @@ select.post-select {
 
 .post-submit {
   background-color: white;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   border: 0.1rem solid black;
   border-radius: 0.5rem;
   padding: 1rem;
   margin-left: 1rem;
+  margin-bottom: 1rem;
   cursor: pointer;
+  /* padding-bottom: 1rem; */
 }
 
 .post-submit:hover {
@@ -2077,8 +2155,10 @@ select.post-select {
 .search-subreddit-div {
   /* padding: 0 1rem; */
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
+  /* width: 33%; */
+  /* width: 15rem; */
   /* width: 50%; */
   /* border: 0.1rem solid transparent; */
 }
@@ -2095,13 +2175,22 @@ select.post-select {
   height: 100%;
 }
 
+/* .subreddit-search-form {
+  width: 80%;
+} */
+
+.query-search-div {
+  /* width: 50%; */
+}
+
 .query-search-div input[type="text"] {
   height: 3rem;
   font-size: 1.5rem;
-  width: 100%;
+  width: 80%;
   border: none;
   border-bottom: 0.1rem solid #b1b1b1;
   outline: none;
+  background-color: inherit;
 }
 
 .SearchSVG {
@@ -2112,6 +2201,7 @@ select.post-select {
 
 .create-post-div {
   /* padding: 0 1rem; */
+  padding: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2192,6 +2282,7 @@ select.post-select {
 }
 
 
+
 .confirm-text p {
   font-size: 1.5rem;
   margin: 0rem;
@@ -2204,6 +2295,7 @@ select.post-select {
 
 .yes-btn {
   padding: 0.3rem 1rem;
+  width: 4rem;
   color: white;
   background-color: #FF851B;
   border-radius: 0.2rem;
@@ -2218,6 +2310,7 @@ select.post-select {
 
 .no-btn {
   padding: 0.3rem 1rem;
+  width: 4rem;
   margin-left: 0.5rem;
   background-color: transparent;
   border-radius: 0.2rem;
@@ -2261,6 +2354,19 @@ select.post-select {
   margin-top: 5rem;
 }
 
+.hamburgerSVG-div {
+  padding-left: 2rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  cursor: pointer;
+}
+
+.hamburgerSVG {
+  width: 100%;
+  height: 100%;
+}
+
+
 
 /* 
 .delete-comment-btn {
@@ -2273,21 +2379,28 @@ select.post-select {
 
 
 
-@media (max-width: 1500px) {
-	.exercise-button1 {
-		left: 80%
-	}
-	.exercise-button2 {
-		right: 80%
-	}
+@media (max-width: 1300px) {
+  .post-title {
+    font-size: 1.5rem;
+  }
 
-	.modal-workout-log-group {
-		width: 20%;
-	}
 }
 
 
 @media (max-width: 1050px) {
+  .modal-info-container {
+    width: 80%;
+  }
+
+  .subreddit-img-header-container {
+    width: 10rem;
+    height: 10rem;
+  }  
+
+  .subreddit-description {
+    font-size: 1.3rem;
+  }
+
   .link-text {
     font-size: 1.2rem;
   }
@@ -2328,6 +2441,10 @@ select.post-select {
 }
 
 @media (max-width: 940px) {
+  .post-description-text {
+    line-height: 1.6rem;
+  }
+
   .list-item-active {
     padding: 1rem 1rem;
   }
@@ -2353,15 +2470,15 @@ select.post-select {
   .post-title-text {
     font-size: 1.5rem;
     line-height: 1.5rem;
-    /* overflow: hidden; */
-    /* text-overflow: ellipsis; */
-    /* display: -webkit-box; */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
     -webkit-line-clamp: 5;
-    /* word-wrap: break-word; */
-    /* -webkit-box-orient: vertical; */
-    /* color: #4a4a4a;
-    padding-right: 2rem;
-    padding: 0.5rem; */
+    word-wrap: break-word;
+    -webkit-box-orient: vertical;
+    color: #4a4a4a;
+    /* padding-right: 2rem; */
+    /* padding: 0.5rem; */
   }
 
   .post-description-text {
@@ -2387,14 +2504,15 @@ select.post-select {
   }
 
   .subreddit-img-container {
-    width: 2rem;
+    width: 3rem;
   }
 }
 
 
-@media (max-width: 770px) {
-  .sortByMenuContainer {
-    /* paddding */
+/* @media (max-width: 770px) {
+
+  .post-score {
+    font-size: 2rem;
   }
 
   .menu-svg-container {
@@ -2404,7 +2522,6 @@ select.post-select {
     font-size: 1.2rem;
   }
   .create-post {
-    /* padding: 1rem 0.3rem 1rem 1rem; */
     font-size: 1.3rem;
   }
 
@@ -2413,17 +2530,267 @@ select.post-select {
     font-size: 1.3rem;
   }
 
-}
+  .post-date {
+    padding: 0;
+  }
+
+} */
 
 @media (max-width: 770px) {
+  .main-routes {
+    width: 90%;
+  }
+
+  .post-score {
+    font-size: 2rem;
+  }
+
+  .score-text {
+    font-size: 2rem;
+  }
+
+  .post-title-text {
+    /* font-size: 1.5rem;
+    line-height: 1.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    word-wrap: break-word;
+    -webkit-box-orient: vertical;
+    color: #4a4a4a;
+    padding-right: 2rem;
+    padding: 0.5rem; */
+  }
+
+  .post-author {
+    padding-bottom: 0;
+  }
+
+  .post-date {
+    padding-bottom: 0;
+  }
+  
+  .post-sub-info {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .post-thumbnail {
+    max-width: 12rem;
+    max-height: 12rem;
+  }
+
+  .author-img-container {
+    width: 5rem;
+    height: 5rem;
+  }
+
+
+}
+
+@media (max-width: 530px) {
+
+  .create-post-page-subreddit input[type="text"] {
+    font-size: 1.3rem;
+  }
+
+  .create-post-page-title input[type="text"] {
+    font-size: 1.5rem;
+  }
+
+  .create-post {
+    /* width: 100%; */
+    /* padding: 0; */
+  }
+
+  .query-search-div input[type="text"] {
+    width: 80%;
+  }
+
+  .confirm-div {
+    flex-direction: row;
+  }
+  .confirm-text p {
+    margin: 0;
+    padding-right: 1rem;
+  }
+
+  .post-description-text p {
+    margin: 0;
+  }
 
 }
 
 
+@media (max-width: 467px) {
+  .create-post-container {
+    margin-bottom: 0;
+  }
+
+  .post-sub-info {
+    flex-direction: column;
+  }
+
+  .post-author {
+    padding-bottom: 1rem;
+  }
+
+  .post-date {
+    padding-bottom: 1rem;
+  }
+
+}
+
+@media (max-width: 439px) {
+  .subredditSearch__container {
+    /* font-size: 10rem; */
+    padding-right: 10rem;
+  }
+
+  .menu-svg-container {
+    width: 40%;
+    padding: 1rem 0rem;
+
+  }
+
+  .sort-menu-svg {
+    width: 5rem;
+  }
+
+  .query-search-div input[type="text"] {
+    width: 80%;
+  }
+}
+
+
+@media (max-width: 425px) { 
+  .main-routes {
+    width: 95%;
+  }
+
+  .author-img-container {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .score-text {
+    font-size: 1.7rem;
+  }
+
+  
+
+  .subreddit-banner-header {
+    flex-direction: column;
+  }
+
+  .active-users-container {
+    padding-top: 1rem;
+  }
+
+  .media-post-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .create-post-div {
+    padding: 1rem 0rem;
+    margin: 1rem 0rem;
+  }
+
+  .subreddit-page-description {
+    text-align: center;
+  }
 
 
 
 
+
+}
+
+@media (max-width: 350px) {
+
+  .suggestion-listing {
+    width: 15rem;
+  }
+
+  .subreddit-subscribers-container {
+    font-size: 1.3rem;
+  }
+  .subreddit-suggestion-members-container {
+    font-size: 1rem;
+  }
+
+
+  .subreddit-header {
+    /* flex-direction: column; */
+  }
+
+  .subreddit-img-header-container {
+    width: 7rem;
+    height: 7rem;
+  }
+
+  .subreddit-description {
+    font-size: 1rem;
+    /* color: black; */
+    /* font-weight: bold; */
+  }
+
+  .post-thumbnail {
+    width: 1rem;
+  }
+
+
+  .main-text-container {
+    padding: 3rem 0 1rem 0;
+  }
+
+  .score-text {
+    font-size: 1.3rem;
+  }
+
+  .post-title-text {
+    padding-right: 1rem;
+    font-size: 1.3rem;
+    line-height: 1.4rem;
+  }
+
+  .post-description-text {
+    line-height: 1.4rem;
+  }
+
+  .profile-post-container {
+    /* min-width: 26rem; */
+  }
+
+  .post-listing-thumbnail-container {
+    /* width: 1rem;
+    height: 1rem; */
+  }
+
+  .post-thumbnail {
+    max-width: 10rem;
+    width: 100%;
+    /* height: 1rem; */
+  }
+}
+
+
+@media (max-width: 271px) {
+
+  .confirm-text p {
+    font-size: 1.3rem;
+  }
+
+  .confirm-btns {
+    display: flex;
+  }
+
+}
 
 /* background color: #fcfcfc */
 /* individual post: #ffffff */

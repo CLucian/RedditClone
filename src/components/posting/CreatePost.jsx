@@ -19,7 +19,7 @@ class CreatePost extends React.Component {
         return (
             <Link to="/create_post" className="create-post-link">
                 <div className="create-post-div">
-                    <div className="create-post">Create Post</div>
+                    <div className="create-post">Post</div>
                     <PostSVG />
                 </div>
             </Link>

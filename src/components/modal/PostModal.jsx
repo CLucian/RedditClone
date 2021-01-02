@@ -98,8 +98,12 @@ class PostModal extends React.Component {
                         <div className="modal-post-title">
                             <div>{this.state.data.title}</div>
                             <div className="post-url">
-                                <a href={this.state.data.url}>
-                                    {this.state.data.url}
+                                <a
+                                    className="modal-url-post"
+                                    href={this.state.data.url}
+                                >
+                                    Original post
+                                    {/* {this.state.data.url} */}
                                 </a>
                             </div>
                         </div>

@@ -9,7 +9,7 @@ class HomeWrapper extends React.Component {
             this.context.HomeWrapper
         )
 
-        return <Home query={this.context.query} />
+        return <Home hideNav={this.props.hideNav} query={this.context.query} />
     }
 }
 

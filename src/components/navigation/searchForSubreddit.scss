@@ -10,7 +10,7 @@
 }
 
 .subredditSearch__container {
-	background-color: #ffffff;
+	// background-color: #ffffff;
   /* background-color: red; */
   padding: 1rem 0rem 1rem 0rem;
   margin-bottom: 2rem;
@@ -18,7 +18,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  // box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .subredditSearch__query-container {
@@ -30,6 +30,7 @@
 }
 
 .subredditSearch__query-container input[type="text"] {
+  background-color: inherit;
   height: 3rem;
   font-size: 1.5rem;
   width: 100%;
@@ -40,4 +41,13 @@
 
 .subredditSearch__search-input {
 	height: 100%;
+}
+
+@media (max-width: 300px) {
+  .subredditSearch__container {
+    justify-content: flex-start;
+  }
+  .subredditSearch__query-container {
+	  width: 80%;
+  }
 }

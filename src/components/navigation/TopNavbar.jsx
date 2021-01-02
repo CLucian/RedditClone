@@ -2,6 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import HamburgerNav from './HamburgerNav'
+import HamburgerSVG from '../svg-components/HamburgerSVG'
+
 import Login from '../Login'
 import MasterSearch from '../search/MasterSearch'
 import { GlobalContext } from '../GlobalState'
@@ -11,6 +13,7 @@ class TopNavbar extends React.Component {
         super()
         this.state = {
             hideNav: '',
+            openMenu: false,
         }
     }
 
@@ -32,6 +35,12 @@ class TopNavbar extends React.Component {
         window.removeEventListener('resize', this.resize)
     }
 
+    handleClick = () => {
+        this.setState({
+            openMenu: !this.state.openMenu,
+        })
+    }
+
     render() {
         return (
             <div className="top-navbar">
@@ -49,7 +58,12 @@ class TopNavbar extends React.Component {
                         </div>
                     </Link>
                     {this.state.hideNav && (
-                        <HamburgerNav mobile={this.state.hideNav} />
+                        <div onClick={this.handleClick}>
+                            <HamburgerSVG />
+                            {this.state.openMenu && (
+                                <HamburgerNav mobile={this.state.hideNav} />
+                            )}
+                        </div>
                     )}
                 </div>
             </div>

@@ -137,10 +137,7 @@ class CommentReply extends React.Component {
                     this.state.confirm && (
                         <div className="confirm-div">
                             <div className="confirm-text">
-                                <p>
-                                    Are you sure you want to delete this
-                                    comment?
-                                </p>
+                                <p>Are you sure?</p>
                             </div>
                             <div className="confirm-btns">
                                 <button

@@ -3,6 +3,10 @@ import React from 'react'
 import postComment from '../../queries/commentReplyInput'
 import { GlobalContext } from '../GlobalState'
 
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
+toast.configure()
 class CommentReplyInput extends React.Component {
     constructor(props) {
         super(props)
@@ -18,6 +22,13 @@ class CommentReplyInput extends React.Component {
         })
     }
 
+    toastFail = (resp) => {
+        toast.error(resp, {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 5000,
+        })
+    }
+
     handleSubmit = (e) => {
         e.preventDefault()
 
@@ -28,10 +39,11 @@ class CommentReplyInput extends React.Component {
                     this.state.value
                 )
                     .then((response) => {
+                        console.log('response in commentReply input', response)
                         if (response.data.json.errors[0] !== undefined) {
-                            response.data.json.errors[0].map((err) => {
-                                return alert(err)
-                            })
+                            return this.toastFail(
+                                response.data.json.errors[0][1]
+                            )
                         } else {
                             this.props.getCommentReply(
                                 response.data.json.data.things[0].data,

@@ -221,9 +221,7 @@ class ProfilePost extends React.Component {
                     ) : (
                         <div className="confirm-div">
                             <div className="confirm-text">
-                                <p>
-                                    Are you sure you want to delete this post?
-                                </p>
+                                <p>Are you sure?</p>
                             </div>
                             <div className="confirm-btns">
                                 <button

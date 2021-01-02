@@ -45,7 +45,7 @@ class SearchInSubreddit extends React.Component {
                             type="text"
                             name="queryString"
                             onChange={this.handleChange}
-                            placeholder="search subreddit"
+                            placeholder="search sub"
                             value={this.state.queryString}
                         />
                     </form>

@@ -1,18 +1,18 @@
-import React from 'react'
-import { ToastContext } from '../toasts/ToastProvider'
-import CreatePostPage from './CreatePostPage'
+// import React from 'react'
+// import { ToastContext } from '../toasts/ToastProvider'
+// import CreatePostPage from './CreatePostPage'
 
-class CreatePostPageWrapper extends React.Component {
-    render() {
-        console.log(
-            'this is the query in HomeWrapper',
-            this.context.CreatePostPageWrapper
-        )
+// class CreatePostPageWrapper extends React.Component {
+//     render() {
+//         console.log(
+//             'this is the query in HomeWrapper',
+//             this.context.CreatePostPageWrapper
+//         )
 
-        return <CreatePostPage notify={this.context.notify} />
-    }
-}
+//         return <CreatePostPage notify={this.context.notify} />
+//     }
+// }
 
-export default CreatePostPageWrapper
+// export default CreatePostPageWrapper
 
-CreatePostPageWrapper.contextType = ToastContext
+// CreatePostPageWrapper.contextType = ToastContext

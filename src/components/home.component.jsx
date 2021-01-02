@@ -55,25 +55,35 @@ class Home extends React.Component {
             page: 1,
             pageDir: null,
             isQuery: false,
+            resize: '',
         }
     }
 
     componentDidMount() {
-        // if (this.context.accessToken) {
         getHomePage()
             .then((response) => {
                 this.handleDataResponse(response)
             })
             .catch((err) => {
                 return err
-                console.log('err retrieving feed in home component', err)
             })
-        // }
+
+        window.addEventListener('resize', this.resize)
+        this.resize()
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.query !== this.props.query) {
             this.handleQuerySearch()
+        }
+    }
+
+    resize = () => {
+        let currentWidth = window.innerWidth < 400
+        if (currentWidth !== this.state.resize) {
+            this.setState({
+                resize: currentWidth,
+            })
         }
     }
 
@@ -147,22 +157,20 @@ class Home extends React.Component {
     }
 
     render() {
-        console.log('masterSearchQuery in Home', this.props.query)
-        const { location, history, match } = this.props
-        console.log('location and stuff props', location)
-        const urlParams = new URLSearchParams(location.search || '')
-        console.log('urlParams home', urlParams.toString())
+        // console.log('this.props.random', this.props.random)
+        // console.log('masterSearchQuery in Home', this.props.query)
+        // const { location, history, match } = this.props
+        // console.log('location and stuff props', location)
+        // const urlParams = new URLSearchParams(location.search || '')
+        // console.log('urlParams home', urlParams.toString())
 
-        if (urlParams.get('after')) {
-            console.log('after result', urlParams.get('after'))
-        } else if (urlParams.get('before')) {
-            console.log('before result', urlParams.get('before'))
-        }
+        // if (urlParams.get('after')) {
+        //     console.log('after result', urlParams.get('after'))
+        // } else if (urlParams.get('before')) {
+        //     console.log('before result', urlParams.get('before'))
+        // }
 
-        // const { pageDir } = this.props.location.state
-        // console.log('pageDir state home', pageDir)
-
-        console.log('this.state.clicked', this.state.sortBy)
+        // console.log('this.state.clicked', this.state.sortBy)
         if (this.state.isLoading) {
             return 'Loading...'
         }
@@ -183,9 +191,11 @@ class Home extends React.Component {
                                 }`}
                             >
                                 {option.icon}
-                                <div className="sort-by-text">
-                                    {option.name}
-                                </div>
+                                {!this.state.resize && (
+                                    <div className="sort-by-text">
+                                        {option.name}
+                                    </div>
+                                )}
                             </div>
                         ))}
                     </div>

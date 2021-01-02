@@ -52,6 +52,8 @@ class Subreddit extends React.Component {
             subreddit: this.props.match.params.id,
             query: null,
             isSubbed: false,
+            resize: '',
+            readMore: false,
         }
 
         this.handleSearchQuery = debounce(this.handleSearchQuery, 500)
@@ -66,6 +68,18 @@ class Subreddit extends React.Component {
         getSubredditDetails(this.state.subreddit).then((response) => {
             this.handleSubredditData(response)
         })
+
+        window.addEventListener('resize', this.resize)
+        this.resize()
+    }
+
+    resize = () => {
+        let currentWidth = window.innerWidth < 400
+        if (currentWidth !== this.state.resize) {
+            this.setState({
+                resize: currentWidth,
+            })
+        }
     }
 
     handleToast = (users) => {
@@ -105,6 +119,15 @@ class Subreddit extends React.Component {
             return {
                 __html: '',
             }
+        }
+    }
+
+    getLength = (description) => {
+        const maxLength = 150
+        if (description.length > maxLength) {
+            return description.substring(0, maxLength) + '...'
+        } else {
+            return description
         }
     }
 
@@ -203,6 +226,12 @@ class Subreddit extends React.Component {
         })
     }
 
+    handleReadMore = () => {
+        this.setState({
+            readMore: !this.state.readMore,
+        })
+    }
+
     render() {
         console.log('this.state.currentSubreddit', this.state.currentSubreddit)
 
@@ -223,6 +252,7 @@ class Subreddit extends React.Component {
             user_is_subscriber,
         } = this.state.currentSubreddit || {}
 
+        console.log('public_description', typeof public_description)
         return (
             <div>
                 <div className="subreddit-header-banner">
@@ -251,12 +281,42 @@ class Subreddit extends React.Component {
                         {display_name_prefixed}
                     </div>
 
-                    <div
-                        className="subreddit-page-description"
-                        dangerouslySetInnerHTML={this.getMarkDown(
-                            public_description
+                    <div className="subreddit-page-desc-container">
+                        {public_description && !this.state.readMore && (
+                            <div
+                                className="subreddit-page-description"
+                                dangerouslySetInnerHTML={this.getMarkDown(
+                                    this.getLength(public_description)
+                                )}
+                            ></div>
                         )}
-                    ></div>
+                        {public_description?.length > 150 &&
+                            !this.state.readMore && (
+                                <div
+                                    className="read-more"
+                                    onClick={this.handleReadMore}
+                                >
+                                    Read More
+                                </div>
+                            )}
+                        {public_description && this.state.readMore && (
+                            <div className="subreddit-page-desc-container">
+                                <div
+                                    className="subreddit-page-description"
+                                    dangerouslySetInnerHTML={this.getMarkDown(
+                                        public_description
+                                    )}
+                                ></div>
+                                <div
+                                    className="read-more"
+                                    onClick={this.handleReadMore}
+                                >
+                                    Read less
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
                     <div
                         style={{ cursor: 'pointer' }}
                         onClick={() => this.handleToast(active_user_count)}
@@ -286,9 +346,11 @@ class Subreddit extends React.Component {
                                 }`}
                             >
                                 {option.icon}
-                                <div className="sort-by-text">
-                                    {option.name}
-                                </div>
+                                {!this.state.resize && (
+                                    <div className="sort-by-text">
+                                        {option.name}
+                                    </div>
+                                )}
                             </div>
                         ))}
                     </div>
@@ -297,6 +359,11 @@ class Subreddit extends React.Component {
                 <div className="create-post-master">
                     <div className="create-post-container">
                         <div className="media-post-container">
+                            <SearchSubreddit
+                                subreddit={this.props.subreddit}
+                                handleSearchQuery={this.handleSearchQuery}
+                            />
+                            <CreatePost />
                             {this.state.isSubbed ? (
                                 <button
                                     className="sub-button"
@@ -312,11 +379,6 @@ class Subreddit extends React.Component {
                                     Subscribe
                                 </button>
                             )}
-                            <SearchSubreddit
-                                subreddit={this.props.subreddit}
-                                handleSearchQuery={this.handleSearchQuery}
-                            />
-                            <CreatePost />
                         </div>
                     </div>
                 </div>

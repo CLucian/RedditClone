@@ -98,34 +98,36 @@ export default class CreatePostPage extends React.Component {
 
     render() {
         return (
-            <div className="create-post-page-container">
-                {/* <button onClick={this.notify}>Click</button> */}
-                <form
-                    className="create-post-form"
-                    type="submit"
-                    onSubmit={this.handleSubmit}
-                >
-                    <div className="additional-post-info">
-                        <div className="create-post-page-subreddit">
-                            <input
-                                type="text"
-                                name="subreddit"
-                                placeholder="Choose a Subreddit"
-                                value={this.state.subreddit}
-                                onChange={this.handleChange}
-                                autoComplete="off"
-                                required="required"
-                            />
-                            <SubredditSearch
-                                query={this.state.subreddit}
-                                token={this.context.accessToken}
-                                getSubreddit={this.getSubreddit}
-                                setSubreddit={this.setSubreddit}
-                                showSuggestions={this.state.showSuggestions}
-                                clickedOutside={this.clickedOutside}
-                            />
-                        </div>
-                        <div className="post-type">
+            <div>
+                <div className="create-post-header">Create Post</div>
+                <div className="create-post-page-container">
+                    {/* <button onClick={this.notify}>Click</button> */}
+                    <form
+                        className="create-post-form"
+                        type="submit"
+                        onSubmit={this.handleSubmit}
+                    >
+                        <div className="additional-post-info">
+                            <div className="create-post-page-subreddit">
+                                <input
+                                    type="text"
+                                    name="subreddit"
+                                    placeholder="Choose a Subreddit"
+                                    value={this.state.subreddit}
+                                    onChange={this.handleChange}
+                                    autoComplete="off"
+                                    required="required"
+                                />
+                                <SubredditSearch
+                                    query={this.state.subreddit}
+                                    token={this.context.accessToken}
+                                    getSubreddit={this.getSubreddit}
+                                    setSubreddit={this.setSubreddit}
+                                    showSuggestions={this.state.showSuggestions}
+                                    clickedOutside={this.clickedOutside}
+                                />
+                            </div>
+                            {/* <div className="post-type">
                             <select
                                 className="post-select"
                                 name="type"
@@ -142,46 +144,49 @@ export default class CreatePostPage extends React.Component {
                                     Link
                                 </option>
                             </select>
+                        </div> */}
                         </div>
-                    </div>
 
-                    <div className="create-post-page-title-container">
-                        <div className="create-post-page-title">
-                            <input
-                                className="title-input"
-                                type="text"
-                                name="title"
-                                placeholder="Title"
-                                value={this.state.title}
-                                onChange={this.handleChange}
-                                maxLength="300"
-                                required="required"
-                                autoComplete="off"
-                            />
-                            {/* <label className="post-input-title">Title</label> */}
-                            <span className="post-input-char-limit">{`${
-                                this.state.title ? this.state.title.length : 0
-                            }/300`}</span>
+                        <div className="create-post-page-title-container">
+                            <div className="create-post-page-title">
+                                <input
+                                    className="title-input"
+                                    type="text"
+                                    name="title"
+                                    placeholder="Title"
+                                    value={this.state.title}
+                                    onChange={this.handleChange}
+                                    maxLength="300"
+                                    required="required"
+                                    autoComplete="off"
+                                />
+                                {/* <label className="post-input-title">Title</label> */}
+                                <span className="post-input-char-limit">{`${
+                                    this.state.title
+                                        ? this.state.title.length
+                                        : 0
+                                }/300`}</span>
+                            </div>
                         </div>
-                    </div>
 
-                    <div className="create-post-page-body">
-                        <div className="text-container">
-                            <textarea
-                                className="reply-text-area"
-                                placeholder="Text (optional)"
-                                name="text"
-                                type="textarea"
-                                wrap="physical"
-                                value={this.state.text}
-                                onChange={this.handleChange}
-                            ></textarea>
+                        <div className="create-post-page-body">
+                            <div className="text-container">
+                                <textarea
+                                    className="reply-text-area"
+                                    placeholder="Text (optional)"
+                                    name="text"
+                                    type="textarea"
+                                    wrap="physical"
+                                    value={this.state.text}
+                                    onChange={this.handleChange}
+                                ></textarea>
+                            </div>
                         </div>
-                    </div>
-                    <button className="post-submit" type="submit">
-                        Submit
-                    </button>
-                </form>
+                        <button className="post-submit" type="submit">
+                            Submit
+                        </button>
+                    </form>
+                </div>
             </div>
         )
     }

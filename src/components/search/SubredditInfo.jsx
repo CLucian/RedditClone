@@ -33,8 +33,12 @@ class SubredditInfo extends React.Component {
                     )}
                 </div>
                 <div className="subreddit-suggestion-info-container">
-                    <div>{this.props.subreddit.display_name}</div>
-                    <div>{this.props.subreddit.subscribers} members</div>
+                    <div className="subreddit-suggestion-name-container">
+                        {this.props.subreddit.display_name}
+                    </div>
+                    <div className="subreddit-suggestion-members-container">
+                        {this.props.subreddit.subscribers} members
+                    </div>
                 </div>
             </div>
         )

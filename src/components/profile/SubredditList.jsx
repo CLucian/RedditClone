@@ -6,6 +6,15 @@ class SubredditList extends React.Component {
         super(props)
     }
 
+    getLength = (description) => {
+        const maxLength = 150
+        if (description.length > maxLength) {
+            return description.substring(0, maxLength) + '...'
+        } else {
+            return description
+        }
+    }
+
     render() {
         // if (!this.props.data.data) {
         //     return null
@@ -44,7 +53,8 @@ class SubredditList extends React.Component {
                                     {display_name}
                                 </div>
                                 <div className="subreddit-description">
-                                    {public_description}
+                                    {public_description &&
+                                        this.getLength(public_description)}
                                 </div>
                             </div>
                         </div>

@@ -6,7 +6,7 @@ export default function submitPost(title, subreddit, type, text) {
     const data = {
         title: title,
         sr: subreddit,
-        kind: type,
+        kind: 'self',
         text: text,
     }
     return axios({

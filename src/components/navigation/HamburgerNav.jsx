@@ -1,5 +1,7 @@
 import React from 'react'
 
+import './hamburgerNav.scss'
+
 import { Link, NavLink, withRouter } from 'react-router-dom'
 import { GlobalContext } from '../GlobalState'
 import Login from '../Login'
@@ -51,53 +53,84 @@ class HamburgerNav extends React.Component {
         const { pathname } = this.props.location
 
         return (
-            <React.Fragment>
-                <div className="navbar">
-                    <ul className="navbar-links">
-                        <div className="menu">Menu</div>
-                        {menuLinks.map((link) => (
-                            <NavLink
-                                onClick={() => this.handleClick(link.route)}
-                                to={`/${link.route}`}
-                            >
-                                {pathname.substring(1) === link.route ? (
-                                    <li className="list-item-active">
-                                        <div className="link-text">
-                                            {link.name}
-                                        </div>
-                                        {link.component}
-                                    </li>
-                                ) : (
-                                    <li className="list-item">
-                                        <div className="link-text">
-                                            {link.name}
-                                        </div>
-                                        {link.component}
-                                    </li>
-                                )}
-                            </NavLink>
-                        ))}
+            <ul className="nav__list-container">
+                {/* <div className="menu">Menu</div> */}
 
-                        {this.context.accessToken ? null : (
-                            <li className="list-item">
-                                <Login />
+                {menuLinks.map((link) => (
+                    <NavLink
+                        onClick={() => this.handleClick(link.route)}
+                        to={`/${link.route}`}
+                    >
+                        {pathname.substring(1) === link.route ? (
+                            <li className="nav__list-item-active">
+                                <div className="link-text">{link.name}</div>
+                                {link.component}
+                            </li>
+                        ) : (
+                            <li className="nav__list-item">
+                                <div className="link-text">{link.name}</div>
+                                {link.component}
                             </li>
                         )}
-                        <div className="userInfo">
-                            {this.context.accessToken ? (
-                                <div>
-                                    <button
-                                        className="logout-btn-nav"
-                                        onClick={this.context.invalidate}
-                                    >
-                                        Log out
-                                    </button>
-                                </div>
-                            ) : null}
-                        </div>
-                    </ul>
+                    </NavLink>
+                ))}
+                <div className="nav__logout-container">
+                    <button
+                        className="nav__logout-btn"
+                        onClick={this.context.invalidate}
+                    >
+                        Log out
+                    </button>
                 </div>
-            </React.Fragment>
+            </ul>
+
+            // <React.Fragment>
+            //     <div className="navbar">
+            //         <ul className="navbar-links">
+            //             <div className="menu">Menu</div>
+            //             {menuLinks.map((link) => (
+            //                 <NavLink
+            //                     onClick={() => this.handleClick(link.route)}
+            //                     to={`/${link.route}`}
+            //                 >
+            //                     {pathname.substring(1) === link.route ? (
+            //                         <li className="list-item-active">
+            //                             <div className="link-text">
+            //                                 {link.name}
+            //                             </div>
+            //                             {link.component}
+            //                         </li>
+            //                     ) : (
+            //                         <li className="list-item">
+            //                             <div className="link-text">
+            //                                 {link.name}
+            //                             </div>
+            //                             {link.component}
+            //                         </li>
+            //                     )}
+            //                 </NavLink>
+            //             ))}
+
+            //             {this.context.accessToken ? null : (
+            //                 <li className="list-item">
+            //                     <Login />
+            //                 </li>
+            //             )}
+            //             <div className="userInfo">
+            //                 {this.context.accessToken ? (
+            //                     <div>
+            //                         <button
+            //                             className="logout-btn-nav"
+            //                             onClick={this.context.invalidate}
+            //                         >
+            //                             Log out
+            //                         </button>
+            //                     </div>
+            //                 ) : null}
+            //             </div>
+            //         </ul>
+            //     </div>
+            // </React.Fragment>
         )
     }
 }

@@ -38,6 +38,7 @@ class App extends React.Component {
         super()
         this.state = {
             hideNav: '',
+            random: 'blah',
         }
     }
 
@@ -49,7 +50,7 @@ class App extends React.Component {
     }
 
     resize = () => {
-        let currentHideNav = window.innerWidth <= 740
+        let currentHideNav = window.innerWidth < 700
         if (currentHideNav !== this.state.hideNav) {
             this.setState({
                 hideNav: currentHideNav,
@@ -97,8 +98,12 @@ class App extends React.Component {
                                         {/* <HomeWrapper> */}
                                         {/* <Route path="/" exact component={Home} /> */}
                                         <Route path="/" exact>
-                                            <HomeWrapper>
-                                                <Home />
+                                            <HomeWrapper
+                                                hideNav={this.state.hideNav}
+                                            >
+                                                <Home
+                                                // random={this.state.random}
+                                                />
                                             </HomeWrapper>
                                         </Route>
 
