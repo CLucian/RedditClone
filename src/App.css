@@ -59,6 +59,7 @@ li, ul {
   padding-right: 2rem;
   padding: 1rem;
   margin-right: 1rem;
+  border: 0.2rem solid transparent;
   /* height: auto; */
   
 }
@@ -66,7 +67,8 @@ li, ul {
 .profile-avatar:hover {
   cursor: pointer;
   background-color: #87CEFA;
-  border-radius: 0.2rem;
+  border: 0.2rem solid #5c75f3;
+  border-radius: 0.3rem;
   /* opacity: 0.2; */
   /* display: flex; */
   /* align-items: center; */
@@ -432,14 +434,19 @@ li, ul {
   padding: 1rem 4rem;
   font-size: 1.5rem;
   text-decoration: none;
-  border: 0.1rem solid #fff;
+  border: 0.2rem solid #fff;
   margin: 0 1.5rem;
   z-index: 999;
 }
 
+.list-item:hover {
+  border-radius: 0.3rem;
+  background-color: #87CEFA;
+}
+
 .list-item-active {
   background-color: #87CEFA;
-  border: 0.1rem solid #5c75f3;
+  border: 0.2rem solid #5c75f3;
   border-radius: 0.2rem;
   display: flex;
   justify-content: space-between;
@@ -767,6 +774,7 @@ a {
 .modal-post-date {
   color: #b8b8b8;
   font-size: 1.5rem;
+  padding-left: 1rem;
 }
 
 
@@ -2379,6 +2387,21 @@ select.post-select {
 
 
 
+
+.page-nav-container {
+  fill: #4a4a4a;
+}
+
+.nextSVG {
+  width: 4rem;
+  height: 4rem;
+}
+
+.prevSVG {
+  width: 4rem;
+  height: 4rem;
+}
+
 @media (max-width: 1300px) {
   .post-title {
     font-size: 1.5rem;
@@ -2451,6 +2474,16 @@ select.post-select {
 
   .list-item {
     padding: 1rem 1rem;
+  }
+
+  .nextSVG {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .prevSVG {
+    width: 3rem;
+    height: 3rem;
   }
 }
 
@@ -2586,6 +2619,9 @@ select.post-select {
     height: 5rem;
   }
 
+  .modal-info-container {
+    padding: 1rem;
+  }
 
 }
 
@@ -2620,6 +2656,25 @@ select.post-select {
     margin: 0;
   }
 
+  .sort-by-text {
+    margin-left: 0;
+    font-size: 1.5rem;
+  }
+
+  .menu-svg-container {
+    display: flex;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: 1rem;
+    width: 40%;
+    padding: 1rem 0rem;
+    /* width: 40%;
+    padding: 1rem 0rem; */
+
+  }
+
 }
 
 
@@ -2649,8 +2704,7 @@ select.post-select {
   }
 
   .menu-svg-container {
-    width: 40%;
-    padding: 1rem 0rem;
+    
 
   }
 

@@ -25,7 +25,6 @@ export default class SubredditSearch extends React.Component {
     }
 
     handleClickOutside = (e) => {
-        console.log('wrapperRef', this.wrapperRef)
         if (
             this.wrapperRef.current &&
             !this.wrapperRef.current.contains(e.target)

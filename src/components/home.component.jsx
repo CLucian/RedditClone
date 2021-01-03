@@ -14,6 +14,8 @@ import { MasterSearchContext } from '../components/search/MasterSearchProvider'
 
 import { handlePages } from '../utils/pagination'
 
+import NextSVG from './svg-components/pageNav-svgs/NextSVG'
+import PrevSVG from './svg-components/pageNav-svgs/PrevSVG'
 import BestSVG from './svg-components/BestSVG'
 import HotSVG from './svg-components/HotSVG'
 import NewSVG from './svg-components/NewSVG'
@@ -191,11 +193,11 @@ class Home extends React.Component {
                                 }`}
                             >
                                 {option.icon}
-                                {!this.state.resize && (
-                                    <div className="sort-by-text">
-                                        {option.name}
-                                    </div>
-                                )}
+                                {/* {!this.state.resize && ( */}
+                                <div className="sort-by-text">
+                                    {option.name}
+                                </div>
+                                {/* )} */}
                             </div>
                         ))}
                     </div>
@@ -225,7 +227,7 @@ class Home extends React.Component {
                             }}
                             className="pagination"
                         >
-                            Prev Page
+                            <PrevSVG />
                         </div>
                     )}
                     {this.state.after && (
@@ -235,7 +237,7 @@ class Home extends React.Component {
                             }}
                             className="pagination"
                         >
-                            Next Page
+                            <NextSVG />
                         </div>
                     )}
                 </div>

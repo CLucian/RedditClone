@@ -22,14 +22,20 @@
   padding: 1rem 1rem;
   font-size: 1.5rem;
   text-decoration: none;
-  border: 0.1rem solid #fff;
+  border: 0.2rem solid #fff;
 //   margin: 0 1.5rem;
   z-index: 999;
 }
 
+.nav__list-item:hover {
+  border-radius: 0.3rem;
+  background-color: #87CEFA;
+  // border: 0.2rem solid transparent;
+}
+
 .nav__list-item-active {
   background-color: #87CEFA;
-  border: 0.1rem solid #5c75f3;
+  border: 0.2rem solid #5c75f3;
   border-radius: 0.2rem;
   display: flex;
   justify-content: space-between;
@@ -62,3 +68,4 @@
 .nav__logout-btn:hover {
   transform: scale(1.05, 1.05);
 }
+

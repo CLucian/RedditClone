@@ -35,6 +35,25 @@ class HamburgerNav extends React.Component {
         this.state = {
             activeRoute: this.props.location.pathname.substring(1),
         }
+        this.wrapperRef = React.createRef()
+    }
+
+    componentDidMount() {
+        document.addEventListener('mousedown', this.handleClickOutside)
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleClickOutside)
+    }
+
+    handleClickOutside = (e) => {
+        console.log('wrapperRef', this.wrapperRef)
+        if (
+            this.wrapperRef.current &&
+            !this.wrapperRef.current.contains(e.target)
+        ) {
+            this.props.clickedOutside()
+        }
     }
 
     handleClick = (val) => {
@@ -43,17 +62,11 @@ class HamburgerNav extends React.Component {
         })
     }
 
-    handleClick = () => {
-        this.setState({
-            navShow: true,
-        })
-    }
-
     render() {
         const { pathname } = this.props.location
 
         return (
-            <ul className="nav__list-container">
+            <ul className="nav__list-container" ref={this.wrapperRef}>
                 {/* <div className="menu">Menu</div> */}
 
                 {menuLinks.map((link) => (

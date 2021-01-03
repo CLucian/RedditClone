@@ -90,12 +90,6 @@ export default class CreatePostPage extends React.Component {
         })
     }
 
-    // notify = () => {
-    //     toast.error('Your post has gone through successfully!', {
-    //         position: toast.POSITION.TOP_CENTER,
-    //     })
-    // }
-
     render() {
         return (
             <div>
@@ -127,24 +121,6 @@ export default class CreatePostPage extends React.Component {
                                     clickedOutside={this.clickedOutside}
                                 />
                             </div>
-                            {/* <div className="post-type">
-                            <select
-                                className="post-select"
-                                name="type"
-                                onChange={this.handleChange}
-                            >
-                                <option
-                                    selected="link"
-                                    name="type"
-                                    value="self"
-                                >
-                                    Text
-                                </option>
-                                <option name="type" value="link">
-                                    Link
-                                </option>
-                            </select>
-                        </div> */}
                         </div>
 
                         <div className="create-post-page-title-container">

@@ -13,7 +13,7 @@ class TopNavbar extends React.Component {
         super()
         this.state = {
             hideNav: '',
-            openMenu: false,
+            showMenu: false,
         }
     }
 
@@ -37,7 +37,13 @@ class TopNavbar extends React.Component {
 
     handleClick = () => {
         this.setState({
-            openMenu: !this.state.openMenu,
+            showMenu: !this.state.showMenu,
+        })
+    }
+
+    clickedOutside = () => {
+        this.setState({
+            showMenu: false,
         })
     }
 
@@ -60,8 +66,11 @@ class TopNavbar extends React.Component {
                     {this.state.hideNav && (
                         <div onClick={this.handleClick}>
                             <HamburgerSVG />
-                            {this.state.openMenu && (
-                                <HamburgerNav mobile={this.state.hideNav} />
+                            {this.state.showMenu && (
+                                <HamburgerNav
+                                    clickedOutside={this.clickedOutside}
+                                    showMenu={this.state.showMenu}
+                                />
                             )}
                         </div>
                     )}
