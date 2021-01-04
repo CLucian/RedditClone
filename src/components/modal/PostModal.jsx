@@ -148,21 +148,19 @@ class PostModal extends React.Component {
                         </div>
                     ) : null}
                     {this.state.data?.media?.type !== 'twitter.com' &&
-                        this.state.data?.media?.oembed?.author_url && (
+                        this.state.data?.media?.oembed?.html && (
                             <Video
-                                video={
-                                    this.state.data?.media?.oembed?.author_url
-                                }
+                                video={this.state.data?.media_embed?.content}
                             />
                         )}
-                    {this.state.data?.secure_media_embed?.media_domain_url && (
+                    {/* {this.state.data?.secure_media_embed?.media_domain_url && (
                         <Twitch
                             url={
                                 this.state.data?.secure_media_embed
                                     ?.media_domain_url
                             }
                         />
-                    )}
+                    )} */}
                     {/* {this.state.data?.media?.reddit_video && (
                     <Video
                         video={

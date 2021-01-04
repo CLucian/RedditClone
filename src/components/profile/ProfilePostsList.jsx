@@ -4,6 +4,9 @@ import ProfilePost from './ProfilePost'
 import getPosts from '../../queries/profilePosts'
 import { GlobalContext } from '../GlobalState'
 
+import NextSVG from '../svg-components/pageNav-svgs/NextSVG'
+import PrevSVG from '../svg-components/pageNav-svgs/PrevSVG'
+
 import getAuthorAvatar, { deleteComment } from '../../queries/profileComments'
 
 class ProfilePostsList extends React.Component {
@@ -142,20 +145,18 @@ class ProfilePostsList extends React.Component {
                             }}
                             className="pagination"
                         >
-                            Prev Page
+                            <PrevSVG />
                         </div>
                     )}
                     {this.state.after && (
-                        // <Link to={`/after=${}`}>
                         <div
                             onClick={() => {
                                 this.getPage('next')
                             }}
                             className="pagination"
                         >
-                            Next Page
+                            <NextSVG />
                         </div>
-                        // </Link>
                     )}
                 </div>
             </div>

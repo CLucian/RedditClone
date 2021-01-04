@@ -27,10 +27,6 @@ class SearchInSubreddit extends React.Component {
     }
 
     render() {
-        console.log(
-            'this.state.queryString in SearchSubreddit',
-            this.state.queryString
-        )
         return (
             <div className="search-subreddit-div">
                 <SearchSVG />

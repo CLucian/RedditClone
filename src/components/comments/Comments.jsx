@@ -114,10 +114,8 @@ class Comments extends React.Component {
                 ?.things[0]?.data
             parentData.childIds = []
 
-            console.log('parentData in comments---', parentData)
             let parentId = parentData?.id
 
-            console.log('parentId in comments----', parentId)
             let newParentArr
             const found = this.state.parentCommentsArr.find((comment) => {
                 return comment === parentId
@@ -180,18 +178,11 @@ class Comments extends React.Component {
                     //         return el !== id
                     //     }
                     // )
-                    console.log('newObj', newObj)
 
-                    this.setState(
-                        {
-                            comments: newObj,
-                            parentCommentsArr: newParentArr,
-                        },
-                        console.log(
-                            'you have set the new state',
-                            this.state.comments
-                        )
-                    )
+                    this.setState({
+                        comments: newObj,
+                        parentCommentsArr: newParentArr,
+                    })
                 }
             })
             .catch((err) => console.log(err))
@@ -200,7 +191,6 @@ class Comments extends React.Component {
     getCommentReply(newCommentData, commentId) {
         //search to see if the id is already logged in the commentMap
         const id = newCommentData.id
-        console.log('whaat is this.state.comments', this.state)
         // check to see if this id already exists from a previous comment made
         if (!this.state.comments.id) {
             // if it does not exist then add the id to the parent childIds array
@@ -219,13 +209,6 @@ class Comments extends React.Component {
     }
 
     getCommentEdit = (newCommentData, oldChildArr) => {
-        console.log('this.state.comments', this.state.comments)
-        console.log(
-            'this.state.parentCommentsArr',
-            this.state.parentCommentsArr
-        )
-        console.log('newCommentData', newCommentData)
-        console.log('oldChildArr', oldChildArr)
         newCommentData.childIds = [...oldChildArr]
         this.setState({
             comments: {
@@ -236,20 +219,6 @@ class Comments extends React.Component {
     }
 
     render() {
-        console.log(
-            'userParentCommentData in Comments',
-            this.props.userParentCommentData
-        )
-        console.log(
-            'userParentCommentData state in Comments',
-            this.state.userParentComment
-        )
-        console.log('this.state.comments', this.state.comments)
-        console.log(
-            'this.state.parentCommentsArr',
-            this.state.parentCommentsArr
-        )
-
         if (this.state.isLoading) {
             return <Loader />
         }

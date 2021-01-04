@@ -16,6 +16,8 @@ import HotSVG from '../svg-components/HotSVG'
 import NewSVG from '../svg-components/NewSVG'
 import TopSVG from '../svg-components/TopSVG'
 import RisingSVG from '../svg-components/RisingSVG'
+import NextSVG from '../svg-components/pageNav-svgs/NextSVG'
+import PrevSVG from '../svg-components/pageNav-svgs/PrevSVG'
 
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -355,7 +357,6 @@ class Subreddit extends React.Component {
                         ))}
                     </div>
                 </div>
-
                 <div className="create-post-master">
                     <div className="create-post-container">
                         <div className="media-post-container">
@@ -382,7 +383,6 @@ class Subreddit extends React.Component {
                         </div>
                     </div>
                 </div>
-
                 {this.state.subredditData &&
                     this.state.subredditData.map((postData) => {
                         return (
@@ -402,7 +402,7 @@ class Subreddit extends React.Component {
                             }}
                             className="pagination"
                         >
-                            Prev Page
+                            <PrevSVG />
                         </div>
                     )}
                     {this.state.after && (
@@ -412,7 +412,7 @@ class Subreddit extends React.Component {
                             }}
                             className="pagination"
                         >
-                            Next Page
+                            <NextSVG />
                         </div>
                     )}
                 </div>

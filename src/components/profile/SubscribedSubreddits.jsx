@@ -3,6 +3,8 @@ import React from 'react'
 import axios from 'axios'
 import { GlobalContext } from '../GlobalState'
 import SubredditList from './SubredditList'
+import NextSVG from '../svg-components/pageNav-svgs/NextSVG'
+import PrevSVG from '../svg-components/pageNav-svgs/PrevSVG'
 
 import getSubreddits from '../../queries/subscribedSubreddits'
 
@@ -80,7 +82,7 @@ class SubscribedSubreddits extends React.Component {
                             }}
                             className="pagination"
                         >
-                            Prev Page
+                            <PrevSVG />
                         </div>
                     )}
                     {this.state.after && (
@@ -90,7 +92,7 @@ class SubscribedSubreddits extends React.Component {
                             }}
                             className="pagination"
                         >
-                            Next Page
+                            <NextSVG />
                         </div>
                     )}
                 </div>

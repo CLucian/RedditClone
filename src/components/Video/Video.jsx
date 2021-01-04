@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactPlayer from 'react-player'
+import Iframe from 'react-iframe'
 
 import '../../App.css'
 
@@ -8,18 +9,27 @@ import { Player } from 'video-react'
 // import Hls from 'hls'
 
 class Video extends React.Component {
+    getVideoSRC = (raw) => {
+        return raw.split('src=')[1]
+    }
+
     render() {
+        console.log('Does it work?', this.getVideoSRC(this.props.video))
+        console.log('this.props.video', this.props.video)
         let url = this.props.video.replace('watch?v=', 'v/')
         return (
             <div className="player-container">
-                <ReactPlayer
+                <Iframe url="https://streamable.com/o/fpuv4" />
+                {/* <ReactPlayer
                     className="video-player"
                     // url={this.props.video}
-                    url={url}
+                    // url={url}
+                    url="https://streamable.com/o/fpuv4"
                     // url="https://clips.twitch.tv/UninterestedAffluentLettuceKreygasm"
-                    controls={true}
-                    config={{ playerVars: { showinfo: 1 } }}
-                />
+                    controls
+                    // controls={true}
+                    // config={{ playerVars: { showinfo: 1 } }}
+                /> */}
                 {/* <ReactPlayer>
                     <iframe
                         src={this.props.video}
@@ -57,3 +67,5 @@ export default Video
 // content: "&lt;iframe width="600" height="338" src="https://www.youtube.com/embed/rYPJYxEoPCg?feature=oembed&amp;enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;"
 
 // "&lt;iframe class="embedly-embed" src="https://cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fclips.twitch.tv%2Fembed%3Fclip%3DUninterestedAffluentLettuceKreygasm%26parent%3Dcdn.embedly.com%26parent%3Dreddit.com%26parent%3Dwww.reddit.com%26parent%3Dold.reddit.com%26parent%3Dnew.reddit.com%26parent%3Dredditmedia.com%26muted%3Dtrue%26autoplay%3Dfalse&amp;display_name=Twitch.tv&amp;url=https%3A%2F%2Fclips.twitch.tv%2FUninterestedAffluentLettuceKreygasm&amp;image=https%3A%2F%2Fclips-media-assets2.twitch.tv%2FAT-cm%7C950415022-social-preview.jpg&amp;key=ed8fa8699ce04833838e66ce79ba05f1&amp;type=text%2Fhtml&amp;schema=twitch" width="600" height="340" scrolling="no" title="Twitch.tv embed" frameborder="0" allow="autoplay; fullscreen" allowfullscreen="true"&gt;&lt;/iframe&gt;"
+
+// meda_embed --> content --> decoded streamble src

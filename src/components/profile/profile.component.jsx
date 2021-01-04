@@ -4,6 +4,9 @@ import Login from '../Login'
 import ProfileComments from './ProfileComments'
 import { GlobalContext } from '../GlobalState'
 
+import NextSVG from '../svg-components/pageNav-svgs/NextSVG'
+import PrevSVG from '../svg-components/pageNav-svgs/PrevSVG'
+
 import { deleteComment } from '../../queries/profileComments'
 
 import getProfile from '../../queries/profile'
@@ -146,20 +149,18 @@ export default class Profile extends React.Component {
                             }}
                             className="pagination"
                         >
-                            Prev Page
+                            <PrevSVG />
                         </div>
                     )}
                     {this.state.after && (
-                        // <Link to={`/after=${}`}>
                         <div
                             onClick={() => {
                                 this.getPage('next')
                             }}
                             className="pagination"
                         >
-                            Next Page
+                            <NextSVG />
                         </div>
-                        // </Link>
                     )}
                 </div>
             </div>

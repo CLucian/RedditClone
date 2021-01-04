@@ -2333,6 +2333,7 @@ select.post-select {
 
 .welcome-text {
   font-size: 3rem;
+  text-align: center;
 }
 
 .login-container {

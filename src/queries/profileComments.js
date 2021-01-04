@@ -15,7 +15,7 @@ export default function getAuthorAvatar(author) {
         data: qs.stringify(data),
     })
         .then((response) => {
-            console.log('response in profileComments', response)
+            // console.log('response in profileComments', response)
             return response
         })
         .catch((err) => {
