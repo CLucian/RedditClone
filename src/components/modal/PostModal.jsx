@@ -5,7 +5,6 @@ import Close from '../svg-components/Close'
 import Comments from '../comments/Comments'
 import { GlobalContext } from '../GlobalState'
 import Video from '../Video/Video'
-import Twitch from '../Video/Twitch'
 import PostComment from '../comments/PostComment'
 
 import marked from 'marked'
@@ -13,6 +12,7 @@ import DOMPurify from 'dompurify'
 import moment from 'moment'
 
 import getPostById from '../../queries/postModal'
+import { renderIntoDocument } from 'react-dom/test-utils'
 
 class PostModal extends React.Component {
     constructor(props) {
@@ -100,10 +100,12 @@ class PostModal extends React.Component {
                             <div className="post-url">
                                 <a
                                     className="modal-url-post"
-                                    href={this.state.data.url}
+                                    href={
+                                        'https://www.reddit.com' +
+                                        this.state.data.permalink
+                                    }
                                 >
                                     Original post
-                                    {/* {this.state.data.url} */}
                                 </a>
                             </div>
                         </div>
@@ -111,7 +113,7 @@ class PostModal extends React.Component {
                         {/* <div className="modal-post-date">
                         {this.getDate(this.state.data.created)}
                     </div> */}
-                        {!this.state.data.preview?.enabled &&
+                        {!this.state.data.media &&
                         !this.state.data?.media?.oembed?.author_url &&
                         this.state.data.thumbnail !== 'self' &&
                         this.state.data.thumbnail !== 'image' &&
@@ -150,32 +152,16 @@ class PostModal extends React.Component {
                     {this.state.data?.media?.type !== 'twitter.com' &&
                         this.state.data?.media?.oembed?.html && (
                             <Video
-                                video={this.state.data?.media_embed?.content}
+                                height={this.state.data.media.oembed.height}
+                                width={this.state.data.media.oembed.width}
+                                // video={this.state.data?.media_embed?.content}
+                                url={this.state.data.url}
+                                provider={
+                                    this.state.data?.media?.oembed
+                                        ?.provider_name
+                                }
                             />
                         )}
-                    {/* {this.state.data?.secure_media_embed?.media_domain_url && (
-                        <Twitch
-                            url={
-                                this.state.data?.secure_media_embed
-                                    ?.media_domain_url
-                            }
-                        />
-                    )} */}
-                    {/* {this.state.data?.media?.reddit_video && (
-                    <Video
-                        video={
-                            this.state.data?.media?.reddit_video?.fallback_url
-                        }
-                        height={
-                            this.state.data?.preview?.images[0].resolutions[1]
-                                ?.height
-                        }
-                        width={
-                            this.state.data?.preview?.images[0].resolutions[1]
-                                ?.width
-                        }
-                    />
-                )} */}
                     <div
                         className="modal-description"
                         dangerouslySetInnerHTML={this.getMarkDown()}

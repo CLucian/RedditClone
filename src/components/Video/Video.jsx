@@ -9,51 +9,70 @@ import { Player } from 'video-react'
 // import Hls from 'hls'
 
 class Video extends React.Component {
-    getVideoSRC = (raw) => {
-        return raw.split('src=')[1]
+    // getVideoSRC = () => {
+    //     const vid = this.props.video
+    //     const provider = this.props.provider
+    //     if (provider === 'YouTube') {
+    //         return vid.replace('watch?v=', 'v/')
+    //     } else if (provider === 'Twitch.tv') {
+    //         return null
+    //     } else if (provider === 'Streamable') {
+    //         const str = vid.split('src=')[2]
+    //         const uri = str.split('&')[0]
+    //         const src = decodeURIComponent(uri)
+    //         return src
+    //     } else {
+    //         return null
+    //     }
+    // }
+
+    getTwitchSlug = () => {
+        const url = this.props.url
+        const slug = url.split('twitch.tv/')[1]
+        return slug
     }
 
     render() {
-        console.log('Does it work?', this.getVideoSRC(this.props.video))
-        console.log('this.props.video', this.props.video)
-        let url = this.props.video.replace('watch?v=', 'v/')
-        return (
-            <div className="player-container">
-                <Iframe url="https://streamable.com/o/fpuv4" />
-                {/* <ReactPlayer
-                    className="video-player"
-                    // url={this.props.video}
-                    // url={url}
-                    url="https://streamable.com/o/fpuv4"
-                    // url="https://clips.twitch.tv/UninterestedAffluentLettuceKreygasm"
-                    controls
-                    // controls={true}
-                    // config={{ playerVars: { showinfo: 1 } }}
-                /> */}
-                {/* <ReactPlayer>
-                    <iframe
-                        src={this.props.video}
-                        frameborder="0"
-                        allow="autoplay; encrypted-media"
-                        allowfullscreen
-                        title="video"
-                    />
-                    <iframe
-                        src="https://clips.twitch.tv/UninterestedAffluentLettuceKreygasm"
-                        // height="<height>"
-                        // width="<width>"
-                        // frameborder="<frameborder>"
-                        // scrolling="<scrolling>"
-                        // allowfullscreen="<allow full screen>"
-                    ></iframe>
+        const { provider, url, height, width } = this.props
+        const TWITCH_URL = `https://clips.twitch.tv/embed?clip=${this.getTwitchSlug()}&parent=localhost`
 
-                    </ReactPlayer> */}
+        // console.log('Does it work?', this.getVideoSRC(this.props.video))
+        console.log('this.props.video', this.props.video)
+        // let url = this.props.video.replace('watch?v=', 'v/')
+        // 'https://clips.twitch.tv/PrettiestDeafChickenJonCarnage'
+        return (
+            <div className="video-container">
+                {provider === 'Twitch.tv' && (
+                    <div className="twitch-container">
+                        <iframe
+                            className="twitch-frame"
+                            src={TWITCH_URL}
+                            // src="https://clips.twitch.tv/embed?clip=PrettiestDeafChickenJonCarnage&parent=localhost"
+                            height={height}
+                            width={width}
+                            frameborder="no"
+                            scrolling="<scrolling>"
+                            allowfullscreen="true"
+                            autoplay="true"
+                        ></iframe>
+                    </div>
+                )}
+                {provider === 'YouTube' && (
+                    <ReactPlayer className="video-player" url={url} controls />
+                )}
+                {provider !== 'YouTube' && provider !== 'Twitch.tv' && (
+                    <div className="player-container">
+                        <Iframe className="video-iframe" url={url} />
+                    </div>
+                )}
             </div>
         )
     }
 }
 
 export default Video
+
+// src="https://clips.twitch.tv/embed?clip=PrettiestDeafChickenJonCarnage&parent=localhost"
 
 // React Video  http://localhost:3000/r/web_design?post_id=t3_k2spjf
 
@@ -69,3 +88,59 @@ export default Video
 // "&lt;iframe class="embedly-embed" src="https://cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fclips.twitch.tv%2Fembed%3Fclip%3DUninterestedAffluentLettuceKreygasm%26parent%3Dcdn.embedly.com%26parent%3Dreddit.com%26parent%3Dwww.reddit.com%26parent%3Dold.reddit.com%26parent%3Dnew.reddit.com%26parent%3Dredditmedia.com%26muted%3Dtrue%26autoplay%3Dfalse&amp;display_name=Twitch.tv&amp;url=https%3A%2F%2Fclips.twitch.tv%2FUninterestedAffluentLettuceKreygasm&amp;image=https%3A%2F%2Fclips-media-assets2.twitch.tv%2FAT-cm%7C950415022-social-preview.jpg&amp;key=ed8fa8699ce04833838e66ce79ba05f1&amp;type=text%2Fhtml&amp;schema=twitch" width="600" height="340" scrolling="no" title="Twitch.tv embed" frameborder="0" allow="autoplay; fullscreen" allowfullscreen="true"&gt;&lt;/iframe&gt;"
 
 // meda_embed --> content --> decoded streamble src
+
+// <div className="player-container">
+//     {provider !== 'Twitch.tv' ? (
+//         <ReactPlayer
+//             className="video-player"
+//             url={url}
+//             controls
+//         />
+//     ) : (
+//         <Iframe className="video-iframe" url={url} />
+//     )}
+// </div>
+
+{
+    /* {provider !== 'Twitch.tv' && ( */
+}
+
+{
+    /* <ReactPlayer
+                    className="video-player"
+                    // url={this.props.video}
+                    // url={this.getVideoSRC()}
+                    url="https://streamable.com/vrlcc"
+                    // url="https://streamable.com/o/fpuv4"
+                    // url="https://clips.twitch.tv/UninterestedAffluentLettuceKreygasm"
+                    controls
+                    // controls={true}
+                    // config={{ playerVars: { showinfo: 1 } }}
+                /> */
+}
+{
+    /* <div className="player-container">
+                    {this.props.provider === 'YouTube' ? (
+                        <ReactPlayer
+                            className="video-player"
+                            // url={this.props.video}
+                            // url={this.getVideoSRC()}
+                            // url="https://streamable.com/o/fpuv4"
+                            // url="https://clips.twitch.tv/UninterestedAffluentLettuceKreygasm"
+                            controls
+                            // controls={true}
+                            // config={{ playerVars: { showinfo: 1 } }}
+                        />
+                    ) : (
+                        <Iframe
+                            className="video-iframe"
+                            // url={this.getVideoSRC()}
+                            url="https://clips.twitch.tv/PrettiestDeafChickenJonCarnage"
+                            // url="https://streamable.com/vrlcc"
+                        />
+                    )}
+                </div> */
+}
+{
+    /* )} */
+}

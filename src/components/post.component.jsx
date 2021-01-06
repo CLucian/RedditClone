@@ -134,6 +134,8 @@ class Post extends React.Component {
         //     return <Redirect to="/ErrorPage" />
         // }
 
+        console.log('this.props.postData.data.', this.props.postData.data)
+
         const { subreddit } = this.props.postData.data
 
         return (
@@ -202,27 +204,27 @@ class Post extends React.Component {
                                             'nsfw' &&
                                         this.props.postData.data.thumbnail !==
                                             'default' ? (
-                                            <a
-                                                href={
-                                                    this.props.postData.data.url
-                                                }
-                                            >
-                                                <div className="post-listing-thumbnail-container">
-                                                    <img
-                                                        className="post-thumbnail"
-                                                        src={
-                                                            this.props.postData
-                                                                .data.thumbnail
-                                                        }
-                                                        // src={this.state.data.thumbnail}
-                                                        alt={
-                                                            this.props.postData
-                                                                .data.thumbnail
-                                                        }
-                                                    />
-                                                </div>
-                                            </a>
-                                        ) : null}
+                                            // <a
+                                            //     href={
+                                            //         this.props.postData.data.url
+                                            //     }
+                                            // >
+                                            <div className="post-listing-thumbnail-container">
+                                                <img
+                                                    className="post-thumbnail"
+                                                    src={
+                                                        this.props.postData.data
+                                                            .thumbnail
+                                                    }
+                                                    // src={this.state.data.thumbnail}
+                                                    alt={
+                                                        this.props.postData.data
+                                                            .thumbnail
+                                                    }
+                                                />
+                                            </div>
+                                        ) : // </a>
+                                        null}
                                     </div>
                                 )}
                             </div>

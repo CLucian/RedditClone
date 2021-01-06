@@ -6,8 +6,8 @@ const Loader = () => {
             <svg
                 version="1.1"
                 xmlns="http://www.w3.org/2000/svg"
-                width="6rem"
-                height="6rem"
+                width="5rem"
+                height="5rem"
                 viewBox="0 0 32 32"
             >
                 <title>spinner6</title>
