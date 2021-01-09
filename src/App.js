@@ -27,8 +27,6 @@ import SearchForSubreddit from './components/navigation/SearchForSubreddit'
 import User from './components/profile/User'
 import ProfilePostsList from './components/profile/ProfilePostsList'
 
-import test from './components/test'
-
 import { GlobalContext, STATUS } from './components/GlobalState'
 import MasterSearch from './components/search/MasterSearch'
 import HomeWrapper from './components/search/HomeWrapper'

@@ -1,4 +1,6 @@
 import React from 'react'
+import { Tweet, Timeline } from 'react-twitter-widgets'
+
 // import { useLocation } from 'react-router-dom'
 
 import Close from '../svg-components/Close'
@@ -36,9 +38,9 @@ class PostModal extends React.Component {
         }
     }
 
-    getMarkDown = () => {
+    getMarkDown = (text) => {
         if (this.state.data) {
-            const rawMarkup = marked(this.state.data.selftext, {
+            const rawMarkup = marked(text, {
                 sanitize: true,
             })
             const clean = DOMPurify.sanitize(rawMarkup)
@@ -57,7 +59,20 @@ class PostModal extends React.Component {
         })
     }
 
-    /// Incorporate an image thumbnail --> also links if clicked
+    getTweetId = () => {
+        const endArr = this.state.data.url.split('status/')[1].split('')
+        let idArr = []
+        for (let i = 0; i < endArr.length; i++) {
+            if (isNaN(endArr[i])) {
+                break
+            } else {
+                idArr.push(endArr[i])
+            }
+        }
+
+        const id = idArr.join('')
+        return id
+    }
 
     render() {
         console.log('post modal this.state.data', this.state.data)
@@ -68,6 +83,10 @@ class PostModal extends React.Component {
         if (!this.state.data) {
             return null
         }
+
+        console.log('getTweetId', this.getTweetId())
+
+        // http://localhost:3000/r/LivestreamFail?post_id=t3_ks97io
 
         return (
             <div className="modal-info-container">
@@ -96,7 +115,12 @@ class PostModal extends React.Component {
                     </div>
                     <div className="modal-post-header">
                         <div className="modal-post-title">
-                            <div>{this.state.data.title}</div>
+                            <div
+                                dangerouslySetInnerHTML={this.getMarkDown(
+                                    this.state.data.title
+                                )}
+                            ></div>
+
                             <div className="post-url">
                                 <a
                                     className="modal-url-post"
@@ -113,8 +137,8 @@ class PostModal extends React.Component {
                         {/* <div className="modal-post-date">
                         {this.getDate(this.state.data.created)}
                     </div> */}
+                        {/* {!this.state.data.media && */}
                         {!this.state.data.media &&
-                        !this.state.data?.media?.oembed?.author_url &&
                         this.state.data.thumbnail !== 'self' &&
                         this.state.data.thumbnail !== 'image' &&
                         this.state.data.thumbnail !== 'thumbnail' &&
@@ -125,7 +149,6 @@ class PostModal extends React.Component {
                                     <img
                                         className="post-thumbnail"
                                         src={this.state.data.thumbnail}
-                                        // src={this.state.data.thumbnail}
                                         alt="thumbnail"
                                     />
                                 </a>
@@ -149,6 +172,13 @@ class PostModal extends React.Component {
                             </a>
                         </div>
                     ) : null}
+                    {this.state.data.media.type === 'twitter.com' && (
+                        <div className="tweet-container">
+                            {this.getTweetId}
+                            <Tweet tweetId={this.getTweetId} />
+                        </div>
+                    )}
+
                     {this.state.data?.media?.type !== 'twitter.com' &&
                         this.state.data?.media?.oembed?.html && (
                             <Video
@@ -164,7 +194,9 @@ class PostModal extends React.Component {
                         )}
                     <div
                         className="modal-description"
-                        dangerouslySetInnerHTML={this.getMarkDown()}
+                        dangerouslySetInnerHTML={this.getMarkDown(
+                            this.state.data.selftext
+                        )}
                     ></div>
                     {/* <div className="modal-description">{this.props.postData.selftext}</div> */}
                     <PostComment
@@ -188,3 +220,5 @@ class PostModal extends React.Component {
 export default PostModal
 
 PostModal.contextType = GlobalContext
+
+// http://localhost:3000/r/LivestreamFail?post_id=t3_kt4xls

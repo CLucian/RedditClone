@@ -59,7 +59,7 @@ class CommentReplyInput extends React.Component {
                     .catch((err) => console.log(err))
             })
         } else {
-            alert('Please type something')
+            this.toastFail('Please type something')
         }
     }
 

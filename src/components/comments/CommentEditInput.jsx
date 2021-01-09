@@ -3,7 +3,10 @@ import qs from 'qs'
 import Axios from 'axios'
 
 import editComment from '../../queries/commentEditInput'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
+toast.configure()
 class CommentEditInput extends React.Component {
     constructor(props) {
         super(props)
@@ -16,6 +19,13 @@ class CommentEditInput extends React.Component {
     handleChange = (e) => {
         this.setState({
             value: e.target.value,
+        })
+    }
+
+    toastFail = (resp) => {
+        toast.error(resp, {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 5000,
         })
     }
 
@@ -49,7 +59,7 @@ class CommentEditInput extends React.Component {
                     .catch((err) => console.log(err))
             })
         } else {
-            alert('Please type something')
+            this.toastFail('Please type something')
         }
         this.props.closeEditPost()
     }

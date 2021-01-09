@@ -14,6 +14,7 @@ import { MasterSearchContext } from '../components/search/MasterSearchProvider'
 
 import { handlePages } from '../utils/pagination'
 
+import Loader from './svg-components/Loader'
 import NextSVG from './svg-components/pageNav-svgs/NextSVG'
 import PrevSVG from './svg-components/pageNav-svgs/PrevSVG'
 import BestSVG from './svg-components/BestSVG'
@@ -159,22 +160,8 @@ class Home extends React.Component {
     }
 
     render() {
-        // console.log('this.props.random', this.props.random)
-        // console.log('masterSearchQuery in Home', this.props.query)
-        // const { location, history, match } = this.props
-        // console.log('location and stuff props', location)
-        // const urlParams = new URLSearchParams(location.search || '')
-        // console.log('urlParams home', urlParams.toString())
-
-        // if (urlParams.get('after')) {
-        //     console.log('after result', urlParams.get('after'))
-        // } else if (urlParams.get('before')) {
-        //     console.log('before result', urlParams.get('before'))
-        // }
-
-        // console.log('this.state.clicked', this.state.sortBy)
         if (this.state.isLoading) {
-            return 'Loading...'
+            return <Loader />
         }
 
         return (
@@ -184,7 +171,6 @@ class Home extends React.Component {
                         <div className="sort-by-text"></div>
                         {sortOptions.map((option) => (
                             <div
-                                // onClick={() => this.getHomePage('best')}
                                 onClick={() => this.handleSort(option.value)}
                                 className={`menu-svg-container ${
                                     this.state.sortBy === option.value

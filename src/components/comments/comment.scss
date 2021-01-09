@@ -101,10 +101,47 @@
 	}
 }
 
+@media (max-width: 600px) {
+	.comments__comment {
+		// max-width: 30rem;
+	}
+	.comments__main-content {
+		// width: 30rem;
+	}
+
+	.comments__text-container {
+		word-break: break-word;
+		// max-width: 30rem;
+		// width: 30rem;
+		// overflow: hidden;
+		// height: 100%;
+		// height: auto;
+	}
+}
+
+
 @media (max-width: 500px) {
 
 	.comments__container {
 		padding-left: 0.5rem;
 	}
+
+	.comments__comment {
+		margin-right: 2rem;
+	}
+
+	.comments__title-container {
+		margin-right: 2rem;
+	}
+}
+
+@media (max-width: 450px) {
+	.comments__reply-collapse-container {
+		padding-left: 0;
+		margin-right: 5rem;
+	}
 }
  
+// I agree. They should have. I assu
+// http://localhost:3000/?post_id=t3_kt4wun
+// comments__comment

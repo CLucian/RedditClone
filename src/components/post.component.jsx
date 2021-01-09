@@ -1,24 +1,16 @@
 import React from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-// import Modal from './modal/Modal'
-// import PostModal from './modal/PostModal'
-import Login from './Login'
-import ErrorPage from './errorPage.component'
 import { GlobalContext } from './GlobalState'
 import { postVote, getAuthorAvatar } from '../queries/postPage'
 
-import Axios from 'axios'
-import qs from 'qs'
 import moment from 'moment'
 import marked from 'marked'
 import DOMPurify from 'dompurify'
 
-import HeartSVG from './svg-components/Heart'
 import BubbleSVG from './svg-components/Bubble'
 import UpArrowSVG from './svg-components/UpArrow'
 import DownArrowSVG from './svg-components/DownArrow'
-import AuthorSVG from './svg-components/Author'
 
 class Post extends React.Component {
     constructor(props) {
@@ -30,7 +22,6 @@ class Post extends React.Component {
             updatedScore: '',
             isLoading: true,
             authorImg: '',
-            // err: null,
         }
     }
 
@@ -50,11 +41,6 @@ class Post extends React.Component {
                 })
             }
         })
-        // .catch((err) => {
-        //     this.setState({
-        //         err,
-        //     })
-        // })
     }
 
     openModal = () => {
@@ -130,13 +116,20 @@ class Post extends React.Component {
     }
 
     render() {
-        // if (this.state.err) {
-        //     return <Redirect to="/ErrorPage" />
-        // }
+        console.log('this.props.postData.data', this.props.postData.data)
 
-        console.log('this.props.postData.data.', this.props.postData.data)
-
-        const { subreddit } = this.props.postData.data
+        const {
+            subreddit,
+            score,
+            name,
+            title,
+            thumbnail,
+            selftext,
+            author,
+            created,
+            num_comments,
+        } = this.props.postData.data
+        const { voteVal, updatedScore, authorImg } = this.state
 
         return (
             <div className="master-container">
@@ -157,70 +150,47 @@ class Post extends React.Component {
                                 className="UpArrowSVG-container"
                                 onClick={() => this.handleArrowClick(1)}
                             >
-                                <UpArrowSVG isActive={this.state.voteVal} />
+                                <UpArrowSVG isActive={voteVal} />
                             </div>
                             <div className="score-text">
-                                {this.state.updatedScore
-                                    ? this.state.updatedScore
-                                    : this.props.postData.data.score}
+                                {updatedScore ? updatedScore : score}
                             </div>
                             <div
                                 className="DownArrowSVG-container"
                                 onClick={() => this.handleArrowClick(-1)}
                             >
-                                <DownArrowSVG isActive={this.state.voteVal} />
+                                <DownArrowSVG isActive={voteVal} />
                             </div>
                         </div>
                         <div className="main-text-container">
-                            {/* <div className="post-listing-subreddit">
-                                {this.props.postData.data.subreddit}
-                            </div> */}
                             <div className="post-title">
                                 <Link
                                     id="modal-open"
                                     className="postLinks"
                                     to={{
-                                        search: `?post_id=${this.props.postData.data.name}`,
+                                        search: `?post_id=${name}`,
                                     }}
                                 >
-                                    <div className="post-title-text">
-                                        {this.getLengthTitle(
-                                            this.props.postData.data.title
+                                    <div
+                                        className="post-title-text"
+                                        dangerouslySetInnerHTML={this.getMarkDown(
+                                            this.getLengthTitle(title)
                                         )}
-                                    </div>
+                                    ></div>
                                 </Link>
-                                {this.props.postData.data?.thumbnail && (
+                                {/* {this.props.postData.data?.thumbnail && ( */}
+                                {thumbnail && (
                                     <div className="subreddit-image-container">
-                                        {/* <div className="post-subreddit">
-                                        {this.props.postData.data.subreddit}
-                                    </div> */}
-                                        {this.props.postData.data.thumbnail !==
-                                            'self' &&
-                                        this.props.postData.data.thumbnail !==
-                                            'thumbnail' &&
-                                        this.props.postData.data.thumbnail !==
-                                            'image' &&
-                                        this.props.postData.data.thumbnail !==
-                                            'nsfw' &&
-                                        this.props.postData.data.thumbnail !==
-                                            'default' ? (
-                                            // <a
-                                            //     href={
-                                            //         this.props.postData.data.url
-                                            //     }
-                                            // >
+                                        {thumbnail !== 'self' &&
+                                        thumbnail !== 'thumbnail' &&
+                                        thumbnail !== 'image' &&
+                                        thumbnail !== 'nsfw' &&
+                                        thumbnail !== 'default' ? (
                                             <div className="post-listing-thumbnail-container">
                                                 <img
                                                     className="post-thumbnail"
-                                                    src={
-                                                        this.props.postData.data
-                                                            .thumbnail
-                                                    }
-                                                    // src={this.state.data.thumbnail}
-                                                    alt={
-                                                        this.props.postData.data
-                                                            .thumbnail
-                                                    }
+                                                    src={thumbnail}
+                                                    alt={thumbnail}
                                                 />
                                             </div>
                                         ) : // </a>
@@ -233,9 +203,7 @@ class Post extends React.Component {
                                 <div
                                     className="post-description-text"
                                     dangerouslySetInnerHTML={this.getMarkDown(
-                                        this.getLength(
-                                            this.props.postData.data.selftext
-                                        )
+                                        this.getLength(selftext)
                                     )}
                                 ></div>
                             </div>
@@ -247,27 +215,23 @@ class Post extends React.Component {
                     <div className="post-sub-info">
                         <div className="post-author">
                             <div className="author-img-container">
-                                {this.state.authorImg && (
+                                {authorImg && (
                                     <img
                                         className="author-img"
-                                        src={this.state.authorImg}
+                                        src={authorImg}
                                     />
                                 )}
                             </div>
                             Posted by:
-                            <div className="author-text">
-                                &nbsp; {this.props.postData.data.author}
-                            </div>
+                            <div className="author-text">&nbsp; {author}</div>
                         </div>
                         <div className="post-date">
-                            <div>
-                                {this.getDate(this.props.postData.data.created)}
-                            </div>
+                            <div>{this.getDate(created)}</div>
                         </div>
                         <div className="post-comment-number">
                             <BubbleSVG />
                             &nbsp;
-                            <div>{this.props.postData.data.num_comments}</div>
+                            <div>{num_comments}</div>
                         </div>
                     </div>
                 </div>

@@ -12,9 +12,15 @@
 
 .postComments__text {
 	padding-left: 0.5rem;
-	font-size: 2rem;
 	height: 100%;
-	background-color: rgba(252, 252, 252, 1);
+	// background-color: rgba(252, 252, 252, 1);
+	background-color: #fff;
+}
+
+textarea {
+	font-family: Arial;
+	font-size: 1.8rem;
+	// background-color: yellow;
 }
 
 .postComments__submit__container {
