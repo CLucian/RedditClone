@@ -44,12 +44,6 @@ class Navbar extends React.Component {
     render() {
         const { pathname } = this.props.location
 
-        console.log('this.state.activeRoute', this.state.activeRoute)
-        console.log(
-            'this.state.activeRoute',
-            this.props.location.pathname.substring(1)
-        )
-
         return (
             <React.Fragment>
                 <div className="navbar">

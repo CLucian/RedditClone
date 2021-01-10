@@ -6,8 +6,6 @@ import { GlobalContext } from '../GlobalState'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-// import InputField from './InputField';
-
 toast.configure()
 class CommentReply extends React.Component {
     constructor(props) {
@@ -57,14 +55,7 @@ class CommentReply extends React.Component {
         } else {
             newParentId = comment.parent_id.substring(3)
         }
-        this.props.commentDelete(
-            comment.name,
-            comment.id,
-            newParentId
-            // this.props.commentData[
-            //     this.props.commentId
-            // ].parent_id.substring(3)
-        )
+        this.props.commentDelete(comment.name, comment.id, newParentId)
         this.deleteToast()
         this.setState({
             confirm: false,
@@ -168,7 +159,7 @@ class CommentReply extends React.Component {
                 )}
                 {this.state.showTextBox ? null : (
                     <CommentEditInput
-                        getCommentReply={this.props.getCommentReply}
+                        // getCommentReply={this.props.getCommentReply}
                         commentData={this.props.commentData}
                         commentId={this.props.commentId}
                         accessToken={this.context.accessToken}

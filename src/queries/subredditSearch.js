@@ -53,8 +53,6 @@ export function getSubredditPosts(
         url: url,
     })
         .then((response) => {
-            console.log('subreddit response - subreddit component!', response)
-            console.log('what is the pageId', pageId)
             return response
             // this.setState({
             //     subredditData: response.data.data.children,
@@ -75,7 +73,6 @@ export function getSubredditDetails(subreddit) {
         url: `https://oauth.reddit.com/r/${subreddit}/about/`,
     })
         .then((response) => {
-            console.log('subreddit subreddit response', response)
             return response
             // this.setState({
             //     currentSubreddit: response.data.data,

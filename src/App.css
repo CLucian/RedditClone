@@ -1708,6 +1708,7 @@ textarea {
 
 
 .post-listing-subreddit {
+  font-family: Arial;
   text-align: right;
   font-size: 1.2rem;
   color: #4a4a4a;

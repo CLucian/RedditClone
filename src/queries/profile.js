@@ -23,7 +23,6 @@ export default function getProfile(pageDir, name, after, before) {
     })
         .then((response) => {
             return response
-            console.log('user comments response', response)
         })
         .catch((err) => {
             console.log(err)

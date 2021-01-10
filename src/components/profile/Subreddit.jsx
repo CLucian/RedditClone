@@ -89,7 +89,7 @@ class Subreddit extends React.Component {
             `There are currently ${users} active users on this subreddit`,
             {
                 position: toast.POSITION.TOP_CENTER,
-                autoClose: 5000,
+                autoClose: 3000,
             }
         )
     }
@@ -138,7 +138,6 @@ class Subreddit extends React.Component {
             pageDir === 'next' ? this.state.page + 1 : this.state.page - 1
         const pageId = pageDir === 'next' ? this.state.after : this.state.before
 
-        console.log('getpage pressed', pageDir)
         this.setState(
             {
                 page: newPage,
@@ -235,8 +234,6 @@ class Subreddit extends React.Component {
     }
 
     render() {
-        console.log('this.state.currentSubreddit', this.state.currentSubreddit)
-
         if (!this.context.accessToken) {
             return null
         }
@@ -254,7 +251,6 @@ class Subreddit extends React.Component {
             user_is_subscriber,
         } = this.state.currentSubreddit || {}
 
-        console.log('public_description', typeof public_description)
         return (
             <div>
                 <div className="subreddit-header-banner">

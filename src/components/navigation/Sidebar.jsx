@@ -36,7 +36,6 @@ class SideBar extends React.Component {
     }
 
     render() {
-        console.log('access token in sidebar', this.context.accessToken)
         if (this.state.isLoading) {
             return 'Loading...'
         }

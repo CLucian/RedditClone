@@ -30,7 +30,6 @@ function getSubredditInfo(subredditArray) {
             url: `https://oauth.reddit.com/r/${subreddit}/about/`,
         })
             .then((response) => {
-                console.log('subreddit subreddit response', response.data.data)
                 return response.data.data
             })
             .catch((err) => {

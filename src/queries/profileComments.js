@@ -20,7 +20,6 @@ export default function getAuthorAvatar(author) {
         })
         .catch((err) => {
             // return err
-            console.log('Avatar fetch error ', err)
         })
 }
 

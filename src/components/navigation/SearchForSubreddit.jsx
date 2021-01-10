@@ -44,7 +44,6 @@ export default class SearchForSubreddit extends React.Component {
     searchSubreddits = () => {
         getSubreddits(this.state.value)
             .then((subredditInfoArray) => {
-                console.log('subredditInfoArray', subredditInfoArray)
                 this.setState({ subInfoArr: subredditInfoArray })
             })
             .catch((err) => console.log(err))

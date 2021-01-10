@@ -16,7 +16,6 @@ class User extends React.Component {
 
     componentDidMount() {
         getUser().then((response) => {
-            console.log('getUser response', response)
             this.setState({
                 userData: response.data,
                 isLoading: false,
@@ -30,8 +29,6 @@ class User extends React.Component {
     }
 
     render() {
-        console.log(this.state.userData)
-
         if (this.state.isLoading) {
             return null
         }

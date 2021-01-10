@@ -3,6 +3,10 @@ import postComment from '../../queries/postComment'
 
 import './postComment.scss'
 
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
+toast.configure()
 class PostComment extends React.Component {
     constructor(props) {
         super(props)
@@ -11,16 +15,29 @@ class PostComment extends React.Component {
         }
     }
 
+    toastFail = (resp) => {
+        toast.success(resp, {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+        })
+    }
+
+    toastSuccess = (resp) => {
+        toast.success(resp, {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+        })
+    }
+
     handleSubmit = (e) => {
         if (this.state.comment?.length > 1) {
             e.preventDefault()
             postComment(this.props.data.name, this.state.comment)
                 .then((response) => {
-                    console.log('response in postComment', response)
                     if (response.data.json.errors.length > 0) {
                         alert(response.data.json.errors[0][1])
                     } else {
-                        alert(
+                        this.toastSuccess(
                             `Your comment '${this.state.comment}' has been submitted`
                         )
                         this.props.getParentComment(response)
@@ -30,7 +47,9 @@ class PostComment extends React.Component {
                     })
                 })
                 .catch((err) =>
-                    alert(`There was an error submitting your comment ${err}`)
+                    this.toastFail(
+                        `There was an error submitting your comment ${err}`
+                    )
                 )
         }
     }

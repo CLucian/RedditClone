@@ -25,7 +25,14 @@ class CommentReplyInput extends React.Component {
     toastFail = (resp) => {
         toast.error(resp, {
             position: toast.POSITION.TOP_CENTER,
-            autoClose: 5000,
+            autoClose: 3000,
+        })
+    }
+
+    toastSuccess = (resp) => {
+        toast.success(resp, {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
         })
     }
 
@@ -39,28 +46,22 @@ class CommentReplyInput extends React.Component {
                     this.state.value
                 )
                     .then((response) => {
-                        console.log('response in commentReply input', response)
                         if (response.data.json.errors[0] !== undefined) {
-                            return this.toastFail(
-                                response.data.json.errors[0][1]
-                            )
+                            this.toastFail(response.data.json.errors[0][1])
                         } else {
+                            this.toastSuccess('Your comment has gone through!')
                             this.props.getCommentReply(
                                 response.data.json.data.things[0].data,
                                 this.props.commentId
                             )
-                            this.context.getAndDisplayComment(
-                                this.props.parent_Id,
-                                this.state.value
-                            )
                         }
-                        this.props.handleCommentPost()
                     })
                     .catch((err) => console.log(err))
             })
         } else {
             this.toastFail('Please type something')
         }
+        this.props.handleCommentPost()
     }
 
     render() {

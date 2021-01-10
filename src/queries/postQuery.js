@@ -39,7 +39,6 @@ export function getSearchQuery(sortBy, pageDir, pageId, query) {
         url: url,
     })
         .then((response) => {
-            console.log('query response in home', response)
             return response
         })
         .catch((err) => {

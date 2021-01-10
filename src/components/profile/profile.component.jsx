@@ -44,7 +44,6 @@ export default class Profile extends React.Component {
         )
             .then((response) => {
                 this.handleResponse(response)
-                console.log('user comments response', response)
             })
             .catch((err) => console.log(err))
     }
@@ -60,7 +59,6 @@ export default class Profile extends React.Component {
 
     confirmDelete = (id) => {
         deleteComment(id).then((response) => {
-            console.log(response)
             getProfile(
                 undefined,
                 this.context.userData.name,
@@ -68,7 +66,6 @@ export default class Profile extends React.Component {
                 this.state.before
             )
                 .then((response) => {
-                    console.log('getProfile response after deleting', response)
                     this.handleResponse(response)
                 })
                 .catch((err) => console.log(err))
@@ -116,7 +113,6 @@ export default class Profile extends React.Component {
     }
 
     render() {
-        console.log('profile component state', this.state.postChildren)
         return (
             <div>
                 <div>

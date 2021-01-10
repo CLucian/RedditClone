@@ -1,8 +1,6 @@
 import React from 'react'
 import marked from 'marked'
 import DOMPurify from 'dompurify'
-import Axios from 'axios'
-import qs from 'qs'
 
 import CommentReply from './CommentReply'
 import { GlobalContext } from '../GlobalState'
@@ -16,8 +14,6 @@ import Collapse from '../svg-components/Collapse'
 import UnCollapse from '../svg-components/UnCollapse'
 
 import './comment.scss'
-
-// const replyContext = React.useContext(GlobalContext)
 
 class Comment extends React.Component {
     constructor(props) {
@@ -46,6 +42,27 @@ class Comment extends React.Component {
                     err: err,
                 })
             })
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.dataChange !== this.props.dataChange) {
+            getAuthorAvatar(
+                this.props.commentData[this.props.commentId]?.author
+            )
+                .then((response) => {
+                    const dataImg = response.data.data.icon_img
+                    const modifiedImg = dataImg.split('?width')[0]
+                    this.setState({
+                        authorImg: modifiedImg,
+                    })
+                })
+                .catch((err) => {
+                    this.setState({
+                        authorImg: null,
+                        err: err,
+                    })
+                })
+        }
     }
 
     handleArrowClick = (vote) => {
@@ -95,7 +112,6 @@ class Comment extends React.Component {
         }
     }
 
-    // nestedcomments = () => []
     getComments = () => {
         return this.props.commentData[this.props.commentId]?.childIds?.map(
             (commentId) => {
@@ -106,7 +122,7 @@ class Comment extends React.Component {
                         getCommentReply={this.props.getCommentReply}
                         getCommentEdit={this.props.getCommentEdit}
                         commentDelete={this.props.commentDelete}
-                        // parent_Id={props.commentData[commentId].parent_id}
+                        dataChange={this.props.dataChange}
                     />
                 )
             }
@@ -119,12 +135,9 @@ class Comment extends React.Component {
         })
     }
 
-    //in render display null if you shouldn't display it
     render() {
-        // console.log('get comment edit', this.props.getCommentEdit)
-        // console.log('commentId', this.props.commentId)
-        // console.log('commentData', this.props.commentData)
-        // console.log('parent_id', this.props.parent_Id)
+        const { voteVal, updatedScore, authorImg, isCollapsed } = this.state
+
         return (
             <>
                 <div className="comments__container">
@@ -136,11 +149,11 @@ class Comment extends React.Component {
                                     className="comments__upvote-arrows"
                                     onClick={() => this.handleArrowClick(1)}
                                 >
-                                    <UpArrow isActive={this.state.voteVal} />
+                                    <UpArrow isActive={voteVal} />
                                 </div>
                                 <div className="comments__comment-score">
-                                    {this.state.updatedScore
-                                        ? this.state.updatedScore
+                                    {updatedScore
+                                        ? updatedScore
                                         : this.props.commentData[
                                               this.props.commentId
                                           ].score}
@@ -149,7 +162,7 @@ class Comment extends React.Component {
                                     className="comments_upvote-arrows"
                                     onClick={() => this.handleArrowClick(-1)}
                                 >
-                                    <DownArrow isActive={this.state.voteVal} />
+                                    <DownArrow isActive={voteVal} />
                                 </div>
                             </div>
                         )}
@@ -158,10 +171,10 @@ class Comment extends React.Component {
                             <div className="comments__title-container">
                                 <div className="comments__author-info-container">
                                     <div className="comments__author-img-container">
-                                        {this.state.authorImg && (
+                                        {authorImg && (
                                             <img
                                                 className="comments__author-img"
-                                                src={this.state.authorImg}
+                                                src={authorImg}
                                             />
                                         )}
                                     </div>
@@ -204,15 +217,11 @@ class Comment extends React.Component {
                                             onClick={this.collapseComments}
                                         >
                                             <Collapse
-                                                isCollapsed={
-                                                    this.state.isCollapsed
-                                                }
+                                                isCollapsed={isCollapsed}
                                             />
 
                                             <UnCollapse
-                                                isCollapsed={
-                                                    this.state.isCollapsed
-                                                }
+                                                isCollapsed={isCollapsed}
                                             />
                                         </div>
                                     ) : null}
@@ -229,7 +238,6 @@ class Comment extends React.Component {
                                                 this.props.commentDelete
                                             }
                                             commentId={this.props.commentId}
-                                            // parent_Id={this.props.parent_Id}
                                             commentData={this.props.commentData}
                                             getCommentEdit={
                                                 this.props.getCommentEdit
@@ -240,7 +248,7 @@ class Comment extends React.Component {
                             </div>
                         </div>
                     </div>
-                    {!this.state.isCollapsed && this.getComments()}
+                    {!isCollapsed && this.getComments()}
                 </div>
             </>
         )

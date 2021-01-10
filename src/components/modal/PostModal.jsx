@@ -75,16 +75,11 @@ class PostModal extends React.Component {
     }
 
     render() {
-        console.log('post modal this.state.data', this.state.data)
-        console.log(
-            'userCommentParentData in postmodal',
-            this.state.userParentCommentData
-        )
         if (!this.state.data) {
             return null
         }
 
-        console.log('getTweetId', this.getTweetId())
+        // console.log('getTweetId', this.getTweetId())
 
         // http://localhost:3000/r/LivestreamFail?post_id=t3_ks97io
 
@@ -172,7 +167,7 @@ class PostModal extends React.Component {
                             </a>
                         </div>
                     ) : null}
-                    {this.state.data.media.type === 'twitter.com' && (
+                    {this.state.data?.media?.type === 'twitter.com' && (
                         <div className="tweet-container">
                             {this.getTweetId}
                             <Tweet tweetId={this.getTweetId} />
@@ -222,3 +217,5 @@ export default PostModal
 PostModal.contextType = GlobalContext
 
 // http://localhost:3000/r/LivestreamFail?post_id=t3_kt4xls
+
+// Twitter errr http://localhost:3000/?post_id=t3_ktojcv

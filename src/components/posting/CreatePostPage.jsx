@@ -61,7 +61,6 @@ export default class CreatePostPage extends React.Component {
                 this.state.text
             )
                 .then((response) => {
-                    console.log('createpostpage response', response)
                     this.postToast()
                     this.setState({
                         title: '',

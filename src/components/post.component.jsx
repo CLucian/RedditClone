@@ -27,7 +27,6 @@ class Post extends React.Component {
 
     componentDidMount() {
         getAuthorAvatar(this.props.postData.data.author).then((response) => {
-            console.log('response in post', response.data.data.icon_img)
             if (response.data.data.icon_img) {
                 const dataImg = response.data.data.icon_img
                 const modifiedImg = dataImg.split('?width')[0]
@@ -116,8 +115,6 @@ class Post extends React.Component {
     }
 
     render() {
-        console.log('this.props.postData.data', this.props.postData.data)
-
         const {
             subreddit,
             score,

@@ -19,7 +19,6 @@ class SubredditList extends React.Component {
         // if (!this.props.data.data) {
         //     return null
         // }
-        console.log('subredditList=-', this.props.data)
         const {
             display_name,
             header_img,

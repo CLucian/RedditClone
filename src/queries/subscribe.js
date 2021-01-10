@@ -12,9 +12,7 @@ export default function subscribe(sr, action) {
         url: 'https://oauth.reddit.com/api/subscribe',
         data: qs.stringify(data),
     })
-        .then((response) => {
-            console.log('response', response)
-        })
+        .then((response) => {})
         .catch((err) => {
             console.log(err)
         })

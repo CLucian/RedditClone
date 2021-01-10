@@ -9,7 +9,6 @@ export default function getComments(subreddit, postCommentsId) {
         url: `https://oauth.reddit.com/${subreddit}/comments/${postCommentsId}`,
     })
         .then((response) => {
-            console.log('response in comments', response)
             return response
         })
         .catch((err) => {

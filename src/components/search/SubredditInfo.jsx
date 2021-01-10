@@ -9,11 +9,6 @@ class SubredditInfo extends React.Component {
     }
 
     render() {
-        console.log(
-            'this.props.subreddit in SubredditInfo',
-            this.props.subreddit
-        )
-
         // if (this.props.subreddit && this.props.subreddit !== undefined) {
         return (
             <div className="subreddit-subscribers-container">

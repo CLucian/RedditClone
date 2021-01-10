@@ -23,7 +23,6 @@ export default function getPosts(pageDir, name, after, before) {
         data: qs.stringify(data),
     })
         .then((response) => {
-            console.log('user comments response', response)
             return response
         })
         .catch((err) => {

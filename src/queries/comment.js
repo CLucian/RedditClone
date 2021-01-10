@@ -12,9 +12,7 @@ export default function postVote(vote, comment) {
         url: 'https://oauth.reddit.com/api/vote',
         data: qs.stringify(data),
     })
-        .then((response) => {
-            console.log('response', response)
-        })
+        .then((response) => {})
         .catch((err) => {
             console.log(err)
         })

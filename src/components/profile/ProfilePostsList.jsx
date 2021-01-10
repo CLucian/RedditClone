@@ -30,7 +30,6 @@ class ProfilePostsList extends React.Component {
         )
             .then((response) => {
                 this.handleResponse(response)
-                console.log('user posts response', response)
             })
             .catch((err) => console.log(err))
 
@@ -58,7 +57,6 @@ class ProfilePostsList extends React.Component {
 
     confirmDelete = (id) => {
         deleteComment(id).then((response) => {
-            console.log(response)
             getPosts(
                 undefined,
                 this.context.userData.name,
@@ -66,7 +64,6 @@ class ProfilePostsList extends React.Component {
                 this.state.before
             )
                 .then((response) => {
-                    console.log('getProfile response after deleting', response)
                     this.handleResponse(response)
                 })
                 .catch((err) => console.log(err))
