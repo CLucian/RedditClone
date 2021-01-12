@@ -1,12 +1,9 @@
 import React from 'react'
 // import axios from 'axios'
 
-// import SubscribedSubreddits from '../profile/SubscribedSubreddits'
 import { GlobalContext } from '../GlobalState'
 import SubredditLinks from '../profile/SubredditLinks'
 import { Link } from 'react-router-dom'
-import SearchForSubreddit from './SearchForSubreddit'
-import SearchSVG from '../svg-components/SearchSVG'
 
 import getSubreddits from '../../queries/sideBar'
 
@@ -46,7 +43,10 @@ class SideBar extends React.Component {
                 <ul className="subreddit-links">
                     {this.state.subredditDataArr.map((subreddit) => {
                         return (
-                            <li className="list-item-subreddit">
+                            <li
+                                className="list-item-subreddit"
+                                key={subreddit.data.id}
+                            >
                                 <SubredditLinks data={subreddit.data} />
                             </li>
                         )

@@ -6,7 +6,6 @@ import 'react-toastify/dist/ReactToastify.css'
 
 import { Route, Switch } from 'react-router-dom'
 
-// import ToastProvider from './components/toasts/ToastProvider'
 import MasterSearchProvider from './components/search/MasterSearchProvider'
 import Home from './components/home.component'
 import About from './components/about.component'
@@ -32,7 +31,6 @@ class App extends React.Component {
         super()
         this.state = {
             hideNav: '',
-            random: 'blah',
         }
     }
 

@@ -52,6 +52,7 @@ class Navbar extends React.Component {
                         {menuLinks.map((link) => (
                             <NavLink
                                 onClick={() => this.handleClick(link.route)}
+                                key={link.name}
                                 to={`/${link.route}`}
                             >
                                 {pathname.substring(1) === link.route ? (

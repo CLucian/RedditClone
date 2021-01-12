@@ -337,6 +337,7 @@ class Subreddit extends React.Component {
                         {sortOptions.map((option) => (
                             <div
                                 onClick={() => this.handleClick(option.value)}
+                                key={option.name}
                                 className={`menu-svg-container ${
                                     this.state.category === option.value
                                         ? 'active'

@@ -133,6 +133,7 @@ export default class Profile extends React.Component {
                                     postNum={this.state.postNum}
                                     accessToken={this.context.accessToken}
                                     after={this.state.after}
+                                    key={child.id}
                                 />
                             )
                         })}
