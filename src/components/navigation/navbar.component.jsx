@@ -31,7 +31,6 @@ class Navbar extends React.Component {
     }
 
     render() {
-        console.log('this.props.location', this.props.location)
         const { pathname } = this.props.location
 
         return (

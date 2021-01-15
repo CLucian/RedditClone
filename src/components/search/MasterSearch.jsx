@@ -42,6 +42,7 @@ class MasterSearch extends React.Component {
                         type="submit"
                         className="subreddit-search-form"
                         onSubmit={this.handleSubmit}
+                        autoComplete="off"
                     >
                         <input
                             className="subreddit-search-input"

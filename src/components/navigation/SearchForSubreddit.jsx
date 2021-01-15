@@ -56,6 +56,7 @@ export default class SearchForSubreddit extends React.Component {
                             <input
                                 className="subredditSearch__search-input"
                                 type="text"
+                                autoComplete="off"
                                 name="query"
                                 onChange={this.handleChange}
                                 placeholder="Search for a subreddit"

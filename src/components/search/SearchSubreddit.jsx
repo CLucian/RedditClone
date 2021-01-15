@@ -39,6 +39,7 @@ class SearchInSubreddit extends React.Component {
                         <input
                             className="subreddit-search-input"
                             type="text"
+                            autoComplete="off"
                             name="queryString"
                             onChange={this.handleChange}
                             placeholder="search sub"

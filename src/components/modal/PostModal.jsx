@@ -195,3 +195,5 @@ class PostModal extends React.Component {
 export default PostModal
 
 PostModal.contextType = GlobalContext
+
+// http://localhost:3000/r/nba?post_id=t3_kusfwm

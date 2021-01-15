@@ -31,7 +31,7 @@ class Comments extends React.Component {
             getComments(this.props.subreddit, this.props.postCommentsId).then(
                 (response) => {
                     const responseData = response.data[1].data.children
-                    console.log('responseData', responseData)
+
                     const parentCommentIdsArr = []
                     responseData.forEach((parentComment) => {
                         parentCommentIdsArr.push(parentComment.data.id)

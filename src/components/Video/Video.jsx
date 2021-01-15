@@ -34,8 +34,14 @@ class Video extends React.Component {
                     <ReactPlayer className="video-player" url={url} controls />
                 )}
                 {provider !== 'YouTube' && provider !== 'Twitch.tv' && (
-                    <div className="player-container">
-                        <Iframe className="video-iframe" url={url} />
+                    <div className="twitch-container">
+                        <Iframe
+                            className="video-iframe"
+                            width={width}
+                            height={height}
+                            url={url}
+                            allowFullScreen
+                        />
                     </div>
                 )}
             </div>
