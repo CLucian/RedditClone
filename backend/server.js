@@ -5,7 +5,7 @@ const app = express()
 
 const axios = require('axios')
 const bodyParser = require('body-parser')
-const PORT = 4000
+const PORT = process.env.PORT || 4000
 // const todoRoutes = express.Router();
 
 const client_id = 'MMej7E1hI1x82A'
