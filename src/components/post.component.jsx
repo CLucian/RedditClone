@@ -175,7 +175,6 @@ class Post extends React.Component {
                                         )}
                                     ></div>
                                 </Link>
-                                {/* {this.props.postData.data?.thumbnail && ( */}
                                 {thumbnail && (
                                     <div className="subreddit-image-container">
                                         {thumbnail !== 'self' &&

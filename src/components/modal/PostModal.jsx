@@ -1,7 +1,5 @@
 import React from 'react'
-import { Tweet, Timeline } from 'react-twitter-widgets'
-
-// import { useLocation } from 'react-router-dom'
+import { Tweet } from 'react-twitter-widgets'
 
 import Close from '../svg-components/Close'
 import Comments from '../comments/Comments'
@@ -14,7 +12,6 @@ import DOMPurify from 'dompurify'
 import moment from 'moment'
 
 import getPostById from '../../queries/postModal'
-import { renderIntoDocument } from 'react-dom/test-utils'
 
 class PostModal extends React.Component {
     constructor(props) {
@@ -79,10 +76,6 @@ class PostModal extends React.Component {
             return null
         }
 
-        // console.log('getTweetId', this.getTweetId())
-
-        // http://localhost:3000/r/LivestreamFail?post_id=t3_ks97io
-
         return (
             <div className="modal-info-container">
                 <div className="modal-post-content">
@@ -128,11 +121,6 @@ class PostModal extends React.Component {
                                 </a>
                             </div>
                         </div>
-
-                        {/* <div className="modal-post-date">
-                        {this.getDate(this.state.data.created)}
-                    </div> */}
-                        {/* {!this.state.data.media && */}
                         {!this.state.data.media &&
                         this.state.data.thumbnail !== 'self' &&
                         this.state.data.thumbnail !== 'image' &&
@@ -157,12 +145,6 @@ class PostModal extends React.Component {
                                 <img
                                     className="full-post-img"
                                     src={this.state.data.url}
-                                    style={
-                                        {
-                                            // width: `${this.state.data.preview.images[0].resolutions[2].width}px`,
-                                            // height: `${this.state.data.preview.images[0].resolutions[2].height}px`,
-                                        }
-                                    }
                                 />
                             </a>
                         </div>
@@ -179,7 +161,6 @@ class PostModal extends React.Component {
                             <Video
                                 height={this.state.data.media.oembed.height}
                                 width={this.state.data.media.oembed.width}
-                                // video={this.state.data?.media_embed?.content}
                                 url={this.state.data.url}
                                 provider={
                                     this.state.data?.media?.oembed
@@ -193,7 +174,6 @@ class PostModal extends React.Component {
                             this.state.data.selftext
                         )}
                     ></div>
-                    {/* <div className="modal-description">{this.props.postData.selftext}</div> */}
                     <PostComment
                         data={this.state.data}
                         getParentComment={this.getParentComment}
@@ -215,7 +195,3 @@ class PostModal extends React.Component {
 export default PostModal
 
 PostModal.contextType = GlobalContext
-
-// http://localhost:3000/r/LivestreamFail?post_id=t3_kt4xls
-
-// Twitter errr http://localhost:3000/?post_id=t3_ktojcv

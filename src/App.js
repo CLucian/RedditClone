@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css'
 
 import { Route, Switch } from 'react-router-dom'
 
+import Loader from './components/svg-components/Loader'
 import MasterSearchProvider from './components/search/MasterSearchProvider'
 import Home from './components/home.component'
 import About from './components/about.component'
@@ -60,7 +61,7 @@ class App extends React.Component {
         }
 
         if (status === STATUS.AUTHENTICATING) {
-            return 'loading...'
+            return <Loader />
         }
 
         if (status === STATUS.AUTHENTICATED) {

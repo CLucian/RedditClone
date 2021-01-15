@@ -9,7 +9,6 @@ class SubredditInfo extends React.Component {
     }
 
     render() {
-        // if (this.props.subreddit && this.props.subreddit !== undefined) {
         return (
             <div className="subreddit-subscribers-container">
                 <div className="subreddit-img-container">
@@ -37,9 +36,6 @@ class SubredditInfo extends React.Component {
                 </div>
             </div>
         )
-        // }
-
-        // return null
     }
 }
 

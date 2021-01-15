@@ -13,7 +13,9 @@ export function fetchProfile(token) {
         })
 }
 
+// this is where it hits the backend
 export function generateToken(code) {
+    // make post to my server with code data (this code is necessary to further make post req to reddit server for auth token)
     return axios.post('/login', { code }).then((response) => {
         return response.data.access_token
     })

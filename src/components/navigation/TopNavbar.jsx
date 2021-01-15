@@ -35,9 +35,15 @@ class TopNavbar extends React.Component {
         window.removeEventListener('resize', this.resize)
     }
 
+    // handleClickOpen = () => {
+    //     this.setState({
+    //         showMenu: true,
+    //     })
+    // }
+
     handleClick = () => {
         this.setState({
-            showMenu: !this.state.showMenu,
+            showMenu: true,
         })
     }
 
@@ -69,7 +75,6 @@ class TopNavbar extends React.Component {
                             {this.state.showMenu && (
                                 <HamburgerNav
                                     clickedOutside={this.clickedOutside}
-                                    showMenu={this.state.showMenu}
                                 />
                             )}
                         </div>

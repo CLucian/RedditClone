@@ -3,8 +3,10 @@ export const flattenCommentTree = (dataTree) => {
     const recursionFnc = (data) => {
         data.forEach((commentObj) => {
             const id = commentObj.data.id
+            // aka --> commentMap = {gg324d : {...}}
             commentMap[id] = commentObj.data
             const childIds = []
+            // add a childIds key and value to the data obj --> {gg324d : {..., childIds: []}}
             commentMap[id].childIds = childIds
 
             const children = commentObj.data?.replies?.data?.children || []
@@ -15,6 +17,7 @@ export const flattenCommentTree = (dataTree) => {
                 })
                 recursionFnc(commentObj.data.replies.data.children)
             }
+            // delete replies key and value ==> this way we don't recurse on this
             delete commentMap[commentObj.data.id].replies
         })
     }

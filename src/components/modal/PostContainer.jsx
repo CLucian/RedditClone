@@ -11,7 +11,6 @@ class PostContainer extends React.Component {
         this.state = {}
     }
     closeModal = () => {
-        const postIdParam = this.props.location.search
         const postPathName = this.props.location.pathname
         this.props.history.push(`${postPathName}`)
     }

@@ -1,6 +1,7 @@
 import React from 'react'
 // import axios from 'axios'
 
+import Loader from '../svg-components/Loader'
 import { GlobalContext } from '../GlobalState'
 import SubredditLinks from '../profile/SubredditLinks'
 import { Link } from 'react-router-dom'
@@ -18,7 +19,6 @@ class SideBar extends React.Component {
 
     componentDidMount() {
         if (this.context.accessToken) {
-            // console.log('accessToken in sidebar', this.context.accessToken)
             getSubreddits()
                 .then((response) => {
                     this.setState({
@@ -34,7 +34,7 @@ class SideBar extends React.Component {
 
     render() {
         if (this.state.isLoading) {
-            return 'Loading...'
+            return <Loader />
         }
 
         return (

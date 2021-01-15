@@ -5,11 +5,8 @@ import marked from 'marked'
 import DOMPurify from 'dompurify'
 import moment from 'moment'
 
-import HeartSVG from '../svg-components/Heart'
 import BubbleSVG from '../svg-components/Bubble'
 import UpArrowSVG from '../svg-components/UpArrow'
-import DownArrowSVG from '../svg-components/DownArrow'
-import AuthorSVG from '../svg-components/Author'
 
 import getAuthorAvatar from '../../queries/profileComments'
 
@@ -129,8 +126,6 @@ class ProfileComments extends React.Component {
     }
 
     render() {
-        // console.log('this.props.childData.data', this.props.childData.data)
-
         const {
             link_title,
             link_id,
@@ -174,9 +169,6 @@ class ProfileComments extends React.Component {
                                 </Link>
                                 {this.props.childData.data?.thumbnail && (
                                     <div className="subreddit-image-container">
-                                        {/* <div className="post-subreddit">
-                                        {this.props.postData.data.subreddit}
-                                    </div> */}
                                         {this.props.childData.data.thumbnail !==
                                             'self' &&
                                         this.props.childData.data.thumbnail !==
@@ -200,7 +192,6 @@ class ProfileComments extends React.Component {
                                                             this.props.childData
                                                                 .data.thumbnail
                                                         }
-                                                        // src={this.state.data.thumbnail}
                                                         alt={
                                                             this.props.childData
                                                                 .data.thumbnail
@@ -229,7 +220,6 @@ class ProfileComments extends React.Component {
                     <div className="post-sub-info">
                         <div className="post-author">
                             <div className="author-img-container">
-                                {/* {this.state.authorImg} */}
                                 {this.state.authorImg && (
                                     <img
                                         className="author-img"

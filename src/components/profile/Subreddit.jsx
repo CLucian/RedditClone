@@ -24,7 +24,6 @@ import 'react-toastify/dist/ReactToastify.css'
 
 import { GlobalContext } from '../GlobalState'
 import {
-    searchSubreddit,
     getSubredditDetails,
     getSubredditPosts,
     currentSubreddit,
@@ -54,7 +53,6 @@ class Subreddit extends React.Component {
             subreddit: this.props.match.params.id,
             query: null,
             isSubbed: false,
-            resize: '',
             readMore: false,
         }
 
@@ -70,18 +68,6 @@ class Subreddit extends React.Component {
         getSubredditDetails(this.state.subreddit).then((response) => {
             this.handleSubredditData(response)
         })
-
-        window.addEventListener('resize', this.resize)
-        this.resize()
-    }
-
-    resize = () => {
-        let currentWidth = window.innerWidth < 400
-        if (currentWidth !== this.state.resize) {
-            this.setState({
-                resize: currentWidth,
-            })
-        }
     }
 
     handleToast = (users) => {
@@ -323,14 +309,8 @@ class Subreddit extends React.Component {
                     >
                         <Users />
                         <div className="active-users">{active_user_count}</div>
-                        {/* <button className="sub-button">Subscribe</button> */}
                     </div>
                 </div>
-                {/* <div className="sub-btn-container">
-                    <div className="sub-btn-wrapper">
-                        <button className="sub-button">Subscribe</button>
-                    </div>
-                </div> */}
                 <div className="sort-container">
                     <div className="sortByMenuContainer">
                         <div className="sort-by-text"></div>
@@ -340,16 +320,14 @@ class Subreddit extends React.Component {
                                 key={option.name}
                                 className={`menu-svg-container ${
                                     this.state.category === option.value
-                                        ? 'active'
+                                        ? 'active-menu'
                                         : ''
                                 }`}
                             >
                                 {option.icon}
-                                {!this.state.resize && (
-                                    <div className="sort-by-text">
-                                        {option.name}
-                                    </div>
-                                )}
+                                <div className="sort-by-text">
+                                    {option.name}
+                                </div>
                             </div>
                         ))}
                     </div>

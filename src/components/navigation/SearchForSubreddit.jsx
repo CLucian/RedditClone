@@ -32,15 +32,6 @@ export default class SearchForSubreddit extends React.Component {
         this.searchSubreddits()
     }
 
-    // searchSubreddits = debounce(() => {
-    //     getSubreddits(this.state.value)
-    //         .then((subredditInfoArray) => {
-    //             console.log('subredditInfoArray', subredditInfoArray)
-    //             this.setState({ subInfoArr: subredditInfoArray })
-    //         })
-    //         .catch((err) => console.log(err))
-    // }, 500)
-
     searchSubreddits = () => {
         getSubreddits(this.state.value)
             .then((subredditInfoArray) => {
@@ -81,10 +72,3 @@ export default class SearchForSubreddit extends React.Component {
         )
     }
 }
-
-// ;<Link id="search-for-subreddit" to="/subreddits">
-//     <div className="search-for-subreddit-container">
-//         <SearchSVG />
-//         <span>Search for specific subreddit</span>
-//     </div>
-// </Link>

@@ -1,18 +1,14 @@
 import React from 'react'
 
-import axios from 'axios'
-import getAxios from '../queries/axios'
-import { withRouter, Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { debounce } from 'lodash'
 
 import Post from './post.component'
 import getHomePage, { getSearchQuery } from '../queries/postQuery'
-import Login from './Login'
-import Modal from './modal/Modal'
+
 import CreatePost from './posting/CreatePost'
 import { MasterSearchContext } from '../components/search/MasterSearchProvider'
-
-import { handlePages } from '../utils/pagination'
+import MasterSearch from './search/MasterSearch'
 
 import Loader from './svg-components/Loader'
 import NextSVG from './svg-components/pageNav-svgs/NextSVG'
@@ -23,10 +19,6 @@ import NewSVG from './svg-components/NewSVG'
 import RisingSVG from './svg-components/RisingSVG'
 import TopSVG from './svg-components/TopSVG'
 
-import { GlobalContext } from './GlobalState'
-import { getFeed } from '../queries/feed'
-import MasterSearch from './search/MasterSearch'
-
 const sortOptions = [
     { name: 'Best', value: 'best', icon: <BestSVG /> },
     { name: 'Hot', value: 'hot', icon: <HotSVG /> },
@@ -34,14 +26,6 @@ const sortOptions = [
     { name: 'Top', value: 'top', icon: <TopSVG /> },
     { name: 'Rising', value: 'rising', icon: <RisingSVG /> },
 ]
-
-const CLIENT_ID = 'MMej7E1hI1x82A'
-const REDIRECT_URI = 'http://localhost:3000/authorize'
-const DURATION = 'permanent'
-const SCOPE =
-    'identity edit flair history modconfig modflair modlog modposts modwiki mysubreddits privatemessages read report save submit subscribe vote wikiedit wikiread'
-const getAuthorizationURL = () =>
-    `https://www.reddit.com/api/v1/authorize?client_id=${CLIENT_ID}&response_type=code&state=${Math.random()}&redirect_uri=${REDIRECT_URI}&duration=${DURATION}&scope=${SCOPE}`
 
 class Home extends React.Component {
     constructor(props) {
@@ -174,16 +158,14 @@ class Home extends React.Component {
                                 onClick={() => this.handleSort(option.value)}
                                 className={`menu-svg-container ${
                                     this.state.sortBy === option.value
-                                        ? 'active'
+                                        ? 'active-menu'
                                         : ''
                                 }`}
                             >
                                 {option.icon}
-                                {/* {!this.state.resize && ( */}
                                 <div className="sort-by-text">
                                     {option.name}
                                 </div>
-                                {/* )} */}
                             </div>
                         ))}
                     </div>

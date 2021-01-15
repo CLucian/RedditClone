@@ -31,67 +31,19 @@ class Comments extends React.Component {
             getComments(this.props.subreddit, this.props.postCommentsId).then(
                 (response) => {
                     const responseData = response.data[1].data.children
+                    console.log('responseData', responseData)
                     const parentCommentIdsArr = []
                     responseData.forEach((parentComment) => {
                         parentCommentIdsArr.push(parentComment.data.id)
                     })
 
-                    const data = responseData
-
                     const commentMap = flattenCommentTree(responseData)
+                    console.log('commentMap', commentMap)
 
-                    // let parentData = this.props?.userParentCommentData?.data
-                    //     ?.json?.data?.things[0]?.data
-                    // let parentId = parentData?.id
-                    // let newParentArr
-                    // let found = parentCommentIdsArr.find((comment) => {
-                    //     return comment === parentId
-                    // })
-                    // if (found) {
-                    //     this.setState({
-                    //         comments: commentMap,
-                    //         parentCommentsArr: parentCommentIdsArr,
-                    //         isLoading: false,
-                    //         // userParentComment: this.props.userParentCommentData,
-                    //     })
-                    // } else if (parentData) {
-                    //     newParentArr = [parentId, ...parentCommentIdsArr]
-                    //     this.setState({
-                    //         parentCommentsArr: newParentArr,
-                    //         isLoading: false,
-                    //         comments: {
-                    //             [parentId]: parentData,
-                    //             ...commentMap,
-                    //         },
-                    //     })
-                    // } else {
-                    //     this.setState({
-                    //         comments: commentMap,
-                    //         parentCommentsArr: parentCommentIdsArr,
-                    //         isLoading: false,
-                    //         // userParentComment: this.props.userParentCommentData,
-                    //     })
-                    // }
-
-                    // let userPostData = this.props?.userParentCommentData?.data
-                    //     ?.json?.data?.things[0]?.data
-
-                    // if (userPostData) {
-                    //     this.setState({
-                    //         comments: commentMap,
-                    //         parentCommentsArr: parentCommentIdsArr,
-                    //         isLoading: false,
-                    //         userPostsArr: [
-                    //             ...this.state.userPostsArr,
-                    //             userPostData,
-                    //         ],
-                    //     })
-                    // } else {
                     this.setState({
                         comments: commentMap,
                         parentCommentsArr: parentCommentIdsArr,
                         isLoading: false,
-                        // userParentComment: this.props.userParentCommentData,
                     })
                     // }
                 }
@@ -123,7 +75,6 @@ class Comments extends React.Component {
                 return
             } else if (parentData) {
                 newParentArr = [parentId, ...this.state.parentCommentsArr]
-                // newCommentObj = { ...this.state.comments }
                 this.setState({
                     parentCommentsArr: newParentArr,
                     userPostsArr: [...this.state.userPostsArr, parentData],
@@ -137,48 +88,15 @@ class Comments extends React.Component {
         }
     }
 
-    // this works except for if it's a parent comment
-    commentDelete = (name, id, parentId) => {
-        // const id = id
+    commentDelete = (name, id) => {
         deleteComment(name)
             .then((response) => {
-                // let newObj
-
-                // create new array of child ids without the deleted id
-
                 this.state.comments[id].body = '[deleted]'
                 this.state.comments[id].author = '[deleted]'
                 const newObj = { ...this.state.comments }
                 this.setState({
                     comments: newObj,
                 })
-
-                // if (!parentId) {
-                //     delete this.state.comments[id]
-                //     newObj = { ...this.state.comments }
-                //     this.setState({
-                //         comments: newObj,
-                //     })
-                // } else {
-                //     const newChildIdsArr = this.state.comments[
-                //         parentId
-                //     ].childIds.filter((el) => {
-                //         return el !== id
-                //     })
-                //     const newParentArr = this.state.parentCommentsArr.filter(
-                //         (el) => {
-                //             return el !== id
-                //         }
-                //     )
-                //     this.state.comments[parentId].childIds = newChildIdsArr
-                //     delete this.state.comments[id]
-                //     newObj = { ...this.state.comments }
-
-                //     this.setState({
-                //         comments: newObj,
-                //         parentCommentsArr: newParentArr,
-                //     })
-                // }
             })
             .catch((err) => console.log(err))
     }
@@ -192,14 +110,6 @@ class Comments extends React.Component {
             ...this.state.comments[commentId].childIds,
             id,
         ]
-
-        // if (!this.state.comments.id) {
-        //     // if it does not exist then add the id to the parent childIds array
-        //     this.state.comments[commentId].childIds = [
-        //         ...this.state.comments[commentId].childIds,
-        //         id,
-        //     ]
-        // }
 
         // add the new comment to the commentMap state OR if edit, replace old comment with new edited comment
         this.setState({
@@ -236,6 +146,7 @@ class Comments extends React.Component {
                             getCommentReply={this.getCommentReply}
                             getCommentEdit={this.getCommentEdit}
                             dataChange={this.state.dataChange}
+                            key={parentId}
                         />
                     )
                 })}
@@ -247,6 +158,3 @@ class Comments extends React.Component {
 export default Comments
 
 Comments.contextType = GlobalContext
-
-// Comment Id = ggn5iwg
-// Post Id = http://localhost:3000/?post_id=t3_khkikz

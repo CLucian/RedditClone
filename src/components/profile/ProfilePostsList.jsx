@@ -36,7 +36,6 @@ class ProfilePostsList extends React.Component {
         getAuthorAvatar(this.context.userData.name)
             .then((response) => {
                 const dataImg = response.data.data.icon_img
-                // console.log('dataImg', dataImg)
                 const modifiedImg = dataImg.split('?width')[0]
                 this.setState({
                     authorImg: modifiedImg,
@@ -71,7 +70,6 @@ class ProfilePostsList extends React.Component {
     }
 
     getPage = (pageDir) => {
-        // this.getProfile(this.state.after, null)
         if (pageDir === 'next') {
             this.setState(
                 {

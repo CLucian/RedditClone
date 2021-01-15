@@ -94,7 +94,6 @@ export default class CreatePostPage extends React.Component {
             <div>
                 <div className="create-post-header">Create Post</div>
                 <div className="create-post-page-container">
-                    {/* <button onClick={this.notify}>Click</button> */}
                     <form
                         className="create-post-form"
                         type="submit"
@@ -135,7 +134,6 @@ export default class CreatePostPage extends React.Component {
                                     required="required"
                                     autoComplete="off"
                                 />
-                                {/* <label className="post-input-title">Title</label> */}
                                 <span className="post-input-char-limit">{`${
                                     this.state.title
                                         ? this.state.title.length

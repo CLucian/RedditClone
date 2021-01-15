@@ -5,11 +5,8 @@ import marked from 'marked'
 import DOMPurify from 'dompurify'
 import moment from 'moment'
 
-import HeartSVG from '../svg-components/Heart'
 import BubbleSVG from '../svg-components/Bubble'
 import UpArrowSVG from '../svg-components/UpArrow'
-import DownArrowSVG from '../svg-components/DownArrow'
-import AuthorSVG from '../svg-components/Author'
 
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -118,9 +115,6 @@ class ProfilePost extends React.Component {
                             <div className="score-text">{score}</div>
                         </div>
                         <div className="main-text-container">
-                            {/* <div className="post-listing-subreddit">
-                                {this.props.postData.data.subreddit}
-                            </div> */}
                             <div className="post-title">
                                 <Link
                                     id="modal-open"
@@ -135,9 +129,6 @@ class ProfilePost extends React.Component {
                                 </Link>
                                 {this.props.childData.data?.thumbnail && (
                                     <div className="subreddit-image-container">
-                                        {/* <div className="post-subreddit">
-                                        {this.props.postData.data.subreddit}
-                                    </div> */}
                                         {this.props.childData.data.thumbnail !==
                                             'self' &&
                                         this.props.childData.data.thumbnail !==
@@ -161,7 +152,6 @@ class ProfilePost extends React.Component {
                                                             this.props.childData
                                                                 .data.thumbnail
                                                         }
-                                                        // src={this.state.data.thumbnail}
                                                         alt={
                                                             this.props.childData
                                                                 .data.thumbnail

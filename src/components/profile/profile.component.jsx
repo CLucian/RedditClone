@@ -1,6 +1,5 @@
 import React from 'react'
 
-import Login from '../Login'
 import ProfileComments from './ProfileComments'
 import { GlobalContext } from '../GlobalState'
 
@@ -10,18 +9,6 @@ import PrevSVG from '../svg-components/pageNav-svgs/PrevSVG'
 import { deleteComment } from '../../queries/profileComments'
 
 import getProfile from '../../queries/profile'
-
-/* 
-    wrap withrouter for whichever component is responsible for fetching posts or whatever
-        - whatever needs to subscribe to route state
-    - link just sets any url/route state like "after"
-    - whatever component is responsible for fetching posts (See above), add a componentdidupdate
-    method and compare previous to current props - if `after` changed, then do whatever
-
-    create a util that passes an object into the Link to --> with pathname and search
-    search gets changed depending on what data you need
-
-*/
 
 export default class Profile extends React.Component {
     constructor(props) {
@@ -73,7 +60,6 @@ export default class Profile extends React.Component {
     }
 
     getPage = (pageDir) => {
-        // this.getProfile(this.state.after, null)
         if (pageDir === 'next') {
             this.setState(
                 {

@@ -72,41 +72,11 @@ class GlobalState extends React.Component {
         })
     }
 
-    setGlobalState = (accessToken) => {
-        this.getUserData(accessToken)
-            .then((userData) => {
-                this.setState({
-                    userData,
-                    hasFetched: true,
-                    accessToken,
-                    authenticated: true,
-                })
-            })
-            .catch((err) => {
-                console.log('setGlobalState Error: ', err)
-                localStorage.clear()
-                this.setState({
-                    accessToken: null,
-                })
-                this.props.history.push('/home')
-            })
-    }
-
-    getAndDisplayComment = (id, reply) => {
-        const yourReply = {
-            id,
-            reply,
-        }
-        return yourReply
-    }
-
     render() {
         return (
             <GlobalContext.Provider
                 value={{
                     ...this.state,
-                    getAndDisplayComment: this.getAndDisplayComment,
-                    // new items
                     setup: this.setup,
                     invalidate: this.invalidate,
                 }}
