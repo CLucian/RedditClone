@@ -143,7 +143,6 @@ class App extends React.Component {
                                 </div>
                             )}
                         </div>
-                        {/* </ToastProvider> */}
                     </MasterSearchProvider>
                 </div>
             )

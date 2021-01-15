@@ -96,32 +96,6 @@ class CommentReply extends React.Component {
                                 Delete
                             </button>
                         )}
-                    {/* {this.props.commentData[this.props.commentId].author ===
-                        this.context.userData.name &&
-                        this.state.confirm && (
-                            <div className="confirm-div">
-                                <div className="confirm-text">
-                                    <p>
-                                        Are you sure you want to delete this
-                                        comment?
-                                    </p>
-                                </div>
-                                <div className="confirm-btns">
-                                    <button
-                                        className="yes-btn"
-                                        // onClick={this.deleted}
-                                    >
-                                        Yes
-                                    </button>
-                                    <button
-                                        className="no-btn"
-                                        // onClick={this.deleteBtn}
-                                    >
-                                        No
-                                    </button>
-                                </div>
-                            </div>
-                        )} */}
                 </div>
                 {this.props.commentData[this.props.commentId].author ===
                     this.context.userData.name &&
@@ -159,7 +133,6 @@ class CommentReply extends React.Component {
                 )}
                 {this.state.showTextBox ? null : (
                     <CommentEditInput
-                        // getCommentReply={this.props.getCommentReply}
                         commentData={this.props.commentData}
                         commentId={this.props.commentId}
                         accessToken={this.context.accessToken}
@@ -185,27 +158,3 @@ class CommentReply extends React.Component {
 export default CommentReply
 
 CommentReply.contextType = GlobalContext
-
-// {
-//     !this.state.confirm ? (
-//         <div className="delete-div">
-//             <button className="delete-btn" onClick={this.deleteBtn}>
-//                 Delete Comment
-//             </button>
-//         </div>
-//     ) : (
-//         <div className="confirm-div">
-//             <div className="confirm-text">
-//                 <p>Are you sure you want to delete this comment?</p>
-//             </div>
-//             <div className="confirm-btns">
-//                 <button className="yes-btn" onClick={this.deleted}>
-//                     Yes
-//                 </button>
-//                 <button className="no-btn" onClick={this.deleteBtn}>
-//                     No
-//                 </button>
-//             </div>
-//         </div>
-//     )
-// }
