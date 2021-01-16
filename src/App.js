@@ -155,3 +155,5 @@ class App extends React.Component {
 App.contextType = GlobalContext
 
 export default App
+
+// "start": "react-scripts start",

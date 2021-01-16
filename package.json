@@ -31,6 +31,9 @@
     "react-twitter-widgets": "^1.9.5",
     "video-react": "^0.14.1"
   },
+  "engines": {
+    "node": "12.16.2"
+  },
   "scripts": {
     "start": "node server.js",
     "build": "react-scripts build",
