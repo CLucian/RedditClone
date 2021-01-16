@@ -32,7 +32,6 @@
     "video-react": "^0.14.1"
   },
   "scripts": {
-    // "start": "react-scripts start",
     "start": "node server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
