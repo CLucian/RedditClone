@@ -12,7 +12,7 @@ import ProfileSVG from '../svg-components/navbar-svgs/ProfileSVG'
 import HomeSVG from '../svg-components/navbar-svgs/HomeSVG'
 
 const CLIENT_ID = 'MMej7E1hI1x82A'
-const REDIRECT_URI = 'http://localhost:3000/authorize'
+const REDIRECT_URI = 'http://localhost:4000/authorize'
 const DURATION = 'permanent'
 const SCOPE =
     'identity edit flair history modconfig modflair modlog modposts modwiki mysubreddits privatemessages read report save submit subscribe vote wikiedit wikiread'
