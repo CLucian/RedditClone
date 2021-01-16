@@ -7,7 +7,8 @@ const getRedirectURI = () => {
 }
 
 export const loginFnc = () => {
-    const CLIENT_ID = 'MMej7E1hI1x82A'
+    // const CLIENT_ID = 'MMej7E1hI1x82A'
+    const CLIENT_ID = process.env.REACT_APP_CLIENT_ID
     // const REDIRECT_URI = 'http://localhost:4000/authorize'
     const REDIRECT_URI = getRedirectURI()
     const DURATION = 'permanent'
