@@ -3,16 +3,23 @@ const express = require('express')
 // initialize express
 const app = express()
 
+const path = require('path')
+
 const axios = require('axios')
 const bodyParser = require('body-parser')
-const PORT = 4000
+const PORT = process.env.PORT || 4000
 // const todoRoutes = express.Router();
 
 const client_id = 'MMej7E1hI1x82A'
 const client_secret = 'uXp9n2I72W_ihiOoyYfW3-0txms'
 const querystring = require('querystring')
 
+app.use(express.static(path.join(__dirname, 'build')))
 app.use(bodyParser.json())
+
+app.get('/', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
+)
 
 app.post('/login', function (req, res) {
     const params = querystring.stringify({
