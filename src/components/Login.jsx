@@ -2,13 +2,11 @@ import React from 'react'
 
 const getRedirectURI = () => {
     if (process.env.NODE_ENV !== 'production') {
-        return process.env.REACT_APP_PORT_DEV
+        return process.env.REACT_APP_REDIRECT_URI_DEV
     } else {
-        return process.env.REACT_APP_PORT_PROD
+        return process.env.REACT_APP_REDIRECT_URI_PROD
     }
 }
-
-REACT_APP_CLIENT_ID
 
 const Login = () => {
     // const CLIENT_ID = 'MMej7E1hI1x82A'

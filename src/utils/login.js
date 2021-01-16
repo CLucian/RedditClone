@@ -1,8 +1,8 @@
 const getRedirectURI = () => {
     if (process.env.NODE_ENV !== 'production') {
-        return process.env.REACT_APP_PORT_DEV
+        return process.env.REACT_APP_REDIRECT_URI_DEV
     } else {
-        return process.env.REACT_APP_PORT_PROD
+        return process.env.REACT_APP_REDIRECT_URI_PROD
     }
 }
 
