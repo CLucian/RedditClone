@@ -1,23 +1,15 @@
-import {
-    port_dev,
-    port_prod,
-    client_id,
-    client_secret,
-    redirect_uri_dev,
-    redirect_uri_prod,
-} from '../../config'
-
 const getRedirectURI = () => {
     if (process.env.NODE_ENV !== 'production') {
-        return port_dev
+        return process.env.REACT_APP_PORT_DEV
     } else {
-        return port_prod
+        return process.env.REACT_APP_PORT_PROD
     }
 }
 
 export const loginFnc = () => {
     const CLIENT_ID = 'MMej7E1hI1x82A'
-    const REDIRECT_URI = 'http://localhost:4000/authorize'
+    // const REDIRECT_URI = 'http://localhost:4000/authorize'
+    const REDIRECT_URI = getRedirectURI()
     const DURATION = 'permanent'
     const SCOPE =
         'identity edit flair history modconfig modflair modlog modposts modwiki mysubreddits privatemessages read report save submit subscribe vote wikiedit wikiread'

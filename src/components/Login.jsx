@@ -1,29 +1,22 @@
 import React from 'react'
-import {
-    port_dev,
-    port_prod,
-    client_id,
-    client_secret,
-    redirect_uri_dev,
-    redirect_uri_prod,
-} from '../../config'
 
 const getRedirectURI = () => {
     if (process.env.NODE_ENV !== 'production') {
-        return port_dev
+        return process.env.REACT_APP_PORT_DEV
     } else {
-        return port_prod
+        return process.env.REACT_APP_PORT_PROD
     }
 }
 
 const Login = () => {
     const CLIENT_ID = client_id
     // const REDIRECT_URI = 'http://localhost:4000/authorize'
+    const REDIRECT_URI = getRedirectURI()
     const DURATION = 'permanent'
     const SCOPE =
         'identity edit flair history modconfig modflair modlog modposts modwiki mysubreddits privatemessages read report save submit subscribe vote wikiedit wikiread'
     const getAuthorizationURL = () =>
-        `https://www.reddit.com/api/v1/authorize?client_id=${CLIENT_ID}&response_type=code&state=${Math.random()}&redirect_uri=${getRedirectURI()}&duration=${DURATION}&scope=${SCOPE}`
+        `https://www.reddit.com/api/v1/authorize?client_id=${CLIENT_ID}&response_type=code&state=${Math.random()}&redirect_uri=${REDIRECT_URI}&duration=${DURATION}&scope=${SCOPE}`
 
     return (
         <div className="login-container">
