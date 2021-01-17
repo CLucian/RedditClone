@@ -21,10 +21,10 @@ const querystring = require('querystring')
 app.use(express.static(path.join(__dirname, 'build')))
 app.use(bodyParser.json())
 
-const REDIRECT_URI = process.env.REDIRECT_URI
-const PORT = process.env.REACT_APP_PORT
+const REDIRECT_URI = process.env.REACT_APP_REDIRECT
+const PORT = process.env.PORT
 const CLIENT_SECRET = process.env.CLIENT_SECRET
-const CLIENT_ID = process.env.CLIENT_ID
+const CLIENT_ID = process.env.REACT_APP_CLIENT_ID
 
 app.post('/login', function (req, res) {
     const params = querystring.stringify({
