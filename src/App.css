@@ -1638,6 +1638,7 @@ textarea {
 }
 
 .post-score {
+  width: 8rem;
   padding: 0.5rem;
   font-size: 2rem;
   text-align: center;
@@ -1762,8 +1763,8 @@ textarea {
 }
 
 .post-listing-thumbnail-container {
-  height: auto;
-  width: 10rem;
+  height: 13rem;
+  width: 13rem;
   /* transition: opacity 2s ease-in-out; */
 }
 
@@ -1774,8 +1775,9 @@ textarea {
 
 .post-listing-thumbnail-container img {
   display: block;
-  height: auto;
-  width: auto;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
   /* height: 100%;
   width: 100%; */
 }
